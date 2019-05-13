@@ -18,21 +18,21 @@
   
   
   <title>Systemd 入门教程：命令篇 | 老朋友好久不见！</title>
-  <meta name="description" content="Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。">
+  <meta name="description" content="Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。本文介绍它的基本用法，分为上下两篇。今天介绍它的主要命令，下一篇介绍如何用于实战。历史上，Linux 的启动一直采用init进程。下面的命令用来启动服务。123$ /etc/init.d/apache2 start# 或者$ service apache2 start这种方法有两个缺点。1. 启动时间长。in">
 <meta name="keywords" content="centos7">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Systemd 入门教程：命令篇">
 <meta property="og:url" content="https://www.zhangqifei.top/2017/05/06/linux/Systemd 入门教程：命令篇/index.html">
 <meta property="og:site_name" content="老朋友好久不见！">
-<meta property="og:description" content="Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。">
+<meta property="og:description" content="Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。本文介绍它的基本用法，分为上下两篇。今天介绍它的主要命令，下一篇介绍如何用于实战。历史上，Linux 的启动一直采用init进程。下面的命令用来启动服务。123$ /etc/init.d/apache2 start# 或者$ service apache2 start这种方法有两个缺点。1. 启动时间长。in">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://zhangqifei.top/picture/ifeier/data/systemd.jpg">
 <meta property="og:image" content="http://zhangqifei.top/picture/ifeier/data/dystemdname.jpg">
 <meta property="og:image" content="http://zhangqifei.top/picture/ifeier/data/systemd.png">
-<meta property="og:updated_time" content="2018-04-13T03:12:25.790Z">
+<meta property="og:updated_time" content="2018-04-22T09:30:14.835Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Systemd 入门教程：命令篇">
-<meta name="twitter:description" content="Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。">
+<meta name="twitter:description" content="Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。本文介绍它的基本用法，分为上下两篇。今天介绍它的主要命令，下一篇介绍如何用于实战。历史上，Linux 的启动一直采用init进程。下面的命令用来启动服务。123$ /etc/init.d/apache2 start# 或者$ service apache2 start这种方法有两个缺点。1. 启动时间长。in">
 <meta name="twitter:image" content="http://zhangqifei.top/picture/ifeier/data/systemd.jpg">
   <!-- Canonical links -->
   <link rel="canonical" href="https://www.zhangqifei.top/2017/05/06/linux/Systemd 入门教程：命令篇/index.html">
@@ -67,7 +67,7 @@
       
       
       <div class="profile-block text-center">
-        <a id="avatar" href="javascript:void(0)" onclick="location.reload()" target="_blank">
+        <a id="avatar" href="javascript:void(0)">
           <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
         </a>
         <h2 id="name" class="hidden-xs hidden-sm">咻一咻</h2>
@@ -237,7 +237,7 @@
   <div class="widget">
     <h3 class="widget-title">分类</h3>
     <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">25</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/运维自动化工具/">运维自动化工具</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/术语/">术语</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通知/">通知</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">9</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">24</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/运维自动化工具/">运维自动化工具</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/术语/">术语</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通知/">通知</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">7</span></li></ul>
     </div>
   </div>
 
@@ -248,7 +248,7 @@
   <div class="widget">
     <h3 class="widget-title">标签</h3>
     <div class="widget-body">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API接口/">API接口</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASCII/">ASCII</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CA/">CA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS/">CentOS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/">Chrome</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ansible/">ansible</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/">apache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos7/">centos7</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/date/">date</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/puppet/">puppet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/saltstack/">saltstack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/发布/">发布</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/状态码/">状态码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/防火墙/">防火墙</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API接口/">API接口</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASCII/">ASCII</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CA/">CA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS/">CentOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/">Chrome</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ansible/">ansible</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/">apache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos7/">centos7</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/date/">date</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/puppet/">puppet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/saltstack/">saltstack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/发布/">发布</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/状态码/">状态码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/防火墙/">防火墙</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -259,7 +259,7 @@
   <div class="widget">
     <h3 class="widget-title">标签云</h3>
     <div class="widget-body tagcloud">
-      <a href="/tags/API接口/" style="font-size: 13px;">API接口</a> <a href="/tags/ASCII/" style="font-size: 13px;">ASCII</a> <a href="/tags/CA/" style="font-size: 13px;">CA</a> <a href="/tags/CentOS/" style="font-size: 13.33px;">CentOS</a> <a href="/tags/Chrome/" style="font-size: 13.33px;">Chrome</a> <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HTTP/" style="font-size: 13.67px;">HTTP</a> <a href="/tags/Linux/" style="font-size: 13px;">Linux</a> <a href="/tags/Nginx/" style="font-size: 13.67px;">Nginx</a> <a href="/tags/ansible/" style="font-size: 13px;">ansible</a> <a href="/tags/apache/" style="font-size: 13px;">apache</a> <a href="/tags/centos7/" style="font-size: 13.33px;">centos7</a> <a href="/tags/date/" style="font-size: 13px;">date</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/ping/" style="font-size: 13px;">ping</a> <a href="/tags/puppet/" style="font-size: 13px;">puppet</a> <a href="/tags/saltstack/" style="font-size: 13px;">saltstack</a> <a href="/tags/发布/" style="font-size: 13px;">发布</a> <a href="/tags/命令/" style="font-size: 14px;">命令</a> <a href="/tags/状态码/" style="font-size: 13px;">状态码</a> <a href="/tags/防火墙/" style="font-size: 13px;">防火墙</a>
+      <a href="/tags/API接口/" style="font-size: 13px;">API接口</a> <a href="/tags/ASCII/" style="font-size: 13px;">ASCII</a> <a href="/tags/CA/" style="font-size: 13px;">CA</a> <a href="/tags/CentOS/" style="font-size: 13px;">CentOS</a> <a href="/tags/Chrome/" style="font-size: 13.33px;">Chrome</a> <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HTTP/" style="font-size: 13.33px;">HTTP</a> <a href="/tags/Linux/" style="font-size: 13px;">Linux</a> <a href="/tags/Nginx/" style="font-size: 13.67px;">Nginx</a> <a href="/tags/ansible/" style="font-size: 13px;">ansible</a> <a href="/tags/apache/" style="font-size: 13px;">apache</a> <a href="/tags/centos7/" style="font-size: 13.33px;">centos7</a> <a href="/tags/date/" style="font-size: 13px;">date</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/ping/" style="font-size: 13px;">ping</a> <a href="/tags/puppet/" style="font-size: 13px;">puppet</a> <a href="/tags/saltstack/" style="font-size: 13px;">saltstack</a> <a href="/tags/发布/" style="font-size: 13px;">发布</a> <a href="/tags/命令/" style="font-size: 14px;">命令</a> <a href="/tags/状态码/" style="font-size: 13px;">状态码</a> <a href="/tags/防火墙/" style="font-size: 13px;">防火墙</a>
     </div>
   </div>
 
@@ -269,7 +269,7 @@
   <div class="widget">
     <h3 class="widget-title">归档</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -319,10 +319,10 @@
                 <a class="category-link" href="/categories/随笔/">随笔</a>
               </p>
               <p class="item-title">
-                <a href="/2018/05/07/linux/Apache、Nginx与Tomcat三者的区别/" class="title">Apache、Nginx与Tomcat三者的区别？</a>
+                <a href="/2018/03/05/随笔/一次说清什么是正向代理，什么是反向代理？/" class="title">一次说清什么是正向代理，什么是反向代理？</a>
               </p>
               <p class="item-date">
-                <time datetime="2018-05-06T19:00:20.000Z" itemprop="datePublished">2018-05-07</time>
+                <time datetime="2018-03-05T01:42:22.000Z" itemprop="datePublished">2018-03-05</time>
               </p>
             </div>
           </li>
@@ -334,10 +334,10 @@
                 <a class="category-link" href="/categories/随笔/">随笔</a>
               </p>
               <p class="item-title">
-                <a href="/2018/05/07/linux/IP Http 和Https之间的区别/" class="title">TCP/IP、Http和Https之间的区别?</a>
+                <a href="/2018/03/04/随笔/程序员为什么一定要用Linux？/" class="title">程序员为什么一定要用Linux？</a>
               </p>
               <p class="item-date">
-                <time datetime="2018-05-06T18:36:20.000Z" itemprop="datePublished">2018-05-07</time>
+                <time datetime="2018-03-04T01:41:22.000Z" itemprop="datePublished">2018-03-04</time>
               </p>
             </div>
           </li>
@@ -349,10 +349,10 @@
                 <a class="category-link" href="/categories/linux/">linux</a>
               </p>
               <p class="item-title">
-                <a href="/2018/05/07/linux/CentOS 6.x和CentOS 7.x的区别/" class="title">CentOS 6.x和CentOS 7.x的区别?</a>
+                <a href="/2018/02/07/linux/金丝雀发布、滚动发布、蓝绿发布到底有什么差别？关键点是什么？/" class="title">金丝雀发布、滚动发布、蓝绿发布到底有什么差别？关键点是什么？</a>
               </p>
               <p class="item-date">
-                <time datetime="2018-05-06T18:00:04.000Z" itemprop="datePublished">2018-05-07</time>
+                <time datetime="2018-02-07T11:42:22.000Z" itemprop="datePublished">2018-02-07</time>
               </p>
             </div>
           </li>
@@ -444,7 +444,7 @@
     </div>
     <div class="article-entry markdown-body" itemprop="articleBody">
       
-        <center><img src="http://zhangqifei.top/picture/ifeier/data/systemd.jpg" width="500" height="200" alt="markdown" align="center"></center><br>Systemd 是 Linux 系统工具，用来启动<strong>守护进程</strong>，已成为大多数发行版的标准配置。<br><a id="more"></a><br>本文介绍它的基本用法，分为上下两篇。今天介绍它的主要命令，<strong>下一篇</strong>介绍如何用于实战。<br>历史上，Linux 的启动一直采用<code>init</code>进程。<br><br>下面的命令用来启动服务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ /etc/init.d/apache2 start</span><br><span class="line"># 或者</span><br><span class="line">$ service apache2 start</span><br></pre></td></tr></table></figure><br><br><strong>这种方法有两个缺点。</strong><br>1. 启动时间长。init进程是串行启动，只有前一个进程启动完，才会启动下一个进程。<br>2. 启动脚本复杂。init进程只是执行启动脚本，不管其他事情。脚本需要自己处理各种情况，这往往使得脚本变得很长。<br><br>Systemd 就是为了解决这些问题而诞生的。它的设计目标是，为系统的启动和管理提供一套完整的解决方案。<br><br>根据 Linux 惯例，字母d是守护进程（daemon）的缩写。 Systemd 这个名字的含义，就是它要守护整个系统。<br><br><br><center><img src="http://zhangqifei.top/picture/ifeier/data/dystemdname.jpg" width="500" height="200" alt="Systemdname" align="center"><br>（Systemd 作者 Lennart Poettering）</center>
+        <center><img src="http://zhangqifei.top/picture/ifeier/data/systemd.jpg" width="500" height="200" alt="markdown" align="center"></center><br>Systemd 是 Linux 系统工具，用来启动<strong>守护进程</strong>，已成为大多数发行版的标准配置。<br><br>本文介绍它的基本用法，分为上下两篇。今天介绍它的主要命令，<strong>下一篇</strong>介绍如何用于实战。<br>历史上，Linux 的启动一直采用<code>init</code>进程。<br><br>下面的命令用来启动服务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ /etc/init.d/apache2 start</span><br><span class="line"># 或者</span><br><span class="line">$ service apache2 start</span><br></pre></td></tr></table></figure><br><br><strong>这种方法有两个缺点。</strong><br>1. 启动时间长。init进程是串行启动，只有前一个进程启动完，才会启动下一个进程。<br>2. 启动脚本复杂。init进程只是执行启动脚本，不管其他事情。脚本需要自己处理各种情况，这往往使得脚本变得很长。<br><br>Systemd 就是为了解决这些问题而诞生的。它的设计目标是，为系统的启动和管理提供一套完整的解决方案。<br><br>根据 Linux 惯例，字母d是守护进程（daemon）的缩写。 Systemd 这个名字的含义，就是它要守护整个系统。<br><br><br><center><img src="http://zhangqifei.top/picture/ifeier/data/dystemdname.jpg" width="500" height="200" alt="Systemdname" align="center"><br>（Systemd 作者 Lennart Poettering）</center>
 
 <p>使用了 Systemd，就不需要再用<code>init</code>了。Systemd 取代了<code>initd</code>，成为系统的第一个进程（PID 等于 1），其他进程都是它的子进程。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl --version    //查看 Systemd 的版本。</span><br></pre></td></tr></table></figure></p>
 <p>Systemd 的优点是功能强大，使用方便，缺点是体系庞大，非常复杂。事实上，现在还有很多人反对使用 Systemd，理由就是它过于复杂，与操作系统的其他部分强耦合，违反”keep simple, keep stupid”的<strong>Unix 哲学</strong></p>
@@ -757,10 +757,10 @@
 
     <div class="copyright">
     	
-        &copy; 2019 咻一咻
+        2015 &copy; 2019 咻一咻
         
         <div class="publishby">
-        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        	Theme by <a href="https://hexo.io/" target="_blank"> Hexo </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
         </div>
     </div>
 </footer>
