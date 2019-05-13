@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="referrer" content="never">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>Systemd 入门教程：命令篇 | 老朋友好久不见！</title>
+  <meta name="description" content="Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。">
+<meta name="keywords" content="centos7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Systemd 入门教程：命令篇">
+<meta property="og:url" content="https://www.zhangqifei.top/2017/05/06/linux/Systemd 入门教程：命令篇/index.html">
+<meta property="og:site_name" content="老朋友好久不见！">
+<meta property="og:description" content="Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://zhangqifei.top/picture/ifeier/data/systemd.jpg">
+<meta property="og:image" content="http://zhangqifei.top/picture/ifeier/data/dystemdname.jpg">
+<meta property="og:image" content="http://zhangqifei.top/picture/ifeier/data/systemd.png">
+<meta property="og:updated_time" content="2018-04-13T03:12:25.790Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Systemd 入门教程：命令篇">
+<meta name="twitter:description" content="Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。">
+<meta name="twitter:image" content="http://zhangqifei.top/picture/ifeier/data/systemd.jpg">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://www.zhangqifei.top/2017/05/06/linux/Systemd 入门教程：命令篇/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="老朋友好久不见！" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="javascript:void(0)" onclick="location.reload()" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">咻一咻</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Smile &amp; Simple</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech>
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/book">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/zhangqifei" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=98bEwsTFwsfAx8S3hobZlJia" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>CSDN博客地址为：<a href="https://blog.csdn.net/qq_37187976/">『点击跳转』</a> 原有文章不迁移。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">24</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/运维自动化工具/">运维自动化工具</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/术语/">术语</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通知/">通知</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">9</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API接口/">API接口</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASCII/">ASCII</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CA/">CA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS/">CentOS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/">Chrome</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ansible/">ansible</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/">apache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos7/">centos7</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/date/">date</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/puppet/">puppet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/saltstack/">saltstack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/发布/">发布</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/状态码/">状态码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/防火墙/">防火墙</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/API接口/" style="font-size: 13px;">API接口</a> <a href="/tags/ASCII/" style="font-size: 13px;">ASCII</a> <a href="/tags/CA/" style="font-size: 13px;">CA</a> <a href="/tags/CentOS/" style="font-size: 13.33px;">CentOS</a> <a href="/tags/Chrome/" style="font-size: 13.33px;">Chrome</a> <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HTTP/" style="font-size: 13.67px;">HTTP</a> <a href="/tags/Linux/" style="font-size: 13px;">Linux</a> <a href="/tags/Nginx/" style="font-size: 13.33px;">Nginx</a> <a href="/tags/ansible/" style="font-size: 13px;">ansible</a> <a href="/tags/apache/" style="font-size: 13px;">apache</a> <a href="/tags/centos7/" style="font-size: 13.33px;">centos7</a> <a href="/tags/date/" style="font-size: 13px;">date</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/ping/" style="font-size: 13px;">ping</a> <a href="/tags/puppet/" style="font-size: 13px;">puppet</a> <a href="/tags/saltstack/" style="font-size: 13px;">saltstack</a> <a href="/tags/发布/" style="font-size: 13px;">发布</a> <a href="/tags/命令/" style="font-size: 14px;">命令</a> <a href="/tags/状态码/" style="font-size: 13px;">状态码</a> <a href="/tags/防火墙/" style="font-size: 13px;">防火墙</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/linux/">linux</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/08/01/通知/恢复更新/" class="title">恢复更新</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-08-01T01:41:22.000Z" itemprop="datePublished">2018-08-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/随笔/">随笔</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/05/07/linux/Apache、Nginx与Tomcat三者的区别/" class="title">Apache、Nginx与Tomcat三者的区别？</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-05-06T19:00:20.000Z" itemprop="datePublished">2018-05-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/随笔/">随笔</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/05/07/linux/IP Http 和Https之间的区别/" class="title">TCP/IP、Http和Https之间的区别?</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-05-06T18:36:20.000Z" itemprop="datePublished">2018-05-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/linux/">linux</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/05/07/linux/CentOS 6.x和CentOS 7.x的区别/" class="title">CentOS 6.x和CentOS 7.x的区别?</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-05-06T18:00:04.000Z" itemprop="datePublished">2018-05-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/随笔/">随笔</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/03/05/随笔/一次说清什么是正向代理，什么是反向代理？/" class="title">一次说清什么是正向代理，什么是反向代理？</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-03-05T01:42:22.000Z" itemprop="datePublished">2018-03-05</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#systemd"><span class="toc-number">1.</span> <span class="toc-text">systemd</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Unit类型"><span class="toc-number">1.1.</span> <span class="toc-text">Unit类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特性"><span class="toc-number">1.2.</span> <span class="toc-text">特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#管理服务"><span class="toc-number">1.3.</span> <span class="toc-text">管理服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务查看"><span class="toc-number">1.4.</span> <span class="toc-text">服务查看</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务状态"><span class="toc-number">1.5.</span> <span class="toc-text">服务状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#systemctl-命令示例"><span class="toc-number">1.6.</span> <span class="toc-text">systemctl 命令示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#systemd-analyze"><span class="toc-number">1.7.</span> <span class="toc-text">systemd-analyze</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hostnamectl查看当前主机的信息。"><span class="toc-number">1.8.</span> <span class="toc-text">hostnamectl查看当前主机的信息。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#localectl查看本地化设置。"><span class="toc-number">1.9.</span> <span class="toc-text">localectl查看本地化设置。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#loginctl查看当前登录的用户。"><span class="toc-number">1.10.</span> <span class="toc-text">loginctl查看当前登录的用户。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#service-unit文件格式"><span class="toc-number">1.11.</span> <span class="toc-text">service unit文件格式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Unit-段的常用选项："><span class="toc-number">1.11.1.</span> <span class="toc-text">[Unit]段的常用选项：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Service-段的常用选项："><span class="toc-number">1.11.2.</span> <span class="toc-text">[Service]段的常用选项：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Install-段的常用选项："><span class="toc-number">1.11.3.</span> <span class="toc-text">[Install]段的常用选项：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务Unit文件示例："><span class="toc-number">1.12.</span> <span class="toc-text">服务Unit文件示例：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行级别"><span class="toc-number">1.13.</span> <span class="toc-text">运行级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#journalctl功能强大，用法非常多。"><span class="toc-number">1.14.</span> <span class="toc-text">journalctl功能强大，用法非常多。</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-linux/Systemd 入门教程：命令篇" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Systemd 入门教程：命令篇
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2017/05/06/linux/Systemd 入门教程：命令篇/" class="article-date">
+	  <time datetime="2017-05-06T01:31:25.000Z" itemprop="datePublished">2017-05-06</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/centos/">centos</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/centos7/">centos7</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2017/05/06/linux/Systemd 入门教程：命令篇/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <center><img src="http://zhangqifei.top/picture/ifeier/data/systemd.jpg" width="500" height="200" alt="markdown" align="center"></center><br>Systemd 是 Linux 系统工具，用来启动<strong>守护进程</strong>，已成为大多数发行版的标准配置。<br><a id="more"></a><br>本文介绍它的基本用法，分为上下两篇。今天介绍它的主要命令，<strong>下一篇</strong>介绍如何用于实战。<br>历史上，Linux 的启动一直采用<code>init</code>进程。<br><br>下面的命令用来启动服务。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ /etc/init.d/apache2 start</span><br><span class="line"># 或者</span><br><span class="line">$ service apache2 start</span><br></pre></td></tr></table></figure><br><br><strong>这种方法有两个缺点。</strong><br>1. 启动时间长。init进程是串行启动，只有前一个进程启动完，才会启动下一个进程。<br>2. 启动脚本复杂。init进程只是执行启动脚本，不管其他事情。脚本需要自己处理各种情况，这往往使得脚本变得很长。<br><br>Systemd 就是为了解决这些问题而诞生的。它的设计目标是，为系统的启动和管理提供一套完整的解决方案。<br><br>根据 Linux 惯例，字母d是守护进程（daemon）的缩写。 Systemd 这个名字的含义，就是它要守护整个系统。<br><br><br><center><img src="http://zhangqifei.top/picture/ifeier/data/dystemdname.jpg" width="500" height="200" alt="Systemdname" align="center"><br>（Systemd 作者 Lennart Poettering）</center>
+
+<p>使用了 Systemd，就不需要再用<code>init</code>了。Systemd 取代了<code>initd</code>，成为系统的第一个进程（PID 等于 1），其他进程都是它的子进程。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl --version    //查看 Systemd 的版本。</span><br></pre></td></tr></table></figure></p>
+<p>Systemd 的优点是功能强大，使用方便，缺点是体系庞大，非常复杂。事实上，现在还有很多人反对使用 Systemd，理由就是它过于复杂，与操作系统的其他部分强耦合，违反”keep simple, keep stupid”的<strong>Unix 哲学</strong></p>
+<p><center><img src="http://zhangqifei.top/picture/ifeier/data/systemd.png" width="500" height="200" alt="Systemdname" align="center"><br>（Systemd 架构图）</center><br>Systemd 并不是一个命令，而是一组命令，涉及到系统管理的方方面面。</p>
+<h2 id="systemd"><a href="#systemd" class="headerlink" title="systemd"></a>systemd</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">POST --&gt; Boot Sequence --&gt; Bootloader --&gt; kernel + initramfs(initrd) --&gt; rootfs--&gt; /sbin/init</span><br><span class="line">    init:CentOS 5: SysV init</span><br><span class="line">    CentOS 6: Upstart</span><br><span class="line">    CentOS 7: Systemd</span><br></pre></td></tr></table></figure>
+<p>Systemd：系统启动和服务器守护进程管理器，负责在系统启动或运行时，激活系统资源，服务器进程和其它进程</p>
+<p><strong>Systemd新特性：</strong></p>
+<ul>
+<li>系统引导时实现服务并行启动</li>
+<li>按需启动守护进程</li>
+<li>自动化的服务依赖关系管理</li>
+<li>同时采用socket式与D-Bus总线式激活服务</li>
+<li>系统状态快照</li>
+</ul>
+<p><strong>核心概念：</strong> unit表示不同类型的systemd对象，通过配置文件进行标识和配置；文件中主要包含了系统服务、监听socket、保存的系统快照以及其它与init相关的信息</p>
+<p><strong>配置文件：</strong></p>
+<ul>
+<li>/usr/lib/systemd/system:每个服务最主要的启动脚本设置,类似于之前的/etc/init.d/</li>
+<li>/run/systemd/system:系统执行过程中所产生的服务脚本,比上面目录优先运行</li>
+<li>/etc/systemd/system:管理员建立的执行脚本,类似于/etc/rc.d/rcN.d/Sxx类的功能,比上面目录优先运行</li>
+</ul>
+<h3 id="Unit类型"><a href="#Unit类型" class="headerlink" title="Unit类型"></a>Unit类型</h3><ol>
+<li>Systemctl –t help 查看unit类型</li>
+<li>Service unit: 文件扩展名为.service, 用于定义系统服务</li>
+<li>Target unit: 文件扩展名为.target，用于模拟实现运行级别</li>
+<li>Device unit: .device, 用于定义内核识别的设备</li>
+<li>Mount unit: .mount, 定义文件系统挂载点</li>
+<li>Socket unit: .socket,用于标识进程间通信用的socket文件，也可在系统启动时，延迟启动服务，实现按需启动</li>
+<li>Scope Unit：不是由 Systemd 启动的外部进程</li>
+<li>Slice Unit：进程组</li>
+<li>Snapshot unit: .snapshot, 管理系统快照</li>
+<li>Swap unit: .swap, 用于标识swap设备</li>
+<li>Automount unit: .automount，文件系统的自动挂载点</li>
+<li>Path unit: .path，用于定义文件系统中的一个文件或目录使用,常用于当文件系统变化时，延迟激活服务，如：spool 目录</li>
+</ol>
+<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><p>关键特性：</p>
+<ul>
+<li>基于socket的激活机制：socket与服务程序分离</li>
+<li>基于d-bus的激活机制：</li>
+<li>基于device的激活机制：</li>
+<li>基于path的激活机制：</li>
+<li>系统快照：保存各unit的当前状态信息于持久存储设备中向后兼容sysvinit脚本</li>
+</ul>
+<p>不兼容：</p>
+<ul>
+<li>systemctl命令固定不变，不可扩展</li>
+<li>非由systemd启动的服务，systemctl无法与之通信和控制</li>
+</ul>
+<h3 id="管理服务"><a href="#管理服务" class="headerlink" title="管理服务"></a>管理服务</h3><ul>
+<li>管理系统服务：CentOS 7: service unit</li>
+</ul>
+<blockquote>
+<p>注意：能兼容早期的服务脚本<br> 命令：systemctl COMMAND name.service</p>
+</blockquote>
+<ul>
+<li>启动：service name start ==&gt; systemctl start name.service</li>
+<li>停止：service name stop ==&gt; systemctl stop name.service</li>
+<li>重启：service name restart ==&gt; systemctl restart name.service</li>
+<li>状态：service name status ==&gt; systemctl status name.service</li>
+<li>条件式重启：已启动才重启，否则不做操作<br> service name condrestart ==&gt; systemctl try-restart name.service</li>
+<li>重载或重启服务：先加载，再启动<br> systemctl reload-or-restart name.service</li>
+<li>重载或条件式重启服务：<br> systemctl reload-or-try-restart name.service</li>
+<li>禁止自动和手动启动：<br> systemctl mask name.service</li>
+<li>取消禁止：<br> systemctl unmask name.service</li>
+</ul>
+<h3 id="服务查看"><a href="#服务查看" class="headerlink" title="服务查看"></a>服务查看</h3><ul>
+<li>查看某服务当前激活与否的状态：<br>systemctl is-active name.service</li>
+<li>查看所有已经激活的服务：<br>systemctl list-units –type|-t service </li>
+<li>查看所有服务：<br>systemctl list-units –type service –all|-a</li>
+</ul>
+<p><strong>chkconfig命令的对应关系：</strong></p>
+<ul>
+<li>设定某服务开机自启：<br>chkconfig name on ==&gt; systemctl enable name.service</li>
+<li>设定某服务开机禁止启动：<br>chkconfig name off ==&gt; systemctl disable name.service</li>
+<li>查看所有服务的开机自启状态：<br>chkconfig –list ==&gt; systemctl list-unit-files –type service </li>
+<li>用来列出该服务在哪些运行级别下启用和禁用<br>chkconfig sshd–list ==&gt;ls /etc/systemd/system/*.wants/sshd.service</li>
+<li>查看服务是否开机自启：<br>systemctl is-enabled name.service</li>
+<li>其它命令：查看服务的依赖关系：<br>systemctl list-dependencies name.service</li>
+<li>杀掉进程：<br>systemctl kill unitname</li>
+</ul>
+<h3 id="服务状态"><a href="#服务状态" class="headerlink" title="服务状态"></a>服务状态</h3> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-unit-files --<span class="built_in">type</span> service --all显示状态</span><br><span class="line">    loaded:Unit:配置文件已处理</span><br><span class="line">    active(running):一次或多次持续处理的运行</span><br><span class="line">    active(exited):成功完成一次性的配置</span><br><span class="line">    active(waiting):运行中，等待一个事件</span><br><span class="line">    inactive:不运行</span><br><span class="line">    enabled:开机启动</span><br><span class="line">    disabled:开机不启动</span><br><span class="line">    static:开机不启动，但可被另一个启用的服务激活</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意，从配置文件的状态无法看出，该 Unit 是否正在运行。这必须执行前面提到的systemctl status命令。</p>
+</blockquote>
+<blockquote>
+<p>一旦修改配置文件，就要让 SystemD 重新加载配置文件，然后重新启动，否则修改不会生效。</p>
+</blockquote>
+<h3 id="systemctl-命令示例"><a href="#systemctl-命令示例" class="headerlink" title="systemctl 命令示例"></a>systemctl 命令示例</h3><ul>
+<li>显示所有单元状态<br>systemctl或systemctl list-units</li>
+<li>只显示服务单元的状态<br>systemctl –type=service ==&gt;systemctl -t=service</li>
+<li>显示sshd服务单元<br>systemctl –l status sshd.service</li>
+<li>验证sshd服务当前是否活动<br>systemctl is-active sshd</li>
+<li>启动，停止和重启sshd服务<br>systemctl start sshd.service<br>systemctl stop sshd.service<br>systemctl restart sshd.service</li>
+<li>重新加载配置<br>systemctl reload sshd.service</li>
+<li>列出活动状态的所有服务单元<br>systemctl list-units –type=service</li>
+<li>列出所有服务单元<br>systemctl list-units –type=service –all</li>
+<li>查看服务单元的启用和禁用状态<br>systemctl list-unit-files  –type=service</li>
+<li>列出失败的服务<br>systemctl –failed –type=servicesy</li>
+<li>列出依赖的单元<br>systemctl list-dependencies sshd</li>
+<li>验证sshd服务是否开机启动<br>systemctl is-enabled sshd</li>
+<li>禁用network，使之不能自动启动,但手动可以<br>systemctl disable network</li>
+<li>启用network<br>systemctl enable  network</li>
+<li>禁用network，使之不能手动或自动启动<br>systemctl mask network</li>
+<li>启用network<br>systemctl unmask network</li>
+</ul>
+<h3 id="systemd-analyze"><a href="#systemd-analyze" class="headerlink" title="systemd-analyze"></a>systemd-analyze</h3> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看启动耗时</span></span><br><span class="line">$ systemd-analyze                                                                                       </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看每个服务的启动耗时</span></span><br><span class="line">$ systemd-analyze blame</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示瀑布状的启动过程流</span></span><br><span class="line">$ systemd-analyze critical-chain</span><br><span class="line">      </span><br><span class="line"><span class="comment"># 显示指定服务的启动流</span></span><br><span class="line">$ systemd-analyze critical-chain atd.service</span><br></pre></td></tr></table></figure>
+<h3 id="hostnamectl查看当前主机的信息。"><a href="#hostnamectl查看当前主机的信息。" class="headerlink" title="hostnamectl查看当前主机的信息。"></a>hostnamectl查看当前主机的信息。</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示当前主机的信息</span></span><br><span class="line">$ hostnamectl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置主机名。</span></span><br><span class="line">$ hostnamectl <span class="built_in">set</span>-hostname rhel7</span><br></pre></td></tr></table></figure>
+<h3 id="localectl查看本地化设置。"><a href="#localectl查看本地化设置。" class="headerlink" title="localectl查看本地化设置。"></a>localectl查看本地化设置。</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看本地化设置</span></span><br><span class="line">$ localectl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置本地化参数。</span></span><br><span class="line">$ localectl <span class="built_in">set</span>-locale LANG=en_GB.utf8</span><br><span class="line">$ localectl <span class="built_in">set</span>-keymap en_GB  </span><br><span class="line">```  </span><br><span class="line"><span class="comment">### timedatectl查看当前时区设置。</span></span><br><span class="line">```bash</span><br><span class="line"><span class="comment"># 查看当前时区设置</span></span><br><span class="line">$ timedatectl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示所有可用的时区</span></span><br><span class="line">$ timedatectl list-timezones                                                                                   </span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置当前时区</span></span><br><span class="line">$ timedatectl <span class="built_in">set</span>-timezone America/New_York</span><br><span class="line">$ timedatectl <span class="built_in">set</span>-time YYYY-MM-DD</span><br><span class="line">$ timedatectl <span class="built_in">set</span>-time HH:MM:SS</span><br></pre></td></tr></table></figure>
+<h3 id="loginctl查看当前登录的用户。"><a href="#loginctl查看当前登录的用户。" class="headerlink" title="loginctl查看当前登录的用户。"></a>loginctl查看当前登录的用户。</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出当前session</span></span><br><span class="line">$ loginctl list-sessions</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出当前登录用户</span></span><br><span class="line">$ loginctl list-users</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出显示指定用户的信息</span></span><br><span class="line">$ loginctl show-user ruanyf</span><br></pre></td></tr></table></figure>
+<h3 id="service-unit文件格式"><a href="#service-unit文件格式" class="headerlink" title="service unit文件格式"></a>service unit文件格式</h3><ul>
+<li>/etc/systemd/system：系统管理员和用户使用<br>/usr/lib/systemd/system：发行版打包者使用</li>
+<li>以“#” 开头的行后面的内容会被认为是注释</li>
+<li>相关布尔值，1、yes、on、true 都是开启，0、no、off、false 都是关闭</li>
+<li>时间单位默认是秒，所以要用毫秒（ms）分钟（m）等须显式说明</li>
+<li>service unit file文件通常由三部分组成：<br>[Unit]：定义与Unit类型无关的通用选项；用于提供unit的描述信息、unit行为及依赖关系等<br>[Service]：与特定类型相关的专用选项；此处为Service类型<br>[Install]：定义由“systemctlenable”以及”systemctldisable“命令在实现服务启用或禁用时用到的一些选项</li>
+</ul>
+<h4 id="Unit-段的常用选项："><a href="#Unit-段的常用选项：" class="headerlink" title="[Unit]段的常用选项："></a>[Unit]段的常用选项：</h4><p> Description：描述信息<br> Documentation：文档地址<br> Requires：依赖到的其它units，强依赖，被依赖的units无法激活时，当前unit也无法激活<br> Wants：依赖到的其它units，弱依赖<br> Conflicts：定义units间的冲突关系<br> Condition…：当前 Unit 运行必须满足的条件，否则不会运行<br> Assert…：当前 Unit 运行必须满足的条件，否则会报启动失败<br> After：定义unit的启动次序，表示当前unit应该晚于哪些unit启动，其功能与Before相反<br> BindsTo：与Requires类似，它指定的 Unit 如果退出，会导致当前 Unit 停止运行<br> Before：如果该字段指定的 Unit 也要启动，那么必须在当前 Unit 之后启动</p>
+<blockquote>
+<p>从上面的输出可以看到，配置文件分成几个区块。每个区块的第一行，是用方括号表示的区别名，比如[Unit]。注意，配置文件的区块名和字段名，都是大小写敏感的。每个区块内部是一些等号连接的键值对;注意，键值对的等号两侧不能有空格.</p>
+</blockquote>
+<h4 id="Service-段的常用选项："><a href="#Service-段的常用选项：" class="headerlink" title="[Service]段的常用选项："></a>[Service]段的常用选项：</h4><p>[Service]区块用来 Service 的配置，只有 Service 类型的 Unit 才有这个区块。它的主要字段如下。</p>
+<ul>
+<li>Type：定义影响ExecStart及相关参数的功能的unit进程启动类型<br>Type=simple：默认值，这个daemon主要由ExecStart接的指令串来启动，启动后常驻于内存中<br>Type=forking：由ExecStart启动的程序透过spawns延伸出其他子程序来作为此daemon的主要服务。原生父程序在启动结束后就会终止<br>Type=oneshot：与simple类似，不过这个程序在工作完毕后就结束了，不会常驻在内存中<br>Type=dbus：与simple类似，但这个daemon必须要在取得一个D-Bus的名称后，才会继续运作.因此通常也要同时设定BusNname= 才行<br>Type=notify：在启动完成后会发送一个通知消息。还需要配合NotifyAccess 来让Systemd 接收消息<br>Type=idle：与simple类似，要执行这个daemon必须要所有的工作都顺利执行完毕后才会执行。这类的daemon通常是开机到最后才执行即可的服务</li>
+</ul>
+<ul>
+<li>EnvironmentFile：环境配置文件</li>
+<li>ExecStart：指明启动unit要运行命令或脚本的绝对路径</li>
+<li>ExecStartPre：ExecStart前运行(启动当前服务之前执行的命令)</li>
+<li>ExecStartPost：ExecStart后运行(启动当前服务之后执行的命令)</li>
+<li>ExecStop：指明停止unit要运行的命令或脚本(停止当前服务时执行的命令)</li>
+<li>Restart：当设定Restart=1 时，则当次daemon服务意外终止后，会再次自动启动此服务(定义何种情况 Systemd 会自动重启当前服务，可能的值包括always（总是重启）、on-success、on-failure、on-abnormal、on-abort、on-watchdog)</li>
+<li>ExecReload：重启当前服务时执行的命令</li>
+<li>ExecStopPost：停止当其服务之后执行的命令</li>
+<li>RestartSec：自动重启当前服务间隔的秒数</li>
+<li>TimeoutSec：定义 Systemd 停止当前服务之前等待的秒数</li>
+<li>Environment：指定环境变量</li>
+</ul>
+<h4 id="Install-段的常用选项："><a href="#Install-段的常用选项：" class="headerlink" title="[Install]段的常用选项："></a>[Install]段的常用选项：</h4><p>[Install]通常是配置文件的最后一个区块，用来定义如何启动，以及是否开机启动。它的主要字段如下。</p>
+<ul>
+<li>Alias：别名，可使用systemctlcommand Alias.service</li>
+<li>RequiredBy：被哪些units所依赖，强依赖(它的值是一个或多个 Target，当前 Unit 激活时，符号链接会放入/etc/systemd/system目录下面以 Target 名 + .required后缀构成的子目录中)</li>
+<li>WantedBy：被哪些units所依赖，弱依赖(它的值是一个或多个 Target，当前 Unit 激活时（enable）符号链接会放入/etc/systemd/system目录下面以 Target 名 + .wants后缀构成的子目录中)</li>
+<li>Also：安装本服务的时候还要安装别的相关服务</li>
+</ul>
+<blockquote>
+<p>注意：对于新创建的unit文件，或者修改了的unit文件，要通知systemd重载此配置文件,而后可以选择重启systemctl daemon-reload<br>Unit 配置文件的完整字段清单，请参考<a href="https://www.freedesktop.org/software/systemd/man/systemd.unit.html" target="_blank" rel="noopener">官方文档</a>。</p>
+</blockquote>
+<h3 id="服务Unit文件示例："><a href="#服务Unit文件示例：" class="headerlink" title="服务Unit文件示例："></a>服务Unit文件示例：</h3> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/systemd/system/bak.service </span><br><span class="line">[Unit]</span><br><span class="line">Description=backup  /etc</span><br><span class="line">Requires=atd.service</span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">ExecStart=/bin/bash -c <span class="string">"echo /testdir/bak.sh|at now"</span></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<ul>
+<li>systemctl daemon-reload</li>
+<li>systemctl start bak</li>
+<li>启动计算机的时候，需要启动大量的 Unit。如果每一次启动，都要一一写明本次启动需要哪些 Unit，显然非常不方便。Systemd 的解决方案就是 Target。</li>
+<li>简单说，Target 就是一个 Unit 组，包含许多相关的 Unit 。启动某个 Target 的时候，Systemd 就会启动里面所有的 Unit。从这个意义上说，Target 这个概念类似于”状态点”，启动某个 Target 就好比启动到某种状态。</li>
+<li>传统的init启动模式里面，有 RunLevel 的概念，跟 Target 的作用很类似。不同的是，RunLevel 是互斥的，不可能多个 RunLevel 同时启动，但是多个 Target 可以同时启动。</li>
+</ul>
+<h3 id="运行级别"><a href="#运行级别" class="headerlink" title="运行级别"></a>运行级别</h3> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"> target units：</span><br><span class="line">     unit配置文件：.target</span><br><span class="line">     ls /usr/lib/systemd/system/*.target</span><br><span class="line">     systemctl list-unit-files --<span class="built_in">type</span> target  --all</span><br><span class="line"> 运行级别：</span><br><span class="line"> 0  ==&gt; runlevel0.target -&gt; poweroff.target</span><br><span class="line"> 1  ==&gt; runlevel1.target -&gt; rescue.target</span><br><span class="line"> 2  ==&gt; runlevel2.target -&gt; multi-user.target</span><br><span class="line"> 3  ==&gt; runlevel3.target -&gt; multi-user.target</span><br><span class="line"> 4  ==&gt; runlevel4.target -&gt; multi-user.target</span><br><span class="line"> 5  ==&gt; runlevel5.target -&gt; graphical.target</span><br><span class="line"> 6  ==&gt; runlevel6.target -&gt; reboot.target</span><br><span class="line"> </span><br><span class="line">（1）默认的 RunLevel（在/etc/inittab文件设置）现在被默认的 Target 取代，位置是/etc/systemd/system/default.target，通常符号链接到graphical.target（图形界面）或者multi-user.target（多用户命令行）。</span><br><span class="line"> </span><br><span class="line">（2）启动脚本的位置，以前是/etc/init.d目录，符号链接到不同的 RunLevel 目录 （比如/etc/rc3.d、/etc/rc5.d等），现在则存放在/lib/systemd/system和/etc/systemd/system目录。</span><br><span class="line"> </span><br><span class="line">（3）配置文件的位置，以前init进程的配置文件是/etc/inittab，各种服务的配置文件存放在/etc/sysconfig目录。现在的配置文件主要存放在/lib/systemd目录，在/etc/systemd目录里面的修改可以覆盖原始设置。</span><br><span class="line"> </span><br><span class="line"> 查看依赖性：</span><br><span class="line"> systemctl list-dependencies graphical.target</span><br><span class="line"> </span><br><span class="line"> 级别切换：</span><br><span class="line"> initN ==&gt; systemctl isolate name.target</span><br><span class="line"> systemctl isolate multi-user.target</span><br><span class="line"> 注：只有/lib/systemd/system/*.target文件中AllowIsolate=yes 才能切换(修改文件需执行systemctl daemon-reload才能生效)</span><br><span class="line"> </span><br><span class="line"> 查看target：</span><br><span class="line"> runlevel;   who -r</span><br><span class="line"> systemctl list-units --<span class="built_in">type</span> target</span><br><span class="line"> </span><br><span class="line"> 获取默认运行级别：</span><br><span class="line"> /etc/inittab==&gt; systemctl get-default</span><br><span class="line"> 修改默认级别：</span><br><span class="line"> /etc/inittab==&gt; systemctl <span class="built_in">set</span>-default name.target</span><br><span class="line"> systemctl <span class="built_in">set</span>-default multi-user.target</span><br><span class="line"> ls –l /etc/systemd/system/default.target</span><br><span class="line"> </span><br><span class="line"> 其它命令</span><br><span class="line"> 切换至紧急救援模式（单用户状态）：</span><br><span class="line"> systemctl rescue </span><br><span class="line"> 切换至emergency模式： </span><br><span class="line"> systemctl emergency</span><br><span class="line"> 其它常用命令：</span><br><span class="line"> 传统命令init，poweroff，halt，reboot都成为systemctl的软链接</span><br><span class="line"> 关机：systemctl halt、systemctl poweroff</span><br><span class="line"> 重启：systemctl reboot</span><br><span class="line"> 挂起：systemctl <span class="built_in">suspend</span></span><br><span class="line"> 休眠：systemctl hibernate</span><br><span class="line"> 休眠并挂起：systemctl hybrid-sleep</span><br></pre></td></tr></table></figure>
+<p> Systemd 统一管理所有 Unit 的启动日志。带来的好处就是，可以只用<code>journalctl</code>一个命令，查看所有日志（内核日志和应用日志）。日志的配置文件是<code>/etc/systemd/journald.conf</code></p>
+<h3 id="journalctl功能强大，用法非常多。"><a href="#journalctl功能强大，用法非常多。" class="headerlink" title="journalctl功能强大，用法非常多。"></a>journalctl功能强大，用法非常多。</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看所有日志（默认情况下 ，只保存本次启动的日志）</span></span><br><span class="line">$ journalctl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看内核日志（不显示应用日志）</span></span><br><span class="line">$ journalctl -k</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看系统本次启动的日志</span></span><br><span class="line">$ journalctl -b</span><br><span class="line">$ journalctl -b -0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看上一次启动的日志（需更改设置）</span></span><br><span class="line">$ journalctl -b -1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定时间的日志</span></span><br><span class="line">$ journalctl --since=<span class="string">"2012-10-30 18:17:16"</span></span><br><span class="line">$ journalctl --since <span class="string">"20 min ago"</span></span><br><span class="line">$ journalctl --since yesterday</span><br><span class="line">$ journalctl --since <span class="string">"2015-01-10"</span> --until <span class="string">"2015-01-11 03:00"</span></span><br><span class="line">$ journalctl --since 09:00 --until <span class="string">"1 hour ago"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示尾部的最新10行日志</span></span><br><span class="line">$ journalctl -n</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示尾部指定行数的日志</span></span><br><span class="line">$ journalctl -n 20</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实时滚动显示最新日志</span></span><br><span class="line">$ journalctl -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定服务的日志</span></span><br><span class="line">$ journalctl /usr/lib/systemd/systemd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定进程的日志</span></span><br><span class="line">$ journalctl _PID=1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看某个路径的脚本的日志</span></span><br><span class="line">$ journalctl /usr/bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定用户的日志</span></span><br><span class="line">$ journalctl _UID=33 --since today</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看某个 Unit 的日志</span></span><br><span class="line">$ journalctl -u nginx.service</span><br><span class="line">$ journalctl -u nginx.service --since today</span><br><span class="line"></span><br><span class="line"><span class="comment"># 实时滚动显示某个 Unit 的最新日志</span></span><br><span class="line">$ journalctl -u nginx.service -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并显示多个 Unit 的日志</span></span><br><span class="line">$ journalctl -u nginx.service -u php-fpm.service --since today</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定优先级（及其以上级别）的日志，共有8级</span></span><br><span class="line"><span class="comment"># 0: emerg</span></span><br><span class="line"><span class="comment"># 1: alert</span></span><br><span class="line"><span class="comment"># 2: crit</span></span><br><span class="line"><span class="comment"># 3: err</span></span><br><span class="line"><span class="comment"># 4: warning</span></span><br><span class="line"><span class="comment"># 5: notice</span></span><br><span class="line"><span class="comment"># 6: info</span></span><br><span class="line"><span class="comment"># 7: debug</span></span><br><span class="line">$ journalctl -p err -b</span><br><span class="line"></span><br><span class="line"><span class="comment"># 日志默认分页输出，--no-pager 改为正常的标准输出</span></span><br><span class="line">$ journalctl --no-pager</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以 JSON 格式（单行）输出</span></span><br><span class="line">$ journalctl -b -u nginx.service -o json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以 JSON 格式（多行）输出，可读性更好</span></span><br><span class="line">$ journalctl -b -u nginx.serviceqq</span><br><span class="line">-o json-pretty</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示日志占据的硬盘空间</span></span><br><span class="line">$ journalctl --disk-usage</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定日志文件占据的最大空间</span></span><br><span class="line">$ journalctl --vacuum-size=1G</span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定日志文件保存多久</span></span><br><span class="line">$ journalctl --vacuum-time=1years</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://www.zhangqifei.top/2017/05/06/linux/Systemd 入门教程：命令篇/" title="Systemd 入门教程：命令篇" target="_blank" rel="external">https://www.zhangqifei.top/2017/05/06/linux/Systemd 入门教程：命令篇/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="javascript:void(0)" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="javascript:void(0)" target="_blank"><span class="text-dark">咻一咻</span><small class="ml-1x">Smile &amp; Simple</small></a></h3>
+        <div>人生没有彩排，每天都是现场直播。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+    <div id="uyan_frame"></div>
+
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2017/06/06/linux/8分钟带你深入浅出搞懂Nginx/" title="8分钟带你深入浅出搞懂Nginx"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2017/05/05/随笔/一次完整的http请求处理过程/" title="一次完整的http请求处理过程"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class>
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/zhangqifei" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=98bEwsTFwsfAx8S3hobZlJia" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 咻一咻
+        
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+
+
+    
+    
+        
+    
+    <script defer type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=[object Object]"></script>
+
+
+    
+    
+
+
+
+</body>
+</html>

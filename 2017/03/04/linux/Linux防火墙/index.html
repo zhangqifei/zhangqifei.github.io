@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="referrer" content="never">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>Linux防火墙 | 老朋友好久不见！</title>
+  <meta name="description" content="安全技术 入侵检测与管理系统（Intrusion Detection Systems）：特点是不阻断任何网络访问，量化、定位来自内外网络的威胁情况，主要以提供报告和事后监督为主，提供有针对性的指导措施和安全决策依据。一般采用旁路部署方式 入侵防御系统（Intrusion Prevention System）：以透明模式工作，分析数据包的内容如：溢出攻击、拒绝服务攻击、木马、蠕虫、系统漏洞等进行准确">
+<meta name="keywords" content="防火墙">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux防火墙">
+<meta property="og:url" content="https://www.zhangqifei.top/2017/03/04/linux/Linux防火墙/index.html">
+<meta property="og:site_name" content="老朋友好久不见！">
+<meta property="og:description" content="安全技术 入侵检测与管理系统（Intrusion Detection Systems）：特点是不阻断任何网络访问，量化、定位来自内外网络的威胁情况，主要以提供报告和事后监督为主，提供有针对性的指导措施和安全决策依据。一般采用旁路部署方式 入侵防御系统（Intrusion Prevention System）：以透明模式工作，分析数据包的内容如：溢出攻击、拒绝服务攻击、木马、蠕虫、系统漏洞等进行准确">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/zhangqifei/picture/master/iptables/20180301140229118.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/zhangqifei/picture/master/iptables/20180301140314791.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/zhangqifei/picture/master/iptables/20180301144916228.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/zhangqifei/picture/master/iptables/20180301140524380.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/zhangqifei/picture/master/iptables/20180301141001934.png">
+<meta property="og:updated_time" content="2018-04-12T04:45:21.320Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux防火墙">
+<meta name="twitter:description" content="安全技术 入侵检测与管理系统（Intrusion Detection Systems）：特点是不阻断任何网络访问，量化、定位来自内外网络的威胁情况，主要以提供报告和事后监督为主，提供有针对性的指导措施和安全决策依据。一般采用旁路部署方式 入侵防御系统（Intrusion Prevention System）：以透明模式工作，分析数据包的内容如：溢出攻击、拒绝服务攻击、木马、蠕虫、系统漏洞等进行准确">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/zhangqifei/picture/master/iptables/20180301140229118.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://www.zhangqifei.top/2017/03/04/linux/Linux防火墙/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="老朋友好久不见！" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="javascript:void(0)" onclick="location.reload()" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">咻一咻</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Smile &amp; Simple</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech>
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/book">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/zhangqifei" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=98bEwsTFwsfAx8S3hobZlJia" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>CSDN博客地址为：<a href="https://blog.csdn.net/qq_37187976/">『点击跳转』</a> 原有文章不迁移。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/centos/">centos</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">24</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/运维自动化工具/">运维自动化工具</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/术语/">术语</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通知/">通知</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">9</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API接口/">API接口</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASCII/">ASCII</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CA/">CA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS/">CentOS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/">Chrome</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ansible/">ansible</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/">apache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos7/">centos7</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/date/">date</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/puppet/">puppet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/saltstack/">saltstack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/发布/">发布</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令/">命令</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/状态码/">状态码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/防火墙/">防火墙</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/API接口/" style="font-size: 13px;">API接口</a> <a href="/tags/ASCII/" style="font-size: 13px;">ASCII</a> <a href="/tags/CA/" style="font-size: 13px;">CA</a> <a href="/tags/CentOS/" style="font-size: 13.33px;">CentOS</a> <a href="/tags/Chrome/" style="font-size: 13.33px;">Chrome</a> <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HTTP/" style="font-size: 13.67px;">HTTP</a> <a href="/tags/Linux/" style="font-size: 13px;">Linux</a> <a href="/tags/Nginx/" style="font-size: 13.33px;">Nginx</a> <a href="/tags/ansible/" style="font-size: 13px;">ansible</a> <a href="/tags/apache/" style="font-size: 13px;">apache</a> <a href="/tags/centos7/" style="font-size: 13.33px;">centos7</a> <a href="/tags/date/" style="font-size: 13px;">date</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/ping/" style="font-size: 13px;">ping</a> <a href="/tags/puppet/" style="font-size: 13px;">puppet</a> <a href="/tags/saltstack/" style="font-size: 13px;">saltstack</a> <a href="/tags/发布/" style="font-size: 13px;">发布</a> <a href="/tags/命令/" style="font-size: 14px;">命令</a> <a href="/tags/状态码/" style="font-size: 13px;">状态码</a> <a href="/tags/防火墙/" style="font-size: 13px;">防火墙</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/linux/">linux</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/08/01/通知/恢复更新/" class="title">恢复更新</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-08-01T01:41:22.000Z" itemprop="datePublished">2018-08-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/随笔/">随笔</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/05/07/linux/Apache、Nginx与Tomcat三者的区别/" class="title">Apache、Nginx与Tomcat三者的区别？</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-05-06T19:00:20.000Z" itemprop="datePublished">2018-05-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/随笔/">随笔</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/05/07/linux/IP Http 和Https之间的区别/" class="title">TCP/IP、Http和Https之间的区别?</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-05-06T18:36:20.000Z" itemprop="datePublished">2018-05-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/linux/">linux</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/05/07/linux/CentOS 6.x和CentOS 7.x的区别/" class="title">CentOS 6.x和CentOS 7.x的区别?</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-05-06T18:00:04.000Z" itemprop="datePublished">2018-05-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/随笔/">随笔</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/03/05/随笔/一次说清什么是正向代理，什么是反向代理？/" class="title">一次说清什么是正向代理，什么是反向代理？</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-03-05T01:42:22.000Z" itemprop="datePublished">2018-03-05</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-linux/Linux防火墙" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux防火墙
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2017/03/04/linux/Linux防火墙/" class="article-date">
+	  <time datetime="2017-03-04T01:42:22.000Z" itemprop="datePublished">2017-03-04</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/防火墙/">防火墙</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2017/03/04/linux/Linux防火墙/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <h3 id="安全技术"><a href="#安全技术" class="headerlink" title="安全技术"></a>安全技术</h3><ul>
+<li><strong>入侵检测与管理系统</strong>（Intrusion Detection Systems）：特点是不阻断任何网络访问，量化、定位来自内外网络的威胁情况，主要以提供报告和事后监督为主，提供有针对性的指导措施和安全决策依据。一般采用旁路部署方式</li>
+<li><strong>入侵防御系统</strong>（Intrusion Prevention System）：以透明模式工作，分析数据包的内容如：溢出攻击、拒绝服务攻击、木马、蠕虫、系统漏洞等进行准确的分析判断，在判定为攻击行为后立即予以阻断，主动而有效的保护网络的安全，一般采用在线部署方式</li>
+<li><strong>防火墙</strong>（FireWall ）：隔离功能，工作在网络或主机边缘，对进出网络或主机的数据包基于一定的规则检查，并在匹配某规则时由规则定义的行为进行处理的一组功能的组件，基本上的实现都是默认情况下关闭所有的通过型访问，只开放允许访问的策略<a id="more"></a>
+</li>
+</ul>
+<h3 id="防火墙的分类"><a href="#防火墙的分类" class="headerlink" title="防火墙的分类"></a>防火墙的分类</h3><ul>
+<li>主机防火墙：服务范围为当前主机</li>
+<li>网络防火墙：服务范围为防火墙一侧的局域网</li>
+<li>硬件防火墙：在专用硬件级别实现部分功能的防火墙；另一个部分功能基于软件实现，Checkpoint,NetScreen</li>
+<li>软件防火墙：运行于通用硬件平台之上的防火墙的应用软件</li>
+<li>网络层防火墙：OSI下面第三层</li>
+<li>应用层防火墙/代理服务器：代理网关，OSI七层</li>
+</ul>
+<h4 id="网络型防火墙"><a href="#网络型防火墙" class="headerlink" title="网络型防火墙"></a>网络型防火墙</h4><center><br><img src="https://raw.githubusercontent.com/zhangqifei/picture/master/iptables/20180301140229118.png" alt="网络型防火墙"><br></center>
+
+<ul>
+<li>包过滤防火墙</li>
+<li>网络层对数据包进行选择，选择的依据是系统内设置的过滤逻辑，被称为访问控制列表（ACL），通过检查数据流中每个数据的源地址，目的地址，所用端口号和协议状态等因素，或他们的组合来确定是否允许该数据包通过</li>
+<li><strong>优点：</strong>对用户来说透明，处理速度快且易于维护</li>
+<li><strong>缺点：</strong>无法检查应用层数据，如病毒等</li>
+</ul>
+<h4 id="应用层防火墙"><a href="#应用层防火墙" class="headerlink" title="应用层防火墙"></a>应用层防火墙</h4><p>应用层防火墙/代理服务型防火墙（Proxy Service）</p>
+<center><br><img src="https://raw.githubusercontent.com/zhangqifei/picture/master/iptables/20180301140314791.png" alt="应用层防火墙"><br></center>
+
+<ul>
+<li>将所有跨越防火墙的网络通信链路分为两段</li>
+<li>内外网用户的访问都是通过代理服务器上的“链接”来实现</li>
+<li><strong>优点：</strong>在应用层对数据进行检查，比较安全</li>
+<li><strong>缺点：</strong>增加防火墙的负载</li>
+<li>现实生产环境中所使用的防火墙一般都是二者结合体</li>
+<li>即先检查网络数据，通过之后再送到应用层去检查</li>
+</ul>
+<h3 id="iptables的基本认识"><a href="#iptables的基本认识" class="headerlink" title="iptables的基本认识"></a>iptables的基本认识</h3><p>Netfilter组件</p>
+<ul>
+<li>内核空间，集成在linux内核中</li>
+<li>扩展各种网络服务的结构化底层框架</li>
+<li>内核中选取五个位置放了五个hook(勾子) function(INPUT、OUTPUT、FORWARD、PREROUTING、POSTROUTING)，而这五个hook function向用户开放，用户可以通过一个命令工具（iptables）向其写入规则</li>
+<li>由信息过滤表（table）组成，包含控制IP包处理的规则集（rules），规则被分组放在链（chain）上</li>
+</ul>
+<center><br><img src="https://raw.githubusercontent.com/zhangqifei/picture/master/iptables/20180301144916228.png" alt="五个链"><br></center>
+
+<p><strong>内核中数据包的传输过程</strong></p>
+<ul>
+<li>当一个数据包进入网卡时，数据包首先进入PREROUTING链，内核根据数据包目的IP判断是否需要转送出去</li>
+<li>如果数据包就是进入本机的，数据包就会沿着图向下移动，到达INPUT链。数据包到达INPUT链后，任何进程都会收到它。本机上运行的程序可以发送数据包，这些数据包经过OUTPUT链，然后到达POSTROUTING链输出</li>
+<li>如果数据包是要转发出去的，且内核允许转发，数据包就会向右移动，经过FORWARD链，然后到达POSTROUTING链输出</li>
+</ul>
+<h4 id="三种报文流向："><a href="#三种报文流向：" class="headerlink" title="三种报文流向："></a>三种报文流向：</h4><ul>
+<li><strong>流入本机：</strong> PREROUTING –&gt; INPUT–&gt;用户空间进程</li>
+<li><strong>流出本机：</strong> 用户空间进程–&gt;OUTPUT–&gt; POSTROUTING</li>
+<li><strong>转发：</strong> PREROUTING –&gt; FORWARD –&gt; POSTROUTING</li>
+</ul>
+<h3 id="防火墙工具"><a href="#防火墙工具" class="headerlink" title="防火墙工具"></a>防火墙工具</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">iptables</span><br><span class="line">    命令行工具，工作在用户空间</span><br><span class="line">    用来编写规则，写好的规则被送往netfilter，告诉内核如何去处理信息包</span><br><span class="line">firewalld</span><br><span class="line">    CentOS 7引入了新的前端管理工具</span><br><span class="line">    管理工具：</span><br><span class="line">        firewall-cmd命令行</span><br><span class="line">        firewall-config图形</span><br></pre></td></tr></table></figure>
+<h3 id="iptables的组成"><a href="#iptables的组成" class="headerlink" title="iptables的组成"></a>iptables的组成</h3><p>iptables由<strong>四个表</strong>和<strong>五个链</strong>以及一些规则组成<br><strong>四个表table：</strong></p>
+<ul>
+<li><strong>filter表:</strong> 过滤规则表，根据预定义的规则过滤符合条件的数据包</li>
+<li><strong>nat表:</strong> network address translation 地址转换规则表</li>
+<li><strong>mangle:</strong> 修改数据标记位规则表</li>
+<li><strong>Raw:</strong> 关闭NAT表上启用的连接跟踪机制，加快封包穿越防火墙速度</li>
+</ul>
+<p><strong>优先级由高到低:</strong> raw–&gt;mangle–&gt;nat–&gt;filter<br><strong>五个内置链chain</strong></p>
+<ul>
+<li>INPUT</li>
+<li>OUTPUT</li>
+<li>FORWARD</li>
+<li>PREROUTING</li>
+<li>POSTROUTING</li>
+</ul>
+<h4 id="Netfilter表和链对应关系"><a href="#Netfilter表和链对应关系" class="headerlink" title="Netfilter表和链对应关系"></a>Netfilter表和链对应关系</h4><center><br><img src="https://raw.githubusercontent.com/zhangqifei/picture/master/iptables/20180301140524380.png" alt="Netfilter表和链对应关系"><br>优先级由高到低: raw -&gt; mangle -&gt; nat -&gt; filter<br></center>
+
+<h4 id="数据包过滤匹配流程"><a href="#数据包过滤匹配流程" class="headerlink" title="数据包过滤匹配流程"></a>数据包过滤匹配流程</h4><center><br><img src="https://raw.githubusercontent.com/zhangqifei/picture/master/iptables/20180301141001934.png" alt="数据包过滤匹配流程"><br></center>
+
+<h3 id="iptables规则"><a href="#iptables规则" class="headerlink" title="iptables规则"></a>iptables规则</h3><p><strong>规则rule：</strong>根据规则的匹配条件尝试匹配报文，对匹配成功的报文根据规则定义的处理动作作出处理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">匹配条件：默认为与条件，同时满足</span><br><span class="line">	基本匹配：IP,端口,TCP的Flags（SYN,ACK等）</span><br><span class="line">	扩展匹配：通过复杂高级功能匹配</span><br><span class="line">处理动作：称为target，跳转目标</span><br><span class="line">	内建处理动作：ACCEPT(接收),DROP(婉转的拒绝),REJECT(强硬的拒绝),SNAT,DNAT,MASQUERADE,MARK,LOG...</span><br><span class="line">	自定义处理动作：自定义chain，利用分类管理复杂情形</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>规则要添加在链上，才生效；添加在自定义上不会自动生效<br>链chain：<br>:   <strong>内置链：</strong>每个内置链对应于一个钩子函数<br>    <strong>自定义链：</strong>用于对内置链进行扩展或补充，可实现更灵活的规则组织管理机制；只有Hook钩子调用自定义链时，才生效</p>
+</blockquote>
+<p><strong>iptables规则添加时考量点</strong></p>
+<ul>
+<li>要实现哪种功能：判断添加在哪张表上</li>
+<li>报文流经的路径：判断添加在哪个链上</li>
+<li>报文的流向：判断源和目的</li>
+<li>匹配规则：业务需要</li>
+</ul>
+<p><strong>链上规则的次序，即为检查的次序，因此隐含一定的法则</strong></p>
+<ul>
+<li>同类规则(访问同一应用)，匹配范围小的放上面</li>
+<li>不同类规则(访问不同应用)，匹配到报文频率较大的放上面</li>
+<li>将那些可由一条规则描述的多个规则合并为一个</li>
+<li>设置默认策略</li>
+</ul>
+<p><strong>实验环境准备：</strong></p>
+<ul>
+<li><strong>Centos7:</strong> <ul>
+<li><code>systemctl stop firewalld.service</code> </li>
+<li><code>systemctl disable firewalld.service</code></li>
+</ul>
+</li>
+<li><strong>Centos6:</strong> <ul>
+<li><code>service iptables stop</code> </li>
+<li><code>chkconfig iptables off</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="iptables命令"><a href="#iptables命令" class="headerlink" title="iptables命令"></a>iptables命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">man 8 iptables</span><br><span class="line"></span><br><span class="line">iptables [-t table] &#123;-A|-C|-D&#125; chain rule-specification</span><br><span class="line"></span><br><span class="line">iptables [-t table] -I chain [rulenum] rule-specification</span><br><span class="line"></span><br><span class="line">iptables [-t table] -R chain rulenum rule-specification</span><br><span class="line"></span><br><span class="line">iptables [-t table] -D chain rulenum</span><br><span class="line"></span><br><span class="line">iptables [-t table] -S [chain [rulenum]]</span><br><span class="line"></span><br><span class="line">iptables [-t table] &#123;-F|-L|-Z&#125; [chain [rulenum]] [options...]</span><br><span class="line"></span><br><span class="line">iptables [-t table] -N chain</span><br><span class="line"></span><br><span class="line">iptables [-t table] -X [chain]</span><br><span class="line"></span><br><span class="line">iptables [-t table] -P chain target</span><br><span class="line"></span><br><span class="line">iptables [-t table] -E old-chain-name new-chain-name</span><br><span class="line"></span><br><span class="line">rule-specification = [matches...] [target]</span><br><span class="line"></span><br><span class="line">match = -m matchname [per-match-options]</span><br><span class="line"></span><br><span class="line">target = -j targetname [per-target-options]</span><br></pre></td></tr></table></figure>
+<p><strong>示例1：</strong><br>从172.18.99.1来的所有全部拒绝访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@centos7 ~]#iptables -A INPUT -s 172.18.99.1 -j DROP</span><br><span class="line">-A 添加 -I 插入 -s 后指定源地址 -j 策略</span><br></pre></td></tr></table></figure></p>
+<h3 id="iptables命令规则格式："><a href="#iptables命令规则格式：" class="headerlink" title="iptables命令规则格式："></a>iptables命令规则格式：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">iptables [-t table] SUBCOMMAND chain [-m matchname[per-match-options]] -j targetname[per-target-options]</span><br><span class="line">--------------------------------</span><br><span class="line">-t table(表)：raw, mangle, nat, [filter]默认</span><br><span class="line">--------------------------------</span><br><span class="line">SUBCOMMAND(子命令)：</span><br><span class="line">	1、链管理：</span><br><span class="line">		-N：new, 自定义一条新的规则链</span><br><span class="line">		-X：delete，删除自定义的空的规则链</span><br><span class="line">		-P：Policy，设置默认策略；对filter表中的链而言，其默认策略有：</span><br><span class="line">			ACCEPT：接受 </span><br><span class="line">			DROP：丢弃 </span><br><span class="line">		-E：重命名自定义链；引用计数不为0的自定义链不能够被重命名，也不能被删除</span><br><span class="line">	2、查看：</span><br><span class="line">		-L：list, 列出指定鏈上的所有规则，本选项须置后</span><br><span class="line">		-n：numberic，以数字格式显示地址和端口号</span><br><span class="line">		-v：verbose，详细信息 </span><br><span class="line">			-vv更详细 </span><br><span class="line">		-x：exactly，显示计数器结果的精确值,而非单位转换后的易读值(字节数更精确) </span><br><span class="line">		--line-numbers：显示规则的序号 </span><br><span class="line">		常用组合：</span><br><span class="line">			--vnL </span><br><span class="line">			--vvnxL --line-numbers </span><br><span class="line">		-S selected,以iptables-save 命令格式显示链上规则</span><br><span class="line">	3、规则管理：</span><br><span class="line">	-A：append，追加 </span><br><span class="line">	-I：insert, 插入，要指明插入至的规则编号，默认为第一条 </span><br><span class="line">	-D：delete，删除(1) 指明规则序号(2) 指明规则本身 </span><br><span class="line">	-R：replace，替换指定链上的指定规则编号 </span><br><span class="line">	-F：flush，清空指定的规则链 </span><br><span class="line">	-Z：zero，置零(包数指从头开始)</span><br><span class="line">		iptables的每条规则都有两个计数器 </span><br><span class="line">		(1) 匹配到的报文的个数 </span><br><span class="line">		(2) 匹配到的所有报文的大小之和</span><br><span class="line">--------------------------------</span><br><span class="line">chain：PREROUTING，INPUT，FORWARD，OUTPUT，POSTROUTING</span><br><span class="line">匹配条件</span><br><span class="line">	基本：通用的，PARAMETERS</span><br><span class="line">	扩展：需加载模块，MATCH EXTENTIONS</span><br><span class="line">1、基本匹配条件：无需加载模块，由iptables/netfilter自行提供</span><br><span class="line">	[!] -s, --source  address[/mask][,...]：源IP地址或范围 </span><br><span class="line">	[!] -d, --destination address[/mask][,...]：目标IP地址或范围 </span><br><span class="line">	[!] -p, --protocol protocol：指定协议，可使用数字如0（all） </span><br><span class="line">		protocol: tcp, udp, icmp, icmpv6,udplite,esp, ah, sctp, mhor  "all"  参看：/etc/protocols </span><br><span class="line">	[!] -i, --in-interface name：报文流入的接口；只能应用于数据报文流入环节，只应用于INPUT、FORWARD、PREROUTING链 </span><br><span class="line">	[!] -o, --out-interface name：报文流出的接口；只能应用于数据报文流出的环节，只应用于FORWARD、OUTPUT、POSTROUTING链</span><br><span class="line">2 扩展匹配条件：需要加载扩展模块（/usr/lib64/xtables/*.so），方可生效</span><br><span class="line">	查看帮助man iptables-extensions</span><br><span class="line">	(1)隐式扩展：在使用-p选项指明了特定的协议时，无需再用-m选项指明扩展模块的扩展机制，不需要手动加载扩展模块</span><br><span class="line">		tcp协议的扩展选项</span><br><span class="line">		[!] --source-port, --sport port[:port]：匹配报文源端口,可为端口范围 </span><br><span class="line">		[!] --destination-port,--dportport[:port]：匹配报文目标端口,可为范围 </span><br><span class="line">		[!] --tcp-flags mask comp</span><br><span class="line">		mask 需检查的标志位列表，用,分隔 例如SYN,ACK,FIN,RST</span><br><span class="line">		comp 在mask列表中必须为1的标志位列表，无指定则必须为0，用,分隔</span><br><span class="line">		</span><br><span class="line">		示例：</span><br><span class="line">		--tcp-flags SYN,ACK,FIN,RST  SYN  表示要检查的标志位为SYN,ACK,FIN,RST四个，其中SYN必须为1，余下的必须为0 </span><br><span class="line">		--tcp-flags SYN,ACK,FIN,RST SYN,ACK </span><br><span class="line">		--tcp-flags ALL ALL </span><br><span class="line">		--tcp_flagsALL NONE</span><br><span class="line">		[!] --syn：用于匹配第一次握手</span><br><span class="line">			相当于：--tcp-flags SYN,ACK,FIN,RST  SYN</span><br><span class="line">			</span><br><span class="line">		udp协议的扩展选项</span><br><span class="line">		[!] --source-port, --sport port[:port]：匹配报文的源端口；可以是端口范围 </span><br><span class="line">		[!] --destination-port,--dportport[:port]：匹配报文的目标端口；可以是端口范围</span><br><span class="line">		icmp协议的扩展选项 </span><br><span class="line">		[!] --icmp-type &#123;type[/code]|typename&#125;</span><br><span class="line">			type/code </span><br><span class="line">			0/0   echo-replyicmp应答 </span><br><span class="line">			8/0   echo-request icmp请求</span><br><span class="line">	(2)显式扩展：必须使用-m选项指明要调用的扩展模块的扩展机制，要手动加载扩展模块</span><br><span class="line">	[-m matchname[per-match-options]]</span><br><span class="line">	处理动作：</span><br><span class="line">	-j targetname [per-target-options]</span><br><span class="line">	简单：ACCEPT，DROP</span><br><span class="line">	扩展：REJECT：--reject-with:icmp-port-unreachable默认 </span><br><span class="line">	RETURN：返回调用链 </span><br><span class="line">	REDIRECT：端口重定向 </span><br><span class="line">	LOG：记录日志，dmesg </span><br><span class="line">	MARK：做防火墙标记 </span><br><span class="line">	DNAT：目标地址转换 </span><br><span class="line">	SNAT：源地址转换 </span><br><span class="line">	MASQUERADE：地址伪装</span><br><span class="line">	... </span><br><span class="line">	自定义链：</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Chain INPUT (policy ACCEPT 21144 packets, 3008K bytes)</span><br><span class="line"> pkts bytes target     prot opt in     out     source               destination         </span><br><span class="line">   21  1954 DROP       all  --  *      *       172.18.99.1          0.0.0.0/0           </span><br><span class="line">   16  1320 REJECT     all  --  *      *       172.18.99.1          0.0.0.0/0            reject-with icmp-port-unreachable</span><br><span class="line">	pkts:包数</span><br><span class="line">	bytes:字节数</span><br><span class="line">	target:处理动作</span><br><span class="line">	prot:协议</span><br><span class="line">	opt:</span><br><span class="line">	in:传入</span><br><span class="line">	out:传出</span><br><span class="line">	source:原地址 </span><br><span class="line">	destination:目标地址</span><br></pre></td></tr></table></figure>
+<p>······持续更新中······</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://www.zhangqifei.top/2017/03/04/linux/Linux防火墙/" title="Linux防火墙" target="_blank" rel="external">https://www.zhangqifei.top/2017/03/04/linux/Linux防火墙/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="javascript:void(0)" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="javascript:void(0)" target="_blank"><span class="text-dark">咻一咻</span><small class="ml-1x">Smile &amp; Simple</small></a></h3>
+        <div>人生没有彩排，每天都是现场直播。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+    <div id="uyan_frame"></div>
+
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2017/03/05/linux/Linux各发行版时间线2017年版本/" title="Linux各发行版时间线2017年版本"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2017/02/08/工具/Chrome浏览器最牛插件之一 Vimium/" title="Chrome浏览器最牛插件之一 Vimium"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class>
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/zhangqifei" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=98bEwsTFwsfAx8S3hobZlJia" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 咻一咻
+        
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+
+
+    
+    
+        
+    
+    <script defer type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=[object Object]"></script>
+
+
+    
+    
+
+
+
+</body>
+</html>
