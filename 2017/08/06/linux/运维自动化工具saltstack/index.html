@@ -52,6 +52,14 @@
     
     
 
+  <script>
+      document.addEventListener('visibilitychange', function () {
+          if (document.visibilityState == 'hidden') {
+              normal_title = document.title;
+              document.title = '欢迎回家！！！！';
+          } else document.title = normal_title;
+      });
+  </script>
 </head>
 
 
@@ -214,6 +222,7 @@
     <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
   <div class="slimContent">
     
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
       <div class="widget">
     <h3 class="widget-title">公告</h3>
     <div class="widget-body">
@@ -226,6 +235,7 @@
 </div>
 
     
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
       
   <div class="widget">
     <h3 class="widget-title">分类</h3>
@@ -236,6 +246,7 @@
 
 
     
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
       
   <div class="widget">
     <h3 class="widget-title">标签</h3>
@@ -246,6 +257,7 @@
 
 
     
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
       
   <div class="widget">
     <h3 class="widget-title">标签云</h3>
@@ -255,6 +267,7 @@
   </div>
 
     
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
       
   <div class="widget">
     <h3 class="widget-title">归档</h3>
@@ -265,6 +278,7 @@
 
 
     
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
       
   <div class="widget">
     <h3 class="widget-title">最新文章</h3>
@@ -278,7 +292,7 @@
                 <a class="category-link" href="/categories/linux/">linux</a>
               </p>
               <p class="item-title">
-                <a href="/2019/08/01/通知/1/" class="title">恢复更新</a>
+                <a href="/2019/08/01/通知/1/" class="title">测试测试测试测试</a>
               </p>
               <p class="item-date">
                 <time datetime="2019-08-01T01:41:22.000Z" itemprop="datePublished">2019-08-01</time>
@@ -355,6 +369,31 @@
   </div>
 </aside>
 
+<script>
+    var timeDiv = document.getElementById("timeDiv");
+
+    function addZero(value) {
+        return value < 10 ? "0" + value : value;
+    }
+    function getTime() {
+        var time = new Date();
+        var year = time.getFullYear();
+        var month = time.getMonth() + 1;
+        var day = time.getDate();
+        var hour = time.getHours();
+        var minute = time.getMinutes();
+        var second = time.getSeconds();
+
+        var week = time.getDay();
+        var area = "日一二三四五六";
+
+        timeDiv.innerHTML = year + "年" + addZero(month) + "月" + addZero(day) + "日 星期" + area[week] + " " + addZero(hour) + "时" + addZero(minute) + "分" + addZero(second) + "秒";
+    }
+    getTime();
+
+
+    window.setInterval(getTime, 1000);//->每隔1000ms都会重新执行getTime
+</script>
   
   
 <main class="main" role="main">

@@ -9,7 +9,7 @@
  */
 
 /**
- * 
+ *
  */
 
 /* Mixins */
@@ -409,8 +409,8 @@ h2,
 .h2,
 h3,
 .h3 {
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 
 h1 small,
@@ -2689,6 +2689,7 @@ a.thumbnail.active {
 .media-middle .media-right,
 .media-middle .media-body {
   vertical-align: middle;
+  height: 64px;
 }
 
 .media-bottom {
@@ -2704,6 +2705,10 @@ a.thumbnail.active {
 .media-heading {
   margin-top: 0;
   margin-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 90%;
 }
 
 .media-list {
@@ -4739,7 +4744,6 @@ a.label:focus {
   -webkit-line-clamp: 2;
   font-size: 18px;
   line-height: 32px;
-  height: 64px;
   word-break: break-all !important;
   word-wrap: break-word !important;
 }
@@ -4821,7 +4825,7 @@ a.label:focus {
   height: 0;
   border-width: 4px;
   border-style: solid;
-  border-color: #777777 transparent transparent #777777;
+  border-color: #bd1515 transparent transparent #bd1515;
 }
 
 .panel-badger:hover:after {
@@ -5668,7 +5672,7 @@ pre code {
 }
 
 .footer {
-  padding: 20px;
+  padding: 0 0 5px 20px;
   background-color: #fbfbfb;
 }
 
@@ -6961,6 +6965,7 @@ body.okayNav-loaded {
 .book .media-middle {
   display: inline-block;
   width: 115px;
+  height: 170px;
 }
 
 .ins-search {
