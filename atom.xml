@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.zhangqifei.top/"/>
-  <updated>2019-05-13T07:29:54.012Z</updated>
+  <updated>2018-04-23T07:12:14.352Z</updated>
   <id>https://www.zhangqifei.top/</id>
   
   <author>
@@ -15,58 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>测试测试测试测试</title>
-    <link href="https://www.zhangqifei.top/2019/08/01/%E9%80%9A%E7%9F%A5/1/"/>
-    <id>https://www.zhangqifei.top/2019/08/01/通知/1/</id>
-    <published>2019-08-01T01:41:22.000Z</published>
-    <updated>2019-05-13T07:29:54.012Z</updated>
-    
-    <content type="html"><![CDATA[<p>测试</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;测试&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-      <category term="linux" scheme="https://www.zhangqifei.top/categories/linux/"/>
-    
-    
-      <category term="Nginx" scheme="https://www.zhangqifei.top/tags/Nginx/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>恢复更新</title>
-    <link href="https://www.zhangqifei.top/2018/08/01/%E9%80%9A%E7%9F%A5/%E6%81%A2%E5%A4%8D%E6%9B%B4%E6%96%B0/"/>
-    <id>https://www.zhangqifei.top/2018/08/01/通知/恢复更新/</id>
-    <published>2018-08-01T01:41:22.000Z</published>
-    <updated>2019-05-13T07:29:54.012Z</updated>
-    
-    <content type="html"><![CDATA[<p>菜鸟终于决定要更新了！地址：<a href="https://www.zhangqifei.top/book/">https://www.zhangqifei.top/book/</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;菜鸟终于决定要更新了！地址：&lt;a href=&quot;https://www.zhangqifei.top/book/&quot;&gt;https://www.zhangqifei.top/book/&lt;/a&gt;&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-      <category term="linux" scheme="https://www.zhangqifei.top/categories/linux/"/>
-    
-    
-      <category term="Nginx" scheme="https://www.zhangqifei.top/tags/Nginx/"/>
-    
-  </entry>
   
   <entry>
     <title>一次说清什么是正向代理，什么是反向代理？</title>
@@ -188,29 +136,6 @@
     </summary>
     
       <category term="随笔" scheme="https://www.zhangqifei.top/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>注意啦!</title>
-    <link href="https://www.zhangqifei.top/2017/09/28/%E9%80%9A%E7%9F%A5/%E6%B3%A8%E6%84%8F%E5%95%A6%EF%BC%81/"/>
-    <id>https://www.zhangqifei.top/2017/09/28/通知/注意啦！/</id>
-    <published>2017-09-28T07:12:09.000Z</published>
-    <updated>2019-05-13T07:29:54.012Z</updated>
-    
-    <content type="html"><![CDATA[<p>CSDN博客地址为： <a href="https://blog.csdn.net/qq_37187976/" target="_blank" rel="noopener">https://blog.csdn.net/qq_37187976/</a> 原有文章不迁移。</p><p><a href="http://www.dpbolvw.net/click-8789796-10780766" target="_top">iPage Web Hosting for only $1.99/Month</a><br><img src="http://www.awltovhc.com/image-8789796-10780766" width="1" height="1" border="0"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;CSDN博客地址为： &lt;a href=&quot;https://blog.csdn.net/qq_37187976/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://blog.csdn.net/qq_37187976/&lt;/a&gt; 原有文章不迁移。&lt;/p
-      
-    
-    </summary>
-    
-      <category term="通知" scheme="https://www.zhangqifei.top/categories/%E9%80%9A%E7%9F%A5/"/>
     
     
   </entry>
@@ -521,6 +446,87 @@
     
     
       <category term="Chrome" scheme="https://www.zhangqifei.top/tags/Chrome/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CentOS7启动及排错</title>
+    <link href="https://www.zhangqifei.top/2017/01/07/linux/CentOS7%E5%90%AF%E5%8A%A8%E5%8F%8A%E6%8E%92%E9%94%99/"/>
+    <id>https://www.zhangqifei.top/2017/01/07/linux/CentOS7启动及排错/</id>
+    <published>2017-01-06T17:50:32.000Z</published>
+    <updated>2018-04-22T08:27:28.687Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="CentOS7引导顺序"><a href="#CentOS7引导顺序" class="headerlink" title="CentOS7引导顺序"></a>CentOS7引导顺序</h1><ul><li>UEFi或BIOS初始化，运行POST开机自检</li><li>选择启动设备</li><li>引导装载程序, centos7是grub2</li><li>加载装载程序的配置文件：<br>/etc/grub.d/<br>/etc/default/grub<br>/boot/grub2/grub.cfg</li><li>加载initramfs驱动模块加载内核选项</li><li>内核初始化，centos7使用systemd代替init </li><li>执行initrd.target所有单元，包括挂载/etc/fstab</li><li>从initramfs根文件系统切换到磁盘根目录</li><li>systemd执行默认target配置，配置文件/etc/systemd/system/default.target</li><li>systemd执行sysinit.target初始化系统及basic.target准备操作系统</li><li>systemd启动multi-user.target下的本机与服务器服务</li><li>systemd执行multi-user.target下的/etc/rc.d/rc.local</li><li>Systemd执行multi-user.target下的getty.target及登录服务</li><li>systemd执行graphical需要的服务</li></ul><h2 id="设置内核参数"><a href="#设置内核参数" class="headerlink" title="设置内核参数"></a>设置内核参数</h2><ul><li>设置内核参数，只影响当次启动</li><li>启动时，在linux16行后添加systemd.unit=desired.target</li><li>systemd.unit=emergency.target </li><li>systemd.unit=rescue.target</li><li>rescue.target 比emergency 支持更多的功能，例如日志等</li><li>systemctl  default  进入默认target</li></ul><h2 id="启动排错"><a href="#启动排错" class="headerlink" title="启动排错"></a>启动排错</h2><ul><li>文件系统损坏<br>先尝试自动修复，失败则进入emergency shell，提示用户修复</li><li>在/etc/fstab不存在对应的设备和UUID<br>等一段时间，如不可用，进入emergency shell</li><li>在/etc/fstab不存在对应挂载点<br>systemd尝试创建挂载点，否则提示进入emergency shell.</li><li>在/etc/fstab不正确的挂载选项<br>提示进入emergency shell</li></ul><h2 id="破解CentOS7的root口令方法一"><a href="#破解CentOS7的root口令方法一" class="headerlink" title="破解CentOS7的root口令方法一"></a>破解CentOS7的root口令方法一</h2><ul><li>启动时任意键暂停启动</li><li>按e键进入编辑模式</li><li>将光标移动linux16开始的行，添加内核参数rd.break</li><li>按ctrl-x启动</li><li>mount –o remount,rw  /sysroot</li><li>chroot /sysroot</li><li>passwd root</li><li>touch /.autorelabel</li><li>exit</li><li>reboot破解</li></ul><h2 id="破解CentOS7的root口令方法二"><a href="#破解CentOS7的root口令方法二" class="headerlink" title="破解CentOS7的root口令方法二"></a>破解CentOS7的root口令方法二</h2><ul><li>启动时任意键暂停启动</li><li>按e键进入编辑模式</li><li>将光标移动linux16开始的行，改为rw init=/sysroot/bin/sh</li><li>按ctrl-x启动</li><li>chroot /sysroot</li><li>passwd root</li><li>touch /.autorelabel</li><li>exit</li><li>reboot</li></ul><h2 id="centous7设置默认启动内核，并删除"><a href="#centous7设置默认启动内核，并删除" class="headerlink" title="centous7设置默认启动内核，并删除"></a>centous7设置默认启动内核，并删除</h2><p>配置文件 ：/boot/grub2/grub.cfg<br>修改：/etc/default/grub  GRUB_DEFAULT=saved saved改为0<br>grub2-mkconfig -o /boot/grub2/grub.crg 重新生成</p><p>删除没用的内核<br>/boot/ 和 /lib/modules/ 里面内核版本的东西 3.10.0.xxxx<br>grub2-mkconfig -o /boot/grub2/grub.crg 重新生成</p><h2 id="修复GRUB2"><a href="#修复GRUB2" class="headerlink" title="修复GRUB2"></a>修复GRUB2</h2><ul><li>GRUB”the Grand Unified Bootloader”引导提示时可以使用命令行界面可从文件系统引导</li><li>主要配置文件/boot/grub2/grub.cfg</li><li>修复配置文件grub2-mkconfig &gt; /boot/grub2/grub.cfg</li><li>修复grub grub2-install /dev/sdaBIOS环境grub2-install  UEFI环境</li><li>调整默认启动内核vim /etc/default/grubGRUB_DEFAULT=0</li></ul><center>![grub.cfg破坏][1]</center><h2 id="删除boot下所有"><a href="#删除boot下所有" class="headerlink" title="删除boot下所有"></a>删除boot下所有</h2><ol><li>进入救援模式</li><li>输入 1 continue</li><li>2 进入shell</li><li>chroot /mnt/sysimage  </li><li>mkdir /mnt/cdroom</li><li>mount -o /dev/cdroom /mnt/cdroom</li><li>rpm -ivh /mnt/cdroom/Packages/kernel-3.10.0.693.e17.x86.rpm –force </li><li>grub2-install /dev/sda</li><li>修复配置文件grub2-mkconfig &gt; /boot/grub2/grub.cfg</li><li>exit</li><li>reboot</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;CentOS7引导顺序&quot;&gt;&lt;a href=&quot;#CentOS7引导顺序&quot; class=&quot;headerlink&quot; title=&quot;CentOS7引导顺序&quot;&gt;&lt;/a&gt;CentOS7引导顺序&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;UEFi或BIOS初始化，运行POST开机自检&lt;/li&gt;
+      
+    
+    </summary>
+    
+      <category term="centos" scheme="https://www.zhangqifei.top/categories/centos/"/>
+    
+    
+      <category term="centos7" scheme="https://www.zhangqifei.top/tags/centos7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>自建CA认证和证书</title>
+    <link href="https://www.zhangqifei.top/2016/09/06/linux/%E8%87%AA%E5%BB%BACA%E8%AE%A4%E8%AF%81%E5%92%8C%E8%AF%81%E4%B9%A6/"/>
+    <id>https://www.zhangqifei.top/2016/09/06/linux/自建CA认证和证书/</id>
+    <published>2016-09-05T16:07:24.000Z</published>
+    <updated>2018-04-22T09:29:32.785Z</updated>
+    
+    <content type="html"><![CDATA[<center><img src="http://zhangqifei.top/picture/ifeier/data/openssl.jpg" width="500" height="200" alt="openssl" align="center"></center><p>一些概念：</p><p>PKI：Public Key Infrastructure</p><ul><li>签证机构：CA（Certificate Authority）</li><li>注册机构：RA（Register Authority）</li><li>证书吊销列表：CRL（Certificate Revoke Lists）</li><li>证书存取库</li></ul><p>X.509：定义了证书的结构和认证协议的标准。包括版本号、序列号、签名算法、颁发者、有效期限、主体名称、主体公钥、CRL分发点、扩展信息、发行者签名等</p><p>获取证书的两种方法：</p><ul><li>使用证书授权机构</li><li>生成签名请求（csr）</li><li>将csr发送给CA</li><li>从CA处接收签名</li><li>自签名的证书</li><li>自已签发自己的公钥重点介绍一下自建CA颁发机构和自签名。</li></ul><h2 id="自建CA颁发机构和自签名"><a href="#自建CA颁发机构和自签名" class="headerlink" title="自建CA颁发机构和自签名"></a>自建CA颁发机构和自签名</h2><p>实验用两台服务器，一台做ca颁发证书，一台去请求签名证书。</p><p>证书申请及签署步骤：</p><ol><li>生成申请请求</li><li>CA核验</li><li>CA签署</li><li>获取证书</li></ol><p>我们先看一下openssl的配置文件：<code>/etc/pki/tls/openssl.cnf</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">####################################################################</span></span><br><span class="line">[ ca ]</span><br><span class="line">default_ca= CA_default<span class="comment"># The default ca section(默认的CA配置，是CA_default,下面第一个小节就是)</span></span><br><span class="line"><span class="comment">####################################################################</span></span><br><span class="line">[ CA_default ]</span><br><span class="line">dir= /etc/pki/CA<span class="comment"># Where everything is kept （dir变量）</span></span><br><span class="line">certs= <span class="variable">$dir</span>/certs<span class="comment"># Where the issued certs are kept（认证证书目录）</span></span><br><span class="line">crl_dir= <span class="variable">$dir</span>/crl<span class="comment"># Where the issued crl are kept（注销证书目录）</span></span><br><span class="line">database= <span class="variable">$dir</span>/index.txt<span class="comment"># database index file.（数据库索引文件）</span></span><br><span class="line">new_certs_dir= <span class="variable">$dir</span>/newcerts<span class="comment"># default place for new certs.（新证书的默认位置）</span></span><br><span class="line">certificate= <span class="variable">$dir</span>/cacert.pem <span class="comment"># The CA certificate（CA机构证书）</span></span><br><span class="line">serial= <span class="variable">$dir</span>/serial <span class="comment"># The current serial number（当前序号，默认为空，可以指定从01开始）</span></span><br><span class="line">crlnumber= <span class="variable">$dir</span>/crlnumber<span class="comment"># the current crl number（下一个吊销证书序号）</span></span><br><span class="line"><span class="comment"># must be commented out to leave a V1 CRL</span></span><br><span class="line">crl= <span class="variable">$dir</span>/crl.pem <span class="comment"># The current CRL（下一个吊销证书）</span></span><br><span class="line">private_key= <span class="variable">$dir</span>/private/cakey.pem<span class="comment"># The private key（CA机构的私钥）</span></span><br><span class="line">RANDFILE= <span class="variable">$dir</span>/private/.rand<span class="comment"># private random number file（随机数文件）</span></span><br><span class="line">x509_extensions= usr_cert<span class="comment"># The extentions to add to the cert</span></span><br><span class="line"><span class="comment"># Comment out the following two lines for the "traditional"</span></span><br><span class="line"><span class="comment"># (and highly broken) format.</span></span><br><span class="line">name_opt = ca_default<span class="comment"># Subject Name options（被颁发者，订阅者选项）</span></span><br><span class="line">cert_opt = ca_default<span class="comment"># Certificate field options（认证字段参数）</span></span><br><span class="line"><span class="comment"># Extension copying option: use with caution.</span></span><br><span class="line"><span class="comment"># copy_extensions = copy</span></span><br><span class="line"><span class="comment"># Extensions to add to a CRL. Note: Netscape communicator chokes on V2 CRLs</span></span><br><span class="line"><span class="comment"># so this is commented out by default to leave a V1 CRL.</span></span><br><span class="line"><span class="comment"># crlnumber must also be commented out to leave a V1 CRL.</span></span><br><span class="line"><span class="comment"># crl_extensions= crl_ext</span></span><br><span class="line">default_days= 365<span class="comment"># how long to certify for （默认的有效期天数是365）</span></span><br><span class="line">default_crl_days= 30<span class="comment"># how long before next CRL</span></span><br><span class="line">default_md= sha256<span class="comment"># use SHA-256 by default</span></span><br><span class="line">preserve= no<span class="comment"># keep passed DN ordering</span></span><br><span class="line"><span class="comment"># A few difference way of specifying how similar the request should look</span></span><br><span class="line"><span class="comment"># For type CA, the listed attributes must be the same, and the optional</span></span><br><span class="line"><span class="comment"># and supplied fields are just that :-)</span></span><br><span class="line">policy= policy_match  <span class="comment"># 是否匹配规则</span></span><br><span class="line"><span class="comment"># For the CA policy</span></span><br><span class="line">[ policy_match ]</span><br><span class="line">countryName= match   <span class="comment"># 国家名是否匹配，match为匹配</span></span><br><span class="line">stateOrProvinceName= match  <span class="comment"># 州或省名是否需要匹配</span></span><br><span class="line">organizationName= match  <span class="comment"># 组织名是否需要匹配</span></span><br><span class="line">organizationalUnitName= optional <span class="comment"># 组织的部门名字是否需要匹配</span></span><br><span class="line">commonName= supplied <span class="comment"># 注释</span></span><br><span class="line">emailAddress= optional <span class="comment"># 邮箱地址</span></span><br><span class="line"><span class="comment"># For the 'anything' policy</span></span><br><span class="line"><span class="comment"># At this point in time, you must list all acceptable 'object'</span></span><br><span class="line"><span class="comment"># types.</span></span><br><span class="line">[ policy_anything ]</span><br><span class="line">countryName= optional</span><br><span class="line">stateOrProvinceName= optional</span><br><span class="line">localityName= optional</span><br><span class="line">organizationName= optional</span><br><span class="line">organizationalUnitName= optional</span><br><span class="line">commonName= supplied</span><br><span class="line">emailAddress= optional</span><br><span class="line"><span class="comment">####################################################################</span></span><br></pre></td></tr></table></figure></p><p>重点关注下面的几个参数：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dir             = /etc/pki/CA           <span class="comment"># Where everything is kept （dir变量）</span></span><br><span class="line">certs           = <span class="variable">$dir</span>/certs            <span class="comment"># Where the issued certs are kept（认证证书目录）</span></span><br><span class="line">database        = <span class="variable">$dir</span>/index.txt        <span class="comment"># database index file.（数据库索引文件）</span></span><br><span class="line">new_certs_dir   = <span class="variable">$dir</span>/newcerts         <span class="comment"># default place for new certs.（新证书的默认位置）</span></span><br><span class="line">certificate     = <span class="variable">$dir</span>/cacert.pem       <span class="comment"># The CA certificate（CA机构证书）</span></span><br><span class="line">serial          = <span class="variable">$dir</span>/serial           <span class="comment"># The current serial number（当前序号，默认为空，可以指定从01开始）</span></span><br><span class="line">private_key     = <span class="variable">$dir</span>/private/cakey.pem<span class="comment"># The private key（CA机构的私钥）</span></span><br></pre></td></tr></table></figure></p><h3 id="1、创建所需要的文件"><a href="#1、创建所需要的文件" class="headerlink" title="1、创建所需要的文件"></a>1、创建所需要的文件</h3><p><code>touch /etc/pki/CA/index.txt</code>生成证书索引数据库文件</p><p><code>echo 01 &gt; /etc/pki/CA/serial</code>指定第一个颁发证书的序列号,16进制数，比如可以从1a开始，一般从01开始。</p><h3 id="2、CA自签证书"><a href="#2、CA自签证书" class="headerlink" title="2、CA自签证书"></a>2、CA自签证书</h3><p>在作为CA的服务器上操作：</p><ul><li>生成私钥</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@aliyun ~]<span class="comment">#(umask 066;openssl genrsa -out /etc/pki/CA/private/cakey.pem 4096)</span></span><br><span class="line">Generating RSA private key, 4096 bit long modulus</span><br><span class="line">.....++</span><br><span class="line">..............................................++</span><br></pre></td></tr></table></figure><ul><li>生成自签名证书</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@aliyun ~]<span class="comment">#openssl req -new -x509 -key /etc/pki/CA/private/cakey.pem -days 7300 -out /etc/pki/CA/cacert.pem</span></span><br><span class="line">You are about to be asked to enter information that will be incorporated</span><br><span class="line">into your certificate request.</span><br><span class="line">What you are about to enter is what is called a Distinguished Name or a DN.</span><br><span class="line">There are quite a few fields but you can leave some blank</span><br><span class="line">For some fields there will be a default value,</span><br><span class="line">If you enter <span class="string">'.'</span>, the field will be left blank.</span><br><span class="line">-----</span><br><span class="line">Country Name (2 letter code) [XX]:CN (国名（2个字母代码）[XX]：CN）</span><br><span class="line">State or Province Name (full name) []:Beijing （州或省名称（全称）北京）</span><br><span class="line">Locality Name (eg, city) [Default City]:Beijing （地区名称（如城市）[默认城市]：北京）</span><br><span class="line">Organization Name (eg, company) [Default Company Ltd]:shangdigongsi （组织名称（如公司）：上帝公司）</span><br><span class="line">Organizational Unit Name (eg, section) []:opt （组织单位名称：opt）</span><br><span class="line">Common Name (eg, your name or your server<span class="string">'s hostname) []:centos （通用名称（例如，您的名字或您的服务器的主机名）[]：centos）</span></span><br><span class="line"><span class="string">Email Address []:1353250703@qq.com （电子邮件地址[]：1353250703@qq.com）</span></span><br></pre></td></tr></table></figure><blockquote><p>参数解析：</p><p>-new: 生成新证书签署请求<br>-x509: 专用于CA生成自签证书<br>-key: 生成请求时用到的私钥文件<br>-days n：证书的有效期限<br>-out /PATH/TO/SOMECERTFILE: 证书的保存路径</p></blockquote><h3 id="3、颁发证书"><a href="#3、颁发证书" class="headerlink" title="3、颁发证书"></a>3、颁发证书</h3><ul><li>在需要使用证书的主机生成证书请求(比如给一台作为博客web服务的服务器生成私钥)</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@aliyun ~]<span class="comment">#(umask 066; openssl genrsa -out /etc/pki/tls/private/blog.key 4096)</span></span><br><span class="line">Generating RSA private key, 4096 bit long modulus</span><br><span class="line">.....................................++</span><br><span class="line">......................................................................................................................++</span><br><span class="line">e is 65537 (0x10001)</span><br></pre></td></tr></table></figure><ul><li>生成证书申请文件</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@aliyun ~]<span class="comment">#openssl req -new -key /etc/pki/tls/private/blog.key -days 3560 -out /etc/pki/tls/blog.csr</span></span><br><span class="line">You are about to be asked to enter information that will be incorporated</span><br><span class="line">into your certificate request.</span><br><span class="line">What you are about to enter is what is called a Distinguished Name or a DN.</span><br><span class="line">There are quite a few fields but you can leave some blank</span><br><span class="line">For some fields there will be a default value,</span><br><span class="line">If you enter <span class="string">'.'</span>, the field will be left blank.</span><br><span class="line">-----</span><br><span class="line">Country Name (2 letter code) [XX]:CN (国名（2个字母代码）[XX]：CN）</span><br><span class="line">State or Province Name (full name) []:Beijing（州或省名称（全称）北京）</span><br><span class="line">Locality Name (eg, city) [Default City]:Bejing （地区名称（如城市）[默认城市]：北京）</span><br><span class="line">Organization Name (eg, company) [Default Company Ltd]:shangdigongsi（组织名称（如公司）：上帝公司）</span><br><span class="line">Organizational Unit Name (eg, section) []:centos（组织单位名称：opt）</span><br><span class="line">Common Name (eg, your name or your server<span class="string">'s hostname) []:opt （通用名称（例如，您的名字或您的服务器的主机名）[]：centos）</span></span><br><span class="line"><span class="string">Email Address []:（电子邮件地址[]：1353250703@qq.com）</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Please enter the following '</span>extra<span class="string">' attributes （请输入以下“额外”属性）</span></span><br><span class="line"><span class="string">to be sent with your certificate request（要发送您的证书请求）</span></span><br><span class="line"><span class="string">A challenge password []:（密码[ ]：）</span></span><br><span class="line"><span class="string">An optional company name []:（可选的公司名称）</span></span><br></pre></td></tr></table></figure><ul><li>将证书请求文件传输给CA</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@aliyun ~]<span class="comment">#scp /etc/pki/tls/blog.csr root@172.16.111.100:/tmp/</span></span><br><span class="line">root@172.16.111.100s password</span><br><span class="line">blog.csr                       100% 1773    1.7Mb/s</span><br></pre></td></tr></table></figure><ul><li>CA签署证书，并将证书颁发给请求者</li></ul><center><img src="http://zhangqifei.top/picture/ifeier/data/ca.jpg" width="500" height="200" alt="openssl" align="center"></center><blockquote><p>注意：默认国家，省，公司名称三项必须和CA一致</p></blockquote><ul><li>把blog.crt证书回传给申请者，申请者可以使用此证书。</li></ul><blockquote><p>证书可以放在网站里，比如tomacat服务有专门存放证书的地方，还有可能需要转化格式，此处使用方法暂略</p></blockquote><h3 id="4、吊销证书"><a href="#4、吊销证书" class="headerlink" title="4、吊销证书"></a>4、吊销证书</h3><ul><li>在客户端获取要吊销的证书的serial</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -<span class="keyword">in</span> /PATH/FROM/CERT_FILE -noout -serial -subject</span><br></pre></td></tr></table></figure><ul><li>在CA上，根据客户提交的serial与subject信息，对比检验是否与index.txt文件中的信息一致，吊销证书：</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl ca -revoke /etc/pki/CA/newcerts/SERIAL.pem</span><br></pre></td></tr></table></figure><ul><li>指定第一个吊销证书的编号<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 01 &gt; /etc/pki/CA/crlnumber</span><br></pre></td></tr></table></figure></li></ul><blockquote><p>注意：这里只有在第一次更新证书吊销列表前，才需要执行指定编号。</p></blockquote><ul><li>更新证书吊销列表</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl ca -gencrl -out /etc/pki/CA/crl/crl.pem</span><br></pre></td></tr></table></figure><ul><li>查看crl文件：</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl crl -<span class="keyword">in</span> /etc/pki/CA/crl/crl.pem -noout -text</span><br></pre></td></tr></table></figure><blockquote><p><a href="https://www.zybuluo.com/mrz1/note/1011025" target="_blank" rel="noopener">更加详细的步骤以及代码实现hexo</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;center&gt;&lt;img src=&quot;http://zhangqifei.top/picture/ifeier/data/openssl.jpg&quot; width=&quot;500&quot; height=&quot;200&quot; alt=&quot;openssl&quot; align=&quot;center&quot;&gt;&lt;/center&gt;
+
+&lt;p
+      
+    
+    </summary>
+    
+      <category term="linux" scheme="https://www.zhangqifei.top/categories/linux/"/>
+    
+    
+      <category term="CA" scheme="https://www.zhangqifei.top/tags/CA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>linux命令-head</title>
+    <link href="https://www.zhangqifei.top/2016/07/06/linux/linux%E5%91%BD%E4%BB%A4-head/"/>
+    <id>https://www.zhangqifei.top/2016/07/06/linux/linux命令-head/</id>
+    <published>2016-07-06T09:12:42.000Z</published>
+    <updated>2018-04-22T09:29:33.121Z</updated>
+    
+    <content type="html"><![CDATA[<p>head 与 tail 就像它的名字一样的浅显易懂，它是用来显示开头或结尾某个数量的文字区块，head 用来显示档案的开头至标准输出中，而 tail 想当然尔就是看档案的结尾。 </p><ol><li>命令格式：<br> head [参数]… [文件]…  </li><li>命令功能：<br> head 用来显示档案的开头至标准输出中，默认head命令打印其相应文件的开头10行。 </li><li>命令参数：<br> -q 隐藏文件名<br> -v 显示文件名<br> -c&lt;字节&gt; 显示字节数<br> -n&lt;行数&gt; 显示的行数</li></ol><p><strong>使用实例：</strong></p><h4 id="实例1：显示文件的前n行"><a href="#实例1：显示文件的前n行" class="headerlink" title="实例1：显示文件的前n行"></a>实例1：显示文件的前n行</h4><p>命令：<code>head -n n /etc/passwd</code></p><h4 id="实例2：显示文件前n个字节"><a href="#实例2：显示文件前n个字节" class="headerlink" title="实例2：显示文件前n个字节"></a>实例2：显示文件前n个字节</h4><p>命令：<code>head -c n /etc/passwd</code></p><h4 id="实例3：文件的除了最后n个字节以外的内容"><a href="#实例3：文件的除了最后n个字节以外的内容" class="headerlink" title="实例3：文件的除了最后n个字节以外的内容"></a>实例3：文件的除了最后n个字节以外的内容</h4><p>命令：<code>head -c -n /etc/passwd</code></p><h4 id="实例4：输出文件除了最后n行的全部内容"><a href="#实例4：输出文件除了最后n行的全部内容" class="headerlink" title="实例4：输出文件除了最后n行的全部内容"></a>实例4：输出文件除了最后n行的全部内容</h4><p>命令：<code>head -n -n /etc/passwd</code></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;head 与 tail 就像它的名字一样的浅显易懂，它是用来显示开头或结尾某个数量的文字区块，head 用来显示档案的开头至标准输出中，而 tail 想当然尔就是看档案的结尾。 &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;命令格式：&lt;br&gt; head [参数]… [文件]…  &lt;/li&gt;
+
+      
+    
+    </summary>
+    
+      <category term="linux" scheme="https://www.zhangqifei.top/categories/linux/"/>
+    
+    
+      <category term="命令" scheme="https://www.zhangqifei.top/tags/%E5%91%BD%E4%BB%A4/"/>
     
   </entry>
   
