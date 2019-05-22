@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="referrer" content="never">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>金丝雀发布、滚动发布、蓝绿发布到底有什么差别？关键点是什么？ | 老朋友好久不见！</title>
+  <meta name="description" content="根据 2017 年的 DevOps 发展报告，高效能组织和低效能组织在软件交付的效率上有数量级上的差异。技术组织的软件交付能力是一种综合能力，涉及众多环节，其中发布是尤为重要的环节。 作为技术人员，大家可能听说过“滚动发布”和“蓝绿发布”等术语，但是很多人并不清楚这些术语背后的原理。本文试图总结当前主流的发布策略，每个的优劣，适用性，让开发人员特别是架构师对现代发布技术有一个更为清晰全面的认识，让">
+<meta name="keywords" content="发布">
+<meta property="og:type" content="article">
+<meta property="og:title" content="金丝雀发布、滚动发布、蓝绿发布到底有什么差别？关键点是什么？">
+<meta property="og:url" content="https://www.zhangqifei.top/2018/02/07/linux总结/金丝雀发布、滚动发布、蓝绿发布到底有什么差别？关键点是什么？/index.html">
+<meta property="og:site_name" content="老朋友好久不见！">
+<meta property="og:description" content="根据 2017 年的 DevOps 发展报告，高效能组织和低效能组织在软件交付的效率上有数量级上的差异。技术组织的软件交付能力是一种综合能力，涉及众多环节，其中发布是尤为重要的环节。 作为技术人员，大家可能听说过“滚动发布”和“蓝绿发布”等术语，但是很多人并不清楚这些术语背后的原理。本文试图总结当前主流的发布策略，每个的优劣，适用性，让开发人员特别是架构师对现代发布技术有一个更为清晰全面的认识，让">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413152557349">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413151836748">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413152452336">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413152919230">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413160543532">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413160829601">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413161359955">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413161716274">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413162041469">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413162342844">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413162608274">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413162726916">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413162936972">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413163047576">
+<meta property="og:image" content="https://img-blog.csdn.net/201804131632311">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413163342859">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413163538922">
+<meta property="og:image" content="https://img-blog.csdn.net/20180413163634468">
+<meta property="og:updated_time" content="2019-05-22T03:44:09.506Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="金丝雀发布、滚动发布、蓝绿发布到底有什么差别？关键点是什么？">
+<meta name="twitter:description" content="根据 2017 年的 DevOps 发展报告，高效能组织和低效能组织在软件交付的效率上有数量级上的差异。技术组织的软件交付能力是一种综合能力，涉及众多环节，其中发布是尤为重要的环节。 作为技术人员，大家可能听说过“滚动发布”和“蓝绿发布”等术语，但是很多人并不清楚这些术语背后的原理。本文试图总结当前主流的发布策略，每个的优劣，适用性，让开发人员特别是架构师对现代发布技术有一个更为清晰全面的认识，让">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180413152557349">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://www.zhangqifei.top/2018/02/07/linux总结/金丝雀发布、滚动发布、蓝绿发布到底有什么差别？关键点是什么？/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="老朋友好久不见！" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+  <script>
+      document.addEventListener('visibilitychange', function () {
+          if (document.visibilityState == 'hidden') {
+              normal_title = document.title;
+              document.title = '欢迎回家！！！！';
+          } else document.title = normal_title;
+      });
+  </script>
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://www.zhangqifei.top">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">咻一咻</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Smile &amp; Simple</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech>
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/zhangqifei" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=98bEwsTFwsfAx8S3hobZlJia" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>CSDN博客地址为：<a href="https://blog.csdn.net/qq_37187976/">『点击跳转』</a> 原有文章不迁移。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/centos7/">centos7</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux总结/">linux总结</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/专业词汇/">专业词汇</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/命令/">命令</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络/">网络</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/运维自动化工具/">运维自动化工具</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API接口/">API接口</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASCII/">ASCII</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CA/">CA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS/">CentOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/">Chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Systemd/">Systemd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vimium/">Vimium</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ab/">ab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ansible/">ansible</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/">apache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bc/">bc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/border/">border</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cat/">cat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos7/">centos7</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/date/">date</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/echo/">echo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grep/">grep</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/head/">head</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lrzsz/">lrzsz</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/puppet/">puppet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/saltstack/">saltstack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/seq/">seq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/发布/">发布</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像/">图像</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/状态码/">状态码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/运维自动化工具/">运维自动化工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/防火墙/">防火墙</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/API接口/" style="font-size: 13px;">API接口</a> <a href="/tags/ASCII/" style="font-size: 13px;">ASCII</a> <a href="/tags/CA/" style="font-size: 13px;">CA</a> <a href="/tags/CentOS/" style="font-size: 13px;">CentOS</a> <a href="/tags/Chrome/" style="font-size: 13px;">Chrome</a> <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HTTP/" style="font-size: 14px;">HTTP</a> <a href="/tags/Linux/" style="font-size: 13px;">Linux</a> <a href="/tags/Systemd/" style="font-size: 13px;">Systemd</a> <a href="/tags/Vimium/" style="font-size: 13px;">Vimium</a> <a href="/tags/ab/" style="font-size: 13px;">ab</a> <a href="/tags/ansible/" style="font-size: 13px;">ansible</a> <a href="/tags/apache/" style="font-size: 13px;">apache</a> <a href="/tags/bc/" style="font-size: 13px;">bc</a> <a href="/tags/border/" style="font-size: 13px;">border</a> <a href="/tags/cat/" style="font-size: 13px;">cat</a> <a href="/tags/centos7/" style="font-size: 14px;">centos7</a> <a href="/tags/date/" style="font-size: 13px;">date</a> <a href="/tags/echo/" style="font-size: 13px;">echo</a> <a href="/tags/grep/" style="font-size: 13px;">grep</a> <a href="/tags/head/" style="font-size: 13px;">head</a> <a href="/tags/lrzsz/" style="font-size: 13px;">lrzsz</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/nginx/" style="font-size: 14px;">nginx</a> <a href="/tags/ping/" style="font-size: 13px;">ping</a> <a href="/tags/puppet/" style="font-size: 13px;">puppet</a> <a href="/tags/redis/" style="font-size: 13px;">redis</a> <a href="/tags/saltstack/" style="font-size: 13px;">saltstack</a> <a href="/tags/seq/" style="font-size: 13px;">seq</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/test/" style="font-size: 13px;">test</a> <a href="/tags/发布/" style="font-size: 13px;">发布</a> <a href="/tags/图像/" style="font-size: 13px;">图像</a> <a href="/tags/状态码/" style="font-size: 13px;">状态码</a> <a href="/tags/运维自动化工具/" style="font-size: 13px;">运维自动化工具</a> <a href="/tags/防火墙/" style="font-size: 13px;">防火墙</a>
+    </div>
+  </div>
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/nginx/">nginx</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/nginx/安装nginx/" class="title">安装-nginx</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T10:15:07.017Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/redis/">redis</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/redis/安装-redis/" class="title">安装-redis</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T09:25:29.739Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/命令/">命令</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/命令/linux命令-sed/" class="title">linux命令-sed</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T09:25:24.606Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/工具/">工具</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/工具/PS AND gimp/" class="title">PS AND gimp</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T01:41:22.000Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/随笔/">随笔</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/03/05/随笔/一次说清什么是正向代理，什么是反向代理？/" class="title">一次说清什么是正向代理，什么是反向代理？</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-03-05T01:42:22.000Z" itemprop="datePublished">2018-03-05</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+<script>
+    var timeDiv = document.getElementById("timeDiv");
+
+    function addZero(value) {
+        return value < 10 ? "0" + value : value;
+    }
+    function getTime() {
+        var time = new Date();
+        var year = time.getFullYear();
+        var month = time.getMonth() + 1;
+        var day = time.getDate();
+        var hour = time.getHours();
+        var minute = time.getMinutes();
+        var second = time.getSeconds();
+
+        var week = time.getDay();
+        var area = "日一二三四五六";
+
+        timeDiv.innerHTML = year + "年" + addZero(month) + "月" + addZero(day) + "日 星期" + area[week] + " " + addZero(hour) + "时" + addZero(minute) + "分" + addZero(second) + "秒";
+    }
+    getTime();
+
+
+    window.setInterval(getTime, 1000);//->每隔1000ms都会重新执行getTime
+</script>
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、单服务器组发布"><span class="toc-number">1.</span> <span class="toc-text">一、单服务器组发布</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#蛮力发布"><span class="toc-number">1.1.</span> <span class="toc-text">蛮力发布</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#金丝雀发布（单服务器组）"><span class="toc-number">1.2.</span> <span class="toc-text">金丝雀发布（单服务器组）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#滚动式发布（单服务器组）"><span class="toc-number">1.3.</span> <span class="toc-text">滚动式发布（单服务器组）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、双服务器组发布"><span class="toc-number">2.</span> <span class="toc-text">二、双服务器组发布</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#金丝雀发布（双服务器组）"><span class="toc-number">2.1.</span> <span class="toc-text">金丝雀发布（双服务器组）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#滚动式发布（双服务器组）"><span class="toc-number">2.2.</span> <span class="toc-text">滚动式发布（双服务器组）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、其它发布方式"><span class="toc-number">3.</span> <span class="toc-text">三、其它发布方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#功能开关发布"><span class="toc-number">3.1.</span> <span class="toc-text">功能开关发布</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#A-B-测试"><span class="toc-number">3.2.</span> <span class="toc-text">A/B 测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#影子测试"><span class="toc-number">3.3.</span> <span class="toc-text">影子测试</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、比较"><span class="toc-number">4.</span> <span class="toc-text">四、比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、结论和建议"><span class="toc-number">5.</span> <span class="toc-text">五、结论和建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、附录"><span class="toc-number">6.</span> <span class="toc-text">六、附录</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-linux总结/金丝雀发布、滚动发布、蓝绿发布到底有什么差别？关键点是什么？" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      金丝雀发布、滚动发布、蓝绿发布到底有什么差别？关键点是什么？
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2018/02/07/linux总结/金丝雀发布、滚动发布、蓝绿发布到底有什么差别？关键点是什么？/" class="article-date">
+	  <time datetime="2018-02-07T11:42:22.000Z" itemprop="datePublished">2018-02-07</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/linux总结/">linux总结</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/发布/">发布</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2018/02/07/linux总结/金丝雀发布、滚动发布、蓝绿发布到底有什么差别？关键点是什么？/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 5.1k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 17(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <p>根据 2017 年的 DevOps 发展报告，高效能组织和低效能组织在软件交付的效率上有数量级上的差异。技术组织的软件交付能力是一种综合能力，涉及众多环节，其中发布是尤为重要的环节。</p>
+<p>作为技术人员，大家可能听说过“滚动发布”和“蓝绿发布”等术语，但是很多人并不清楚这些术语背后的原理。本文试图总结当前主流的发布策略，每个的优劣，适用性，让开发人员特别是架构师对现代发布技术有一个更为清晰全面的认识，让大家能够根据自己的企业上下文，对发布策略做出正确的选型和实践。</p>
+<h3 id="一、单服务器组发布"><a href="#一、单服务器组发布" class="headerlink" title="一、单服务器组发布"></a>一、单服务器组发布</h3><p>先解释下单服务器组的概念，早先我们机器资源比较紧张，不像现在云计算和虚拟化（包括容器技术）这么发达，所以应用机器基本是预先静态分配好的（一般由运维负责分配），原来应用 A 住在这 n 台机器上，那么下次升级发布的应用 A 也住在这 n 台机器上，所以称为单服务器组发布方式。</p>
+<h4 id="蛮力发布"><a href="#蛮力发布" class="headerlink" title="蛮力发布"></a>蛮力发布</h4><p>如下图所示，这种发布方式比较简单粗暴，有点像我们传统的软件升级方式，主要靠手工完成，先将老版本 V1 全部下掉，再将新版本发到机器上去。这种方式会引入服务中断（停机），在开发测试环境是可行的，但对于生产环境发布，其会直接影响用户的使用体验，这种方式一般是不建议的。</p>
+<center><br><img src="https://img-blog.csdn.net/20180413152557349" alt="这里写图片描述"><br></center>
+
+<p><strong>优势：</strong></p>
+<ul>
+<li>简单成本低</li>
+</ul>
+<p><strong>不足：</strong></p>
+<ul>
+<li>服务中断用户受影响，出了问题回退也慢</li>
+</ul>
+<p><strong>适用场合：</strong></p>
+<ul>
+<li>开发测试环境</li>
+<li>非关键应用（用户影响面小）</li>
+<li>初创公司什么都缺，找夜深人静用户访问量小的时间干</li>
+</ul>
+<p><strong>流量模式</strong></p>
+<center><br><img src="https://img-blog.csdn.net/20180413151836748" alt="这里写图片描述"><br>蛮力发布会引入服务中断时间<br></center>
+
+<h4 id="金丝雀发布（单服务器组）"><a href="#金丝雀发布（单服务器组）" class="headerlink" title="金丝雀发布（单服务器组）"></a>金丝雀发布（单服务器组）</h4><p>在蛮力发布基础上的一种简单改进发布方式，目前仍然是不少成长型技术组织的主流发布方式。单服务器组下的金丝雀发布的简化步骤如下图所示：</p>
+<center><br><img src="https://img-blog.csdn.net/20180413152452336" alt="这里写图片描述"><br></center>
+
+<p><strong>实践要点</strong></p>
+<ul>
+<li>金丝雀发布一般先发 1 台，或者一个小比例，例如 2% 的服务器，主要做流量验证用，也称为金丝雀 (Canary) 测试（国内常称灰度测试）。以前旷工开矿下矿洞前，先会放一只金丝雀进去探是否有有毒气体，看金丝雀能否活下来，金丝雀发布由此得名。简单的金丝雀测试一般通过手工测试验证，复杂的金丝雀测试需要比较完善的监控基础设施配合，通过监控指标反馈，观察金丝雀的健康状况，作为后续发布或回退的依据。</li>
+<li>如果金丝测试通过，则把剩余的 V1 版本全部升级为 V2 版本。如果金丝雀测试失败，则直接回退金丝雀，发布失败。</li>
+</ul>
+<p><strong>优势：</strong></p>
+<ul>
+<li>用户体验影响小，金丝雀发布过程出现问题只影响少量用户</li>
+</ul>
+<p><strong>不足：</strong></p>
+<ul>
+<li>发布自动化程度不够，发布期间可引发服务中断</li>
+</ul>
+<p><strong>适用场合：</strong></p>
+<ul>
+<li>对新版本功能或性能缺乏足够信心</li>
+<li>用户体验要求较高的网站业务场景</li>
+<li>缺乏足够的自动化发布工具研发能力</li>
+</ul>
+<p><strong>流量模式</strong></p>
+<center><br><img src="https://img-blog.csdn.net/20180413152919230" alt="这里写图片描述"><br>少量金丝雀先接受流量，再全量发布<br></center>
+
+<h4 id="滚动式发布（单服务器组）"><a href="#滚动式发布（单服务器组）" class="headerlink" title="滚动式发布（单服务器组）"></a>滚动式发布（单服务器组）</h4><p>在金丝雀发布基础上的进一步优化改进，是一种自动化程度较高的发布方式，用户体验比较平滑，是目前成熟型技术组织所采用的主流发布方式。单服务器组下的滚动发布的简化步骤如下图所示：</p>
+<center><br><img src="https://img-blog.csdn.net/20180413160543532" alt="这里写图片描述"><br></center>
+
+<p><strong>实践要点</strong></p>
+<ul>
+<li>滚动式发布一般先发 1 台，或者一个小比例，如 2% 服务器，主要做流量验证用，类似金丝雀 (Canary) 测试。</li>
+<li>滚动式发布需要比较复杂的发布工具和智能 LB，支持平滑的版本替换和流量拉入拉出。</li>
+<li>每次发布时，先将老版本 V1 流量从 LB 上摘除，然后清除老版本，发新版本 V2，再将 LB 流量接入新版本。这样可以尽量保证用户体验不受影响。</li>
+<li>一次滚动式发布一般由若干个发布批次组成，每批的数量一般是可以配置的（可以通过发布模板定义）。例如第一批 1 台（金丝雀），第二批 10%，第三批 50%，第四批 100%。每个批次之间留观察间隔，通过手工验证或监控反馈确保没有问题再发下一批次，所以总体上滚动式发布过程是比较缓慢的 (其中金丝雀的时间一般会比后续批次更长，比如金丝雀 10 分钟，后续间隔 2 分钟)。</li>
+<li>回退是发布的逆过程，将新版本流量从 LB 上摘除，清除新版本，发老版本，再将 LB 流量接入老版本。和发布过程一样，回退过程一般也比较慢的。</li>
+<li>滚动式发布国外术语通常叫 Rolling Update Deployment。</li>
+</ul>
+<p><strong>优势：</strong></p>
+<ul>
+<li>用户体验影响小，体验较平滑</li>
+</ul>
+<p><strong>不足：</strong></p>
+<ul>
+<li>发布和回退时间比较缓慢</li>
+<li>发布工具比较复杂，LB 需要平滑的流量摘除和拉入能力</li>
+</ul>
+<p><strong>适用场合：</strong></p>
+<ul>
+<li>用户体验不能中断的网站业务场景</li>
+<li>有一定的复杂发布工具研发能力；</li>
+</ul>
+<p><strong>流量模式</strong></p>
+<center><br><img src="https://img-blog.csdn.net/20180413160829601" alt="这里写图片描述"><br>滚动式发布，流量平滑过渡，<br></center>
+
+<h3 id="二、双服务器组发布"><a href="#二、双服务器组发布" class="headerlink" title="二、双服务器组发布"></a>二、双服务器组发布</h3><p>蓝绿发布仅适用于双服务器组发布，可以认为是对蛮力发布的一种简单优化发布方式。简化过程如下图所示：</p>
+<center><br><img src="https://img-blog.csdn.net/20180413161359955" alt="这里写图片描述"><br></center>
+
+<p><strong>实践要点</strong></p>
+<ul>
+<li>V1 版本称为蓝组，V2 版本称为绿组，发布时通过 LB 一次性将流量从蓝组直接切换到绿组，不经过金丝雀和滚动发布，蓝绿发布由此得名；</li>
+<li>出现问题回退也很直接，通过 LB 直接将流量切回蓝组。</li>
+<li>发布初步成功后，蓝组机器一般不直接回收，而是留一个待观察期，视具体情况观察期的时间可长可短，观察期过后确认发布无问题，则可以回收蓝组机器。</li>
+</ul>
+<p><strong>优势：</strong></p>
+<ul>
+<li>升级切换和回退速度非常快</li>
+</ul>
+<p><strong>不足：</strong></p>
+<ul>
+<li>切换是全量的，如果 V2 版本有问题，则对用户体验有直接影响；</li>
+<li>需要两倍机器资源；</li>
+</ul>
+<p><strong>适用场合：</strong></p>
+<ul>
+<li>对用户体验有一定容忍度的场景</li>
+<li>机器资源有富余或者可以按需分配（AWS 云，或自建容器云）</li>
+<li>暂不具备复杂滚动发布工具研发能力；</li>
+</ul>
+<p><strong>流量模式</strong></p>
+<center><br><img src="https://img-blog.csdn.net/20180413161716274" alt="这里写图片描述"><br>蓝绿发布一次完成流程切换<br></center>
+
+<h4 id="金丝雀发布（双服务器组）"><a href="#金丝雀发布（双服务器组）" class="headerlink" title="金丝雀发布（双服务器组）"></a>金丝雀发布（双服务器组）</h4><p>对蓝绿部署的一种简单优化，发布时先从绿组拉入 1 台金丝雀，待金丝雀验证通过再发全量。对比蓝绿发布，该发布方式的优势是有一个生产流量的金丝雀验证过程，可以减轻 V2 可能有问题的风险和影响面。简化发布过程如下图所示：</p>
+<center><br><img src="https://img-blog.csdn.net/20180413162041469" alt="这里写图片描述"><br></center>
+
+<h4 id="滚动式发布（双服务器组）"><a href="#滚动式发布（双服务器组）" class="headerlink" title="滚动式发布（双服务器组）"></a>滚动式发布（双服务器组）</h4><p>滚动式发布是对上面的蓝绿和金丝雀发布的进一步优化，按批次增量滚动发布，提供更平滑的用户体验。</p>
+<center><br><img src="https://img-blog.csdn.net/20180413162342844" alt="这里写图片描述"><br></center>
+
+<p><strong>实践要点</strong></p>
+<ul>
+<li>发布前先申请一批新服务器，数量一般和 V1 版本相同，将 V2 版本应用发布到新服务器上。例如如果在 AWS 云上，则可以直接调用 API 申请一批新 VM，如果用容器云 Kubernetes，则可以直接启动一批新容器（使用 V2 版本容器镜像）。</li>
+<li>一般会先通过 LB 拉入 1 台 V2 版本的机器，这台机器也相当于金丝雀，用于流量验证。</li>
+<li>逐步按批次完成发布，每批只需要通过 LB 拉入 V2 版本，再拉出对应数量的 V1 版本。批次之间留有观察间隔，通过手工或监控反馈确保没有问题再继续发布。</li>
+<li>发布有问题回退很快，直接通过 LB 将流量切回 V1 即可。</li>
+<li>完成发布后，一般 V1 版本要保留观察以备万一，比如留 1 天，1 天后没有问题则回收 V1 机器资源。</li>
+</ul>
+<p><strong>优势：</strong></p>
+<ul>
+<li>用户体验影响小；</li>
+<li>升级切换和回退（rollback）速度比单服务器组滚动发布要快，LB 切流量即可；</li>
+</ul>
+<p><strong>不足：</strong></p>
+<ul>
+<li>需要两倍机器资源；</li>
+<li>发布工具比较复杂，LB 需要流量切换能力</li>
+</ul>
+<p><strong>适用场合：</strong></p>
+<ul>
+<li>用户体验不能中断的网站业务场景</li>
+<li>机器资源有富余或者可以按需分配（AWS 云，或自建容器云）</li>
+<li>有一定的发布工具研发能力；</li>
+</ul>
+<p><strong>流量模式</strong></p>
+<center><br><img src="https://img-blog.csdn.net/20180413162608274" alt="这里写图片描述"><br>滚动式发布，流量平滑过渡<br></center>
+
+<h3 id="三、其它发布方式"><a href="#三、其它发布方式" class="headerlink" title="三、其它发布方式"></a>三、其它发布方式</h3><p>上述都是偏传统的发布方式，能覆盖大部分应用发布场景。针对一些关键新功能的上线发布，或者一些特定的场景，还有一些特殊的发布方式。</p>
+<h4 id="功能开关发布"><a href="#功能开关发布" class="headerlink" title="功能开关发布"></a>功能开关发布</h4><p>利用代码中的功能开关（Feature Flag/Toggle/Switch）来控制发布逻辑，一般不需要复杂的发布工具和智能 LB 配合，是一种相对比较低成本和简单的发布方式。这种方式也是支持现代 DevOps 理念，研发人员可以灵活定制和自助完成的发布方式。功能开关的原理如下图所示：</p>
+<center><br><img src="https://img-blog.csdn.net/20180413162726916" alt="这里写图片描述"><br>功能开关发布<br></center>
+
+<p><strong>实践要点</strong></p>
+<ul>
+<li>功能开关发布需要一个配置中心或者开关中心这样的服务支持，例如携程的 Apollo 配置中心附录 6.3，或者开源的 FF4J附录 6.4，这些都支持开关发布，业界还有专门的功能开关 SaaS 服务，例如 LaunchDarkly附录 6.5。通过配置中心，运维或研发人员可以在运行期动态配置功能开关的值。当然，功能开关发布只是配置中心的一种使用场景，配置中心还能支持其它很多动态配置场景。</li>
+<li>功能开关服务一般提供客户端 SDK，方便开发人员集成。在运行期，客户端 SDK 会同步最新的开关值，技术实现有推方式 (push)，也有拉方式 (pull)，或者推拉结合方式。</li>
+<li>新功能（V2 new feature）和老功能（V1 old feature）住在同一套代码中，新功能隐藏在开关后面，如果开关没有打开，则走老代码逻辑，如果开关打开，则走新代码逻辑。技术实现上可以理解为一个简单的 if/else 逻辑。</li>
+<li>应用上线后，开关先不打开，然后运维或研发人员通过开关中心打开新功能，经过流量验证新功能没有问题，则发布完成；如果有问题，则随时可以通过开关中心切回老功能逻辑。</li>
+</ul>
+<p><strong>优势：</strong></p>
+<ul>
+<li>升级切换和回退速度非常快</li>
+<li>相对于复杂的发布工具，实施比较简单，成本相对低廉</li>
+<li>研发能够灵活定制发布逻辑，支持 DevOps 自助发布</li>
+</ul>
+<p><strong>不足：</strong></p>
+<ul>
+<li>切换是全量的，如果 V2 版本有问题，则对用户体验有直接影响；</li>
+<li>对代码有侵入，代码逻辑会变复杂，需要定期清理老版本逻辑，维护成本变高</li>
+</ul>
+<p><strong>适用场合：</strong></p>
+<ul>
+<li>对用户体验有一定容忍度的场景</li>
+<li>已有配置中心或开关中心服务</li>
+<li>暂不具备研发复杂发布工具能力；</li>
+</ul>
+<p><strong>流量模式</strong></p>
+<center><br><img src="https://img-blog.csdn.net/20180413162936972" alt="这里写图片描述"><br>通过功能开关一次完成流量切换<br></center>
+
+<h4 id="A-B-测试"><a href="#A-B-测试" class="headerlink" title="A/B 测试"></a>A/B 测试</h4><p>A/B 测试附录 7.10原来主要用于产品功能的比对测试，收集用户反馈和对比数据做产品功能设计的决策。实际上，A/B 测试也可以作为一种新功能发布技术。下图展示基于 LB 实现的一种 A/B 测试发布。</p>
+<center><br><img src="https://img-blog.csdn.net/20180413163047576" alt="这里写图片描述"><br></center>
+
+<p><strong>实践要点</strong></p>
+<ul>
+<li>上图中，原来 PC 端和手机端都访问老版本 V1 服务（也称 A 组或控制组），当 V2 新版本（也称 B 组或实验组）发布以后，为了验证 V2 的功能正确性，同时也为了避免 V2 有问题时影响所有用户，先通过 LB 将手机端的流量切换到 V2 版本，经过一段时间的 A/B 比对测试和观察（主要通过用户和监控反馈），确保 V2 正常，则通过 LB 将全部流量切换到 V2。</li>
+<li>基于 LB 方式实现 A/B 测试，LB 需要能够通过某种条件做流量路由，例如通过 client ip，设备类型，浏览器类型，甚至是定制的 HTTP Header 或查询字符串。</li>
+<li>高级的 A/B 测试需要专门的平台支撑，wasabi附录 6.6就是 intuit 开源的一个支持高级 A/B 测试的平台，这类平台可以细粒度到针对某类用户做 A/B 测试，例如针对某个地区的用户，某个年龄段的用户，公司内部用户等等。举了例子，假设一个关键业务的新功能上线，为了降低风险采用 A/B 测试，可以做到先只让公司内部员工能访问到新功能，待新功能验证过，再全量放开给外部用户使用。</li>
+<li>功能开关和 A/B 测试有点相似，但功能开关一般是无状态和全量的，无法做到针对某类特定用户进行测试，而 A/B 测试一般是有状态的，能够跟踪事务和用户级别的状态，可以实现针对某类特定用户进行测试。</li>
+</ul>
+<p><strong>优势：</strong></p>
+<ul>
+<li>用户体验影响小；</li>
+<li>可以使用生产流量测试；</li>
+<li>可以做到针对某类特定目标用户进行测试；</li>
+</ul>
+<p><strong>不足：</strong></p>
+<ul>
+<li>搭建复杂度相对高，有一定技术门槛</li>
+</ul>
+<p><strong>适用场合：</strong></p>
+<ul>
+<li>核心关键业务，比如涉及资金的</li>
+<li>具备一定的 A/B 测试平台研发能力</li>
+</ul>
+<p><strong>流量模式</strong></p>
+<center><br><img src="https://img-blog.csdn.net/201804131632311" alt="这里写图片描述"><br>针对某类目标用户进行 A/B 测试<br></center>
+
+<h4 id="影子测试"><a href="#影子测试" class="headerlink" title="影子测试"></a>影子测试</h4><p>对于一些涉及核心业务的遗留系统的升级改造，为了确保万无一失，有一种称为影子测试的大招，采用比较复杂的流量复制、回放和比对技术实现。下面是影子测试的一个样例架构图，</p>
+<center><br><img src="https://img-blog.csdn.net/20180413163342859" alt="这里写图片描述"><br></center>
+
+<p><strong>实践要点</strong></p>
+<ul>
+<li>目标实现老的 legacy 服务迁移升级到新的 experimental 服务。</li>
+<li>测试开始前，需要在测试环境部署一份 legacy 服务和 experimental 服务，同时将生产数据库复制两份到测试环境。同时需要将生产请求日志收集起来，一般可以通过 kafka 队列收集，然后通过类似 goreplay附录 6.8这样的工具，消费 kafka 里头的请求日志，复制回放，将请求分发到 legacy 服务和 experimental 服务，收到响应后进行比对，如果所有响应比对成功，则可以认为 legacy 服务和 experimental 服务在功能逻辑上是等价的；如果有响应比对失败，则认为两者在功能逻辑上不等价，需要修复 experimental 并重新进行影子测试，直到全部比对成功。根据系统复杂度和关键性不同，比对测试时间短的可能需要几周，长的可达半年之久。</li>
+<li>影子测试因为旁路在独立测试环境中进行，可以对生产流量完全无影响。</li>
+<li>影子测试一般适用于遗留系统的等价重构迁移，例如.net 转 Java，或者 SQLServer 数据库升级为 MySQL 数据库，且外部依赖不能太多，否则需要开发很多 mock，测试部署成本会很高，且比对测试更加复杂和不稳定。</li>
+<li>当当网有一个比较成功的交易系统.NET 转 Java 迁移项目附录 6.9，采用了影子测试技术，值得参考借鉴。</li>
+</ul>
+<p><strong>优势：</strong></p>
+<ul>
+<li>对生产用户体验完全无影响</li>
+<li>可以使用生产真实流量进行测试（复制比对）</li>
+</ul>
+<p><strong>不足：</strong></p>
+<ul>
+<li>搭建复杂度很高，技术门槛高，数据库的导出复制是难点</li>
+<li>外部依赖不能太多，否则测试部署成本很高，且比对测试更加复杂和不稳定</li>
+</ul>
+<p><strong>适用场合：</strong></p>
+<ul>
+<li>核心关键业务，比如涉及资金的</li>
+<li>具备一定影子测试平台研发能力，包括流量复制、数据库导出复制和分发比对系统。</li>
+</ul>
+<p><strong>流量模式</strong></p>
+<center><br><img src="https://img-blog.csdn.net/20180413163538922" alt="这里写图片描述"><br>影子测试对生产流量无影响<br></center>
+
+<h3 id="四、比较"><a href="#四、比较" class="headerlink" title="四、比较"></a>四、比较</h3><p>下表对各种发布策略，从各个维度进行综合比较，供参考：</p>
+<center><br><img src="https://img-blog.csdn.net/20180413163634468" alt="这里写图片描述"><br></center>
+
+<h3 id="五、结论和建议"><a href="#五、结论和建议" class="headerlink" title="五、结论和建议"></a>五、结论和建议</h3><p>下面是对发布策略的一些选型建议，供不同阶段公司参考：</p>
+<ul>
+<li>蛮力发布一般是不建议采用的，除非是开发测试环境，用户体验不敏感的非关键应用，或者是创业期什么都缺时候的无奈之举。</li>
+<li>如果暂时还不具备研发较复杂的滚动发布工具和配套智能 LB，则功能开关是一种不错的轻量级发布技术，投入相对较小的成本，可以让研发人员灵活定制发布逻辑。</li>
+<li>金丝雀发布通过少量新版本服务器接收生产流量的方式去验证新版本，可以显著降低风险。金丝雀发布适用于大部分场景，一般成长型公司就可以采用。</li>
+<li>对于达到一定业务体量的公司，考虑到用户体验对业务的关键性，则需要投入研发资源开发支持滚动式发布的工具和配套的智能 LB，实现自动化和零停机的发布。滚动式发布一般和金丝雀发布配合，先发一台金丝雀去验证流量，再按批次增量发布。</li>
+<li>随着轻量级虚拟化（例如容器）的普及，双服务器组发布方式具有更快的发布和回退速度，是值得投入的高级发布技术。蓝绿部署仅适用于双服务器组，滚动式发布既可以在单服务器组上实现，也可以在双服务器组上实现。</li>
+<li>对于涉及关键核心业务的新功能上线，采用 A/B 测试，可以显著降低发布风险，A/B 测试是唯一一种支持针对特定用户组进行生产测试的高级发布技术。当然 A/B 测试的投入不低，建议有一定研发能力的组织采用。</li>
+<li>对于关键核心业务的迁移重构，为确保万无一失，最后的一个大招是影子测试，影子测试对生产流量和用户完全无影响。当然这个大招的投入成本和门槛都高，建议有足够业务体量和研发能力的组织投入。</li>
+<li>上述的各种发布策略并不是非此即彼的，一个公司常常会综合采用多种发布技术作为互补，实现灵活的发布能力。例如主流的发布手段是金丝雀 + 滚动式发布，某些业务线可能根据业务场景需要采用功能开关发布，还有一些业务线则可能采用高级的 A/B 测试发布手段。</li>
+</ul>
+<h3 id="六、附录"><a href="#六、附录" class="headerlink" title="六、附录"></a>六、附录</h3><p><a href="https://github.com/ContainerSolutions/k8s-deployment-strategies" target="_blank" rel="noopener">https://github.com/ContainerSolutions/k8s-deployment-strategies</a></p>
+<p><a href="https://opensource.com/article/18/2/feature-flags-ring-deployment-model" target="_blank" rel="noopener">https://opensource.com/article/18/2/feature-flags-ring-deployment-model</a></p>
+<p><a href="https://github.com/ctripcorp/apollo" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo</a></p>
+<p><a href="http://www.ff4j.org/" target="_blank" rel="noopener">http://www.ff4j.org/</a></p>
+<p><a href="https://launchdarkly.com/" target="_blank" rel="noopener">https://launchdarkly.com/</a></p>
+<p><a href="https://github.com/intuit/wasabi" target="_blank" rel="noopener">https://github.com/intuit/wasabi</a></p>
+<p><a href="https://blog.zenika.com/2017/04/19/migration-dun-legacy-avec-goreplay/" target="_blank" rel="noopener">https://blog.zenika.com/2017/04/19/migration-dun-legacy-avec-goreplay/</a></p>
+<p><a href="https://github.com/buger/goreplay" target="_blank" rel="noopener">https://github.com/buger/goreplay</a></p>
+<p><a href="http://blog.shurenyun.com/untitled-9/" target="_blank" rel="noopener">http://blog.shurenyun.com/untitled-9/</a></p>
+<p><a href="https://en.wikipedia.org/wiki/A/B_testing" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/A/B_testing</a></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://www.zhangqifei.top/2018/02/07/linux总结/金丝雀发布、滚动发布、蓝绿发布到底有什么差别？关键点是什么？/" title="金丝雀发布、滚动发布、蓝绿发布到底有什么差别？关键点是什么？" target="_blank" rel="external">https://www.zhangqifei.top/2018/02/07/linux总结/金丝雀发布、滚动发布、蓝绿发布到底有什么差别？关键点是什么？/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://www.zhangqifei.top" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://www.zhangqifei.top" target="_blank"><span class="text-dark">咻一咻</span><small class="ml-1x">Smile &amp; Simple</small></a></h3>
+        <div>人生没有彩排，每天都是现场直播。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjkyMy85NDg0">
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+      
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2018/03/04/随笔/程序员为什么一定要用Linux？/" title="程序员为什么一定要用Linux？"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2018/01/08/浏览器/吐血推荐珍藏的Chrome插件/" title="吐血推荐珍藏的Chrome插件"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class>
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/zhangqifei" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=98bEwsTFwsfAx8S3hobZlJia" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        2015 &copy; 2019 咻一咻
+        
+        <div class="publishby">
+        	Theme by <a href="https://hexo.io/" target="_blank"> Hexo </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+
+
+    
+    
+        
+    
+<script defer type="text/javascript">
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+
+    if (typeof LivereTower === 'function') { return; }
+
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+    
+    
+
+
+
+</body>
+</html>

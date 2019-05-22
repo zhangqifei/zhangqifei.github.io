@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="referrer" content="never">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>运维自动化工具saltstack | 老朋友好久不见！</title>
+  <meta name="description" content="Saltstack简介SaltStack是一个服务器基础架构集中化管理平台，具备配置管理、远程执行、监控等功能，一般可以理解为简化版的puppet和加强版的func。SaltStack基于Python语言实现，结合轻量级消息队列（ZeroMQ）与Python第三方模块（Pyzmq、PyCrypto、Pyjinjia2、python-msgpack和PyYAML等）构建。通过部署SaltStack环">
+<meta name="keywords" content="saltstack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="运维自动化工具saltstack">
+<meta property="og:url" content="https://www.zhangqifei.top/2017/08/06/运维自动化工具/运维自动化工具saltstack/index.html">
+<meta property="og:site_name" content="老朋友好久不见！">
+<meta property="og:description" content="Saltstack简介SaltStack是一个服务器基础架构集中化管理平台，具备配置管理、远程执行、监控等功能，一般可以理解为简化版的puppet和加强版的func。SaltStack基于Python语言实现，结合轻量级消息队列（ZeroMQ）与Python第三方模块（Pyzmq、PyCrypto、Pyjinjia2、python-msgpack和PyYAML等）构建。通过部署SaltStack环">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.linuxidc.com/upload/2017_12/171221203479473.png">
+<meta property="og:image" content="https://www.linuxidc.com/upload/2017_12/171221203479471.png">
+<meta property="og:image" content="https://www.linuxidc.com/upload/2017_12/171221203479476.png">
+<meta property="og:image" content="https://www.linuxidc.com/upload/2017_12/171221203479474.png">
+<meta property="og:image" content="https://www.linuxidc.com/upload/2017_12/171221203479472.png">
+<meta property="og:image" content="https://www.linuxidc.com/upload/2017_12/171221203479475.png">
+<meta property="og:updated_time" content="2019-05-22T03:49:05.122Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="运维自动化工具saltstack">
+<meta name="twitter:description" content="Saltstack简介SaltStack是一个服务器基础架构集中化管理平台，具备配置管理、远程执行、监控等功能，一般可以理解为简化版的puppet和加强版的func。SaltStack基于Python语言实现，结合轻量级消息队列（ZeroMQ）与Python第三方模块（Pyzmq、PyCrypto、Pyjinjia2、python-msgpack和PyYAML等）构建。通过部署SaltStack环">
+<meta name="twitter:image" content="https://www.linuxidc.com/upload/2017_12/171221203479473.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://www.zhangqifei.top/2017/08/06/运维自动化工具/运维自动化工具saltstack/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="老朋友好久不见！" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+  <script>
+      document.addEventListener('visibilitychange', function () {
+          if (document.visibilityState == 'hidden') {
+              normal_title = document.title;
+              document.title = '欢迎回家！！！！';
+          } else document.title = normal_title;
+      });
+  </script>
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://www.zhangqifei.top">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">咻一咻</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Smile &amp; Simple</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech>
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/zhangqifei" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=98bEwsTFwsfAx8S3hobZlJia" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>CSDN博客地址为：<a href="https://blog.csdn.net/qq_37187976/">『点击跳转』</a> 原有文章不迁移。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/centos7/">centos7</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux总结/">linux总结</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/专业词汇/">专业词汇</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/命令/">命令</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络/">网络</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/运维自动化工具/">运维自动化工具</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API接口/">API接口</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASCII/">ASCII</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CA/">CA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS/">CentOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/">Chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Systemd/">Systemd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vimium/">Vimium</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ab/">ab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ansible/">ansible</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/">apache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bc/">bc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/border/">border</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cat/">cat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos7/">centos7</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/date/">date</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/echo/">echo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grep/">grep</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/head/">head</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lrzsz/">lrzsz</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/puppet/">puppet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/saltstack/">saltstack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/seq/">seq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/发布/">发布</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像/">图像</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/状态码/">状态码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/运维自动化工具/">运维自动化工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/防火墙/">防火墙</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/API接口/" style="font-size: 13px;">API接口</a> <a href="/tags/ASCII/" style="font-size: 13px;">ASCII</a> <a href="/tags/CA/" style="font-size: 13px;">CA</a> <a href="/tags/CentOS/" style="font-size: 13px;">CentOS</a> <a href="/tags/Chrome/" style="font-size: 13px;">Chrome</a> <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HTTP/" style="font-size: 14px;">HTTP</a> <a href="/tags/Linux/" style="font-size: 13px;">Linux</a> <a href="/tags/Systemd/" style="font-size: 13px;">Systemd</a> <a href="/tags/Vimium/" style="font-size: 13px;">Vimium</a> <a href="/tags/ab/" style="font-size: 13px;">ab</a> <a href="/tags/ansible/" style="font-size: 13px;">ansible</a> <a href="/tags/apache/" style="font-size: 13px;">apache</a> <a href="/tags/bc/" style="font-size: 13px;">bc</a> <a href="/tags/border/" style="font-size: 13px;">border</a> <a href="/tags/cat/" style="font-size: 13px;">cat</a> <a href="/tags/centos7/" style="font-size: 14px;">centos7</a> <a href="/tags/date/" style="font-size: 13px;">date</a> <a href="/tags/echo/" style="font-size: 13px;">echo</a> <a href="/tags/grep/" style="font-size: 13px;">grep</a> <a href="/tags/head/" style="font-size: 13px;">head</a> <a href="/tags/lrzsz/" style="font-size: 13px;">lrzsz</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/nginx/" style="font-size: 14px;">nginx</a> <a href="/tags/ping/" style="font-size: 13px;">ping</a> <a href="/tags/puppet/" style="font-size: 13px;">puppet</a> <a href="/tags/redis/" style="font-size: 13px;">redis</a> <a href="/tags/saltstack/" style="font-size: 13px;">saltstack</a> <a href="/tags/seq/" style="font-size: 13px;">seq</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/test/" style="font-size: 13px;">test</a> <a href="/tags/发布/" style="font-size: 13px;">发布</a> <a href="/tags/图像/" style="font-size: 13px;">图像</a> <a href="/tags/状态码/" style="font-size: 13px;">状态码</a> <a href="/tags/运维自动化工具/" style="font-size: 13px;">运维自动化工具</a> <a href="/tags/防火墙/" style="font-size: 13px;">防火墙</a>
+    </div>
+  </div>
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/nginx/">nginx</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/nginx/安装nginx/" class="title">安装-nginx</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T10:15:07.017Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/redis/">redis</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/redis/安装-redis/" class="title">安装-redis</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T09:25:29.739Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/命令/">命令</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/命令/linux命令-sed/" class="title">linux命令-sed</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T09:25:24.606Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/工具/">工具</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/工具/PS AND gimp/" class="title">PS AND gimp</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T01:41:22.000Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/随笔/">随笔</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/03/05/随笔/一次说清什么是正向代理，什么是反向代理？/" class="title">一次说清什么是正向代理，什么是反向代理？</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-03-05T01:42:22.000Z" itemprop="datePublished">2018-03-05</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+<script>
+    var timeDiv = document.getElementById("timeDiv");
+
+    function addZero(value) {
+        return value < 10 ? "0" + value : value;
+    }
+    function getTime() {
+        var time = new Date();
+        var year = time.getFullYear();
+        var month = time.getMonth() + 1;
+        var day = time.getDate();
+        var hour = time.getHours();
+        var minute = time.getMinutes();
+        var second = time.getSeconds();
+
+        var week = time.getDay();
+        var area = "日一二三四五六";
+
+        timeDiv.innerHTML = year + "年" + addZero(month) + "月" + addZero(day) + "日 星期" + area[week] + " " + addZero(hour) + "时" + addZero(minute) + "分" + addZero(second) + "秒";
+    }
+    getTime();
+
+
+    window.setInterval(getTime, 1000);//->每隔1000ms都会重新执行getTime
+</script>
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Saltstack简介"><span class="toc-number">1.</span> <span class="toc-text">Saltstack简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#特点"><span class="toc-number">1.1.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#架构"><span class="toc-number">1.2.</span> <span class="toc-text">架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#连接方式"><span class="toc-number">1.3.</span> <span class="toc-text">连接方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装部署"><span class="toc-number">2.</span> <span class="toc-text">安装部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#初始化环境："><span class="toc-number">2.1.</span> <span class="toc-text">初始化环境：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#master-端安装"><span class="toc-number">2.2.</span> <span class="toc-text">master  端安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#monitor端安装"><span class="toc-number">2.3.</span> <span class="toc-text">monitor端安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#证书管理"><span class="toc-number">2.4.</span> <span class="toc-text">证书管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#验证测试"><span class="toc-number">2.5.</span> <span class="toc-text">验证测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见模块"><span class="toc-number">3.</span> <span class="toc-text">常见模块</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-运维自动化工具/运维自动化工具saltstack" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      运维自动化工具saltstack
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2017/08/06/运维自动化工具/运维自动化工具saltstack/" class="article-date">
+	  <time datetime="2017-08-06T10:42:22.000Z" itemprop="datePublished">2017-08-06</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/运维自动化工具/">运维自动化工具</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/saltstack/">saltstack</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2017/08/06/运维自动化工具/运维自动化工具saltstack/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 7(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <h2 id="Saltstack简介"><a href="#Saltstack简介" class="headerlink" title="Saltstack简介"></a>Saltstack简介</h2><p>SaltStack是一个服务器基础架构集中化管理平台，具备配置管理、远程执行、监控等功能，一般可以理解为简化版的puppet和加强版的func。SaltStack基于Python语言实现，结合轻量级消息队列（ZeroMQ）与Python第三方模块（Pyzmq、PyCrypto、Pyjinjia2、python-msgpack和PyYAML等）构建。通过部署SaltStack环境，我们可以在成千上万台服务器上做到批量执行命令，根据不同业务特性进行配置集中化管理、分发文件、采集服务器数据、操作系统基础及软件包管理等，SaltStack是运维人员提高工作效率、规范业务配置与操作的利器。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul>
+<li><strong>简单</strong><ul>
+<li>兼顾大规模部署与更小的系统的同时提供多功能性是很困难的，Salt是非常简单配置和维护，不管项目的大小。Salt可以胜任管理任意的数量的服务器，不管是本地网络，还是跨数据中心。架构采用C/S模式，在一个后台程序中集成必要功能。默认不需要复杂的配置就可以工作，同时可以定制用于特殊的需求。</li>
+</ul>
+</li>
+<li><strong>并行执行</strong><ul>
+<li>Salt的核心功能：</li>
+<li>通过并行方式让远端节点执行命令</li>
+<li>采用安全的加密/解析协议</li>
+<li>最小化使用网络和负载</li>
+<li>提供简单的程序接口</li>
+<li>Salt引入了更细粒度的控制，允许不通过目标名字，二是通过系统属性分类</li>
+</ul>
+</li>
+<li><strong>构建在成熟技术之上</strong><ul>
+<li>Salt采用了很多技术和技巧。网络层采用优秀的ZeroMQ库，所以守护进程里面包含AMQ代理。Salt采用公钥和主控通讯，同时使用更快的AES加密通信，验证和加密都已经集成在Salt里面。Salt使用msgpack通讯，所以更快速和更轻量网络交换。</li>
+</ul>
+</li>
+<li><strong>Python 客户端接口</strong><ul>
+<li>为了实现简单的扩展，Salt执行例程可以写成简单的Python模块。客户端程序收集的数据可以发送回主控端，可以是其他任意程序。可以通过Python API调用Salt程序，或者命令行，因此，Salt可以用来执行一次性命令，或者大型应用程序中的一部分模块。</li>
+</ul>
+</li>
+<li><strong>快速，灵活，可扩展</strong><ul>
+<li>结果是一个系统可以高速在一台或者一组服务器执行命令。Salt速度很快，配置简单，扩展性好，提供了一个远程执行架构，可以管理多样化需求的任何数量的服务器。整合了世界上最好的远程执行方法，增强处理能力，扩展使用范围，使得可以适用任何多样化复杂的网络。</li>
+</ul>
+</li>
+<li><strong>开源</strong><ul>
+<li>Salt基于Apache 2.0 licence开发，可以用于开源或者自有项目。请反馈你的扩展给项目组，以便更多人受益，共同促进Salt发展。请在你的系统部署 系统，让运维更便捷。</li>
+</ul>
+</li>
+</ul>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p>saltstack是基于C/S服务模式，在该架构中，服务器端叫做Master，客户端叫做Minion。传统的C/S模式我们这样理解，客户端发送请求给服务器端，服务器端接受到来自客户端的请求并处理完成后再返回客户端。 在saltstack架构中，不仅有传统的C/S服务模式，而且有消息队列中的发布与订阅（pub/sub）服务模式。目前我们一般用其C/S架构做批量管理。</p>
+<center><br><img src="https://www.linuxidc.com/upload/2017_12/171221203479473.png" alt="12"><br></center>
+
+<ul>
+<li>Master：控制中心,salt命令运行和资源状态管理</li>
+<li>Minion : 需要管理的客户端机器,会主动去连接Mater端,并从Master端得到资源状态</li>
+<li>信息,同步资源管理信息</li>
+<li>States：配置管理的指令集</li>
+<li>Modules：在命令行中和配置文件中使用的指令模块,可以在命令行中运行</li>
+<li>Grains：minion端的变量,静态的</li>
+<li>Pillar：minion端的变量,动态的比较私密的变量,可以通过配置文件实现同步minions定义</li>
+<li>highstate：为minion端下发永久添加状态,从sls配置文件读取.即同步状态配置</li>
+<li>salt_schedule：会自动保持客户端配置</li>
+</ul>
+<h3 id="连接方式"><a href="#连接方式" class="headerlink" title="连接方式"></a>连接方式</h3><p>Master与Minion认证</p>
+<ul>
+<li>minion在第一次启动时，会在/etc/salt/pki/minion/（该路径在/etc/salt/minion里面设置）下自动生成minion.pem（private key）和 minion.pub（public key），然后将 minion.pub发送给master。</li>
+<li>master在接收到minion的public key后，通过salt-key命令accept minion public key，这样在master的/etc/salt/pki/master/minions下的将会存放以minion id命名的 public key，然后master就能对minion发送指令了。<ul>
+<li>SaltStack master启动后默认监听4505和4506两个端口。4505（publish_port）为saltstack的消息发布系统，4506（ret_port）为saltstack客户端与服务端通信的端口。如果使用lsof 查看4505端口，会发现所有的minion在4505端口持续保持在ESTABLISHED状态</li>
+</ul>
+</li>
+</ul>
+<h2 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">主机名	                IP地址	               系统</span><br><span class="line">saltstack-server	172.20.4.50	CentOS release 6.9 (Final)</span><br><span class="line">saltstack-1	        172.20.4.51	CentOS release 6.9 (Final)</span><br><span class="line">saltstack-2	        172.20.4.52	CentOS release 6.9 (Final)</span><br></pre></td></tr></table></figure>
+<h3 id="初始化环境："><a href="#初始化环境：" class="headerlink" title="初始化环境："></a>初始化环境：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">yum install ntpdate -y &amp;&amp; ntpdate time1.aliyun.com                    #同步时间</span><br><span class="line">service iptables stop                                                 #关闭iptables</span><br><span class="line">sed -i &quot;s/SELINUX=enforcing/SELINUX=disabled/&quot;  /etc/selinux/config   #关闭selinux</span><br><span class="line">setenforce 0</span><br><span class="line"> </span><br><span class="line">cat &gt; saltstack.repo &lt;&lt;EOF</span><br><span class="line">[saltstack-repo]</span><br><span class="line">name=SaltStack repo for RHEL/CentOS $releasever</span><br><span class="line">baseurl=https://repo.saltstack.com/yum/RedHat/$releasever/$basearch/latest</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">gpgkey=https://repo.saltstack.com/yum/redhat/$releasever/$basearch/latest/SALTSTACK-GPG-KEY.pub</span><br><span class="line">EOF</span><br><span class="line">rpm --import https://repo.saltstack.com/yum/redhat/6/x86_64/latest/SALTSTACK-GPG-KEY.pub</span><br><span class="line">yum cleanall &amp;&amp; yum makecache                #更新yum源</span><br></pre></td></tr></table></figure>
+<h3 id="master-端安装"><a href="#master-端安装" class="headerlink" title="master  端安装"></a>master  端安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">yum -y install salt-master</span><br><span class="line">mkdir /etc/salt/states</span><br><span class="line"> </span><br><span class="line">编辑/etc/salt/states</span><br><span class="line">interface: 0.0.0.0</span><br><span class="line">state_top: top.sls</span><br><span class="line">file_roots:</span><br><span class="line">   base:</span><br><span class="line">     - /etc/salt/states</span><br></pre></td></tr></table></figure>
+<center><br><img src="https://www.linuxidc.com/upload/2017_12/171221203479471.png" alt="12"><br></center>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">启动服务，并设置开机自启</span><br><span class="line">/etc/init.d/salt-master start</span><br><span class="line">chkconfig salt-master on</span><br></pre></td></tr></table></figure>
+<h3 id="monitor端安装"><a href="#monitor端安装" class="headerlink" title="monitor端安装"></a>monitor端安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">配置yum源和master方法一致</span><br><span class="line"></span><br><span class="line">yum -y install salt-minion</span><br><span class="line">修改/etc/salt/minion文件（slatstack-1/2 都更改成对应的id，master指向master的ip地址）</span><br></pre></td></tr></table></figure>
+<center><br><img src="https://www.linuxidc.com/upload/2017_12/171221203479476.png" alt><br></center><br>启动客户端，并设置开机自启动<br><center><br><img src="https://www.linuxidc.com/upload/2017_12/171221203479474.png" alt><br></center>
+
+<h3 id="证书管理"><a href="#证书管理" class="headerlink" title="证书管理"></a>证书管理</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#执行salt-key -L  查看秘钥验证</span><br><span class="line">#执行Salt-key -a 加ID添加认证秘钥</span><br></pre></td></tr></table></figure>
+<center><br><img src="https://www.linuxidc.com/upload/2017_12/171221203479472.png" alt><br></center>
+
+<h3 id="验证测试"><a href="#验证测试" class="headerlink" title="验证测试"></a>验证测试</h3><center><br><img src="https://www.linuxidc.com/upload/2017_12/171221203479475.png" alt><br></center>    
+
+<h2 id="常见模块"><a href="#常见模块" class="headerlink" title="常见模块"></a>常见模块</h2><p>(1)、cp模块（实现远程文件、目录的复制，以及下载URL文件等操作）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">将主服务器file_roots指定位置下的目录复制到被控主机</span><br><span class="line">salt &quot;*&quot; cp.get_dir salt://testdir /tmp/test</span><br><span class="line"></span><br><span class="line">将主服务器file_roots指定位置下的文件复制到被控主机</span><br><span class="line">salt &quot;*&quot; cp.get_file salt://testdir/testfile /tmp/testfile</span><br><span class="line"></span><br><span class="line">下载指定URL内容到被控主机指定位置</span><br><span class="line">salt &quot;*&quot; cp.get_url http://mirrors.163.com/.help/CentOS6-Base-163.repo /etc/yum.repos.d/CentOS6-Base-163.repo</span><br></pre></td></tr></table></figure></p>
+<p>(2)、cmd模块（实现远程的命令行调用执行）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">salt &quot;*&quot; cmd.run &apos;netstat -lntup&apos;</span><br></pre></td></tr></table></figure></p>
+<p>(3)、cron模块（实现被控主机的crontab操作）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">为指定的被控主机、root用户添加crontab信息</span><br><span class="line">salt &quot;*&quot; cron.set_job root &apos;*/5&apos; &apos;*&apos; &apos;*&apos; &apos;*&apos; &apos;*&apos; &apos;/usr/sbin/ntpdate time1.aliyun.com&apos;</span><br><span class="line"></span><br><span class="line">删除指定的被控主机、root用户的crontab信息</span><br><span class="line">salt &quot;*&quot; cron.rm_job root &apos;/usr/sbin/ntpdate time1.aliyun.com&apos;</span><br><span class="line"></span><br><span class="line">查看定时任务</span><br><span class="line">salt &apos;*&apos; cron.raw_cron root</span><br></pre></td></tr></table></figure></p>
+<p>(4)、dnsutil模块（实现被控主机通用DNS操作）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">为被控主机添加指定的hosts主机配置项</span><br><span class="line">salt &apos;*&apos; dnsutil.hosts_append /etc/hosts 127.0.0.1 test.saltstack.com</span><br></pre></td></tr></table></figure></p>
+<p>(5)、file模块（被控主机文件常见操作，包括文件读写、权限、查找、校验等）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">salt &apos;*&apos; file.get_sum /etc/resolv.conf md5</span><br><span class="line">salt &apos;*&apos; file.stats /etc/resolv.conf</span><br></pre></td></tr></table></figure></p>
+<p>(6)、network模块（返回被控主机网络信息）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">salt &apos;*&apos; network.ip_addrs</span><br><span class="line">salt &apos;*&apos; network.interfaces</span><br></pre></td></tr></table></figure></p>
+<p>(7)、pkg包管理模块（被控主机程序包管理，如yum、apt-get等）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">salt &apos;*&apos; pkg.install sysstat</span><br><span class="line">salt &apos;*&apos; pkg.file_list sysstat</span><br></pre></td></tr></table></figure></p>
+<p>(8)、service 服务模块（被控主机程序包服务管理）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">salt &apos;*&apos; service.enable crond</span><br><span class="line">salt &apos;*&apos; service.disable crond</span><br><span class="line">salt &apos;*&apos; service.status crond</span><br><span class="line">salt &apos;*&apos; service.stop crond</span><br><span class="line">salt &apos;*&apos; service.start crond</span><br><span class="line">salt &apos;*&apos; service.restart crond</span><br><span class="line">salt &apos;*&apos; service.reload crond</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://www.zhangqifei.top/2017/08/06/运维自动化工具/运维自动化工具saltstack/" title="运维自动化工具saltstack" target="_blank" rel="external">https://www.zhangqifei.top/2017/08/06/运维自动化工具/运维自动化工具saltstack/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://www.zhangqifei.top" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://www.zhangqifei.top" target="_blank"><span class="text-dark">咻一咻</span><small class="ml-1x">Smile &amp; Simple</small></a></h3>
+        <div>人生没有彩排，每天都是现场直播。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjkyMy85NDg0">
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+      
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2017/08/07/运维自动化工具/运维自动化工具puppet/" title="运维自动化工具puppet"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2017/06/06/nginx/8分钟带你深入浅出搞懂Nginx/" title="8分钟带你深入浅出搞懂Nginx"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class>
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/zhangqifei" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=98bEwsTFwsfAx8S3hobZlJia" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        2015 &copy; 2019 咻一咻
+        
+        <div class="publishby">
+        	Theme by <a href="https://hexo.io/" target="_blank"> Hexo </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+
+
+    
+    
+        
+    
+<script defer type="text/javascript">
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+
+    if (typeof LivereTower === 'function') { return; }
+
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+    
+    
+
+
+
+</body>
+</html>

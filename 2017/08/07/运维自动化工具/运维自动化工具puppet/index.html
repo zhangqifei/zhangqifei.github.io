@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="referrer" content="never">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>运维自动化工具puppet | 老朋友好久不见！</title>
+  <meta name="description" content="puppet的概念Puppet是一款使用GPLV2X协议授权的开源管理配置工具，用Ruby语言开发。其既可以通过客户端–服务器的方式运行，也可以独立运行。Puppet可以为系统管理员提供方便、快捷的系统自动化管理。对于系统管理员来说通过Puppet配置管理系统，底层的操作系统的发行版本是透明的，Puppet通过（Provider又称提供者）属性来完成软件的配置与安装，管理员不必关心操作系统的种类与">
+<meta name="keywords" content="puppet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="运维自动化工具puppet">
+<meta property="og:url" content="https://www.zhangqifei.top/2017/08/07/运维自动化工具/运维自动化工具puppet/index.html">
+<meta property="og:site_name" content="老朋友好久不见！">
+<meta property="og:description" content="puppet的概念Puppet是一款使用GPLV2X协议授权的开源管理配置工具，用Ruby语言开发。其既可以通过客户端–服务器的方式运行，也可以独立运行。Puppet可以为系统管理员提供方便、快捷的系统自动化管理。对于系统管理员来说通过Puppet配置管理系统，底层的操作系统的发行版本是透明的，Puppet通过（Provider又称提供者）属性来完成软件的配置与安装，管理员不必关心操作系统的种类与">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.linuxidc.com/upload/2017_12/171221202568971.png">
+<meta property="og:updated_time" content="2019-05-22T03:48:59.655Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="运维自动化工具puppet">
+<meta name="twitter:description" content="puppet的概念Puppet是一款使用GPLV2X协议授权的开源管理配置工具，用Ruby语言开发。其既可以通过客户端–服务器的方式运行，也可以独立运行。Puppet可以为系统管理员提供方便、快捷的系统自动化管理。对于系统管理员来说通过Puppet配置管理系统，底层的操作系统的发行版本是透明的，Puppet通过（Provider又称提供者）属性来完成软件的配置与安装，管理员不必关心操作系统的种类与">
+<meta name="twitter:image" content="https://www.linuxidc.com/upload/2017_12/171221202568971.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://www.zhangqifei.top/2017/08/07/运维自动化工具/运维自动化工具puppet/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="老朋友好久不见！" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+  <script>
+      document.addEventListener('visibilitychange', function () {
+          if (document.visibilityState == 'hidden') {
+              normal_title = document.title;
+              document.title = '欢迎回家！！！！';
+          } else document.title = normal_title;
+      });
+  </script>
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://www.zhangqifei.top">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">咻一咻</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Smile &amp; Simple</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech>
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/zhangqifei" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=98bEwsTFwsfAx8S3hobZlJia" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>CSDN博客地址为：<a href="https://blog.csdn.net/qq_37187976/">『点击跳转』</a> 原有文章不迁移。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/centos7/">centos7</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux总结/">linux总结</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/专业词汇/">专业词汇</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/命令/">命令</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络/">网络</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/运维自动化工具/">运维自动化工具</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API接口/">API接口</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASCII/">ASCII</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CA/">CA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS/">CentOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/">Chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Systemd/">Systemd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vimium/">Vimium</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ab/">ab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ansible/">ansible</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/">apache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bc/">bc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/border/">border</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cat/">cat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos7/">centos7</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/date/">date</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/echo/">echo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grep/">grep</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/head/">head</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lrzsz/">lrzsz</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/puppet/">puppet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/saltstack/">saltstack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/seq/">seq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/发布/">发布</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像/">图像</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/状态码/">状态码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/运维自动化工具/">运维自动化工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/防火墙/">防火墙</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/API接口/" style="font-size: 13px;">API接口</a> <a href="/tags/ASCII/" style="font-size: 13px;">ASCII</a> <a href="/tags/CA/" style="font-size: 13px;">CA</a> <a href="/tags/CentOS/" style="font-size: 13px;">CentOS</a> <a href="/tags/Chrome/" style="font-size: 13px;">Chrome</a> <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HTTP/" style="font-size: 14px;">HTTP</a> <a href="/tags/Linux/" style="font-size: 13px;">Linux</a> <a href="/tags/Systemd/" style="font-size: 13px;">Systemd</a> <a href="/tags/Vimium/" style="font-size: 13px;">Vimium</a> <a href="/tags/ab/" style="font-size: 13px;">ab</a> <a href="/tags/ansible/" style="font-size: 13px;">ansible</a> <a href="/tags/apache/" style="font-size: 13px;">apache</a> <a href="/tags/bc/" style="font-size: 13px;">bc</a> <a href="/tags/border/" style="font-size: 13px;">border</a> <a href="/tags/cat/" style="font-size: 13px;">cat</a> <a href="/tags/centos7/" style="font-size: 14px;">centos7</a> <a href="/tags/date/" style="font-size: 13px;">date</a> <a href="/tags/echo/" style="font-size: 13px;">echo</a> <a href="/tags/grep/" style="font-size: 13px;">grep</a> <a href="/tags/head/" style="font-size: 13px;">head</a> <a href="/tags/lrzsz/" style="font-size: 13px;">lrzsz</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/nginx/" style="font-size: 14px;">nginx</a> <a href="/tags/ping/" style="font-size: 13px;">ping</a> <a href="/tags/puppet/" style="font-size: 13px;">puppet</a> <a href="/tags/redis/" style="font-size: 13px;">redis</a> <a href="/tags/saltstack/" style="font-size: 13px;">saltstack</a> <a href="/tags/seq/" style="font-size: 13px;">seq</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/test/" style="font-size: 13px;">test</a> <a href="/tags/发布/" style="font-size: 13px;">发布</a> <a href="/tags/图像/" style="font-size: 13px;">图像</a> <a href="/tags/状态码/" style="font-size: 13px;">状态码</a> <a href="/tags/运维自动化工具/" style="font-size: 13px;">运维自动化工具</a> <a href="/tags/防火墙/" style="font-size: 13px;">防火墙</a>
+    </div>
+  </div>
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/nginx/">nginx</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/nginx/安装nginx/" class="title">安装-nginx</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T10:15:07.017Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/redis/">redis</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/redis/安装-redis/" class="title">安装-redis</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T09:25:29.739Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/命令/">命令</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/命令/linux命令-sed/" class="title">linux命令-sed</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T09:25:24.606Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/工具/">工具</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/工具/PS AND gimp/" class="title">PS AND gimp</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T01:41:22.000Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/随笔/">随笔</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/03/05/随笔/一次说清什么是正向代理，什么是反向代理？/" class="title">一次说清什么是正向代理，什么是反向代理？</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-03-05T01:42:22.000Z" itemprop="datePublished">2018-03-05</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+<script>
+    var timeDiv = document.getElementById("timeDiv");
+
+    function addZero(value) {
+        return value < 10 ? "0" + value : value;
+    }
+    function getTime() {
+        var time = new Date();
+        var year = time.getFullYear();
+        var month = time.getMonth() + 1;
+        var day = time.getDate();
+        var hour = time.getHours();
+        var minute = time.getMinutes();
+        var second = time.getSeconds();
+
+        var week = time.getDay();
+        var area = "日一二三四五六";
+
+        timeDiv.innerHTML = year + "年" + addZero(month) + "月" + addZero(day) + "日 星期" + area[week] + " " + addZero(hour) + "时" + addZero(minute) + "分" + addZero(second) + "秒";
+    }
+    getTime();
+
+
+    window.setInterval(getTime, 1000);//->每隔1000ms都会重新执行getTime
+</script>
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#puppet的概念"><span class="toc-number">1.</span> <span class="toc-text">puppet的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#puppet工作模型"><span class="toc-number">1.1.</span> <span class="toc-text">puppet工作模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#puppet的细节和原理"><span class="toc-number">1.2.</span> <span class="toc-text">puppet的细节和原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-number">2.</span> <span class="toc-text">准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#服务端安装"><span class="toc-number">2.1.</span> <span class="toc-text">服务端安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端安装"><span class="toc-number">2.2.</span> <span class="toc-text">客户端安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务端查看，签发客户端的证书"><span class="toc-number">2.3.</span> <span class="toc-text">服务端查看，签发客户端的证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试"><span class="toc-number">2.4.</span> <span class="toc-text">测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置自动签发证书"><span class="toc-number">2.5.</span> <span class="toc-text">配置自动签发证书</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模块管理"><span class="toc-number">3.</span> <span class="toc-text">模块管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扩展学习"><span class="toc-number">4.</span> <span class="toc-text">扩展学习</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-运维自动化工具/运维自动化工具puppet" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      运维自动化工具puppet
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2017/08/07/运维自动化工具/运维自动化工具puppet/" class="article-date">
+	  <time datetime="2017-08-07T11:42:22.000Z" itemprop="datePublished">2017-08-07</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/运维自动化工具/">运维自动化工具</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/puppet/">puppet</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2017/08/07/运维自动化工具/运维自动化工具puppet/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2.5k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 9(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <h2 id="puppet的概念"><a href="#puppet的概念" class="headerlink" title="puppet的概念"></a>puppet的概念</h2><p>Puppet是一款使用GPLV2X协议授权的开源管理配置工具，用Ruby语言开发。其既可以通过客户端–服务器的方式运行，也可以独立运行。Puppet可以为系统管理员提供方便、快捷的系统自动化管理。对于系统管理员来说通过Puppet配置管理系统，底层的操作系统的发行版本是透明的，Puppet通过（Provider又称提供者）属性来完成软件的配置与安装，管理员不必关心操作系统的种类与发行版本，<br>Puppet还可以提供一个强大的框架来完成系统管理功能，在框架的基础上系统管理员可以通过Puppet语言来描述系统的一些事务，如安装软件、初始化系统、启动、删除服务、推送配置文件和差异化配置管理服务器等。同时系统管理员和系统管理员之间可以分享用Puppet语言描述好的事务，从而减少重复劳动，提高工作效率。</p>
+<h3 id="puppet工作模型"><a href="#puppet工作模型" class="headerlink" title="puppet工作模型"></a>puppet工作模型</h3><ul>
+<li>a.部署调度<ul>
+<li>puppet master在一台服务器以守护进程方式运行，同时也包含客户端各节点的配置信息，puppet agent 在与master的通信过程中，通过标准的SSL协议进行加密和验证，验证通过后，agent从masteer上读取响应节点信息应用在本地。</li>
+</ul>
+</li>
+<li>b.配置语言和资源抽象<ul>
+<li>puppet使用描述性语言来定义配置项，在puppet中将配置项被称为resource，当Agent连接Master时，Master并不知道Agent的操作系统型号和版本。Agent通过Facter工具收集系统相关信息，并通过SSL协议将Agent的信息传递给Master。Master根据Agent收集到的相关信息，通过资源的提供者来为Agent服务。比如Package资源收到Agent的信息后，会识别Agent的系统型号版本，并通过资源提供者（如yum aptitude pkgadd apt-get等）匹配，为Agent服务。</li>
+</ul>
+</li>
+<li>c.事物层<pre><code>Puppet事务层其实就是它的解析引擎。Puppet事务层配置每一台主机的过程包括：
+</code></pre><ul>
+<li>解析和配置编译。</li>
+<li>将编译好的配置同步到Agent。</li>
+<li>在Agent上应用配置。</li>
+<li>向Master报告运行结果。</li>
+</ul>
+</li>
+</ul>
+<p>首先Puppet会创建一个图表来表示所有资源的关系和上下游执行顺序，以及和Agent的关系。然后Puppet将按照资源之间的关系和上下游顺序依次执行。<br>接着Puppet为每一个Agent获取相应的资源，并把它们编译成“目录”，然后将目录依次分发到各主机，并通过Agent来应用它们，最后应用结果以报告形式反馈给Master。自动化运维工具puppet安装配置</p>
+<h3 id="puppet的细节和原理"><a href="#puppet的细节和原理" class="headerlink" title="puppet的细节和原理"></a>puppet的细节和原理</h3><p><center><br><img src="https://www.linuxidc.com/upload/2017_12/171221202568971.png" alt><br></center><br>Puppet采用了非常简单的C/S架构，所有数据的交互都通过SSL进行，以保证安全。</p>
+<ol>
+<li>客户端Puppetd向Master发起认证请求，或使用带签名的证书。</li>
+<li>Master告诉Client你是合法的。</li>
+<li>客户端Puppetd调用Facter，Facter探测出主机的一些变量，例如主机名、内存大小、IP地址等。Puppetd将这些信息通过SSL连接发送到服务器端。</li>
+<li>服务器端的Puppet Master检测客户端的主机名，然后找到manifest对应的node配置，并对该部分内容进行解析。Facter送过来的信息可以作为变量处 理，node牵涉到的代码才解析，其他没牵涉的代码不解析。解析分为几个阶段，首先是语法检查，如果语法错误就报错；如果语法没错，就继续解析，解析的结 果生成一个中间的“伪代码”（catelog），然后把伪代码发给客户端。</li>
+<li>客户端接收到“伪代码”，并且执行。</li>
+<li>客户端在执行时判断有没有File文件，如果有，则向fileserver发起请求。</li>
+<li>客户端判断有没有配置Report，如果已配置，则把执行结果发送给服务器。</li>
+<li>服务器端把客户端的执行结果写入日志，并发送给报告系统。</li>
+</ol>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">两台机器：</span><br><span class="line">192.168.1.100（服务端）</span><br><span class="line">192.168.1.101 （客户端）</span><br><span class="line">两台机器关闭selinux，清空iptables规则，并保存，设置hostname</span><br><span class="line"></span><br><span class="line">100上</span><br><span class="line">hostname   master.aming.com</span><br><span class="line">编辑/etc/sysconfig/network  定义hostname</span><br><span class="line"></span><br><span class="line">101上</span><br><span class="line">hostname   client.aming.com</span><br><span class="line">编辑/etc/sysconfig/network  定义hostname</span><br><span class="line">重启服务器</span><br><span class="line"></span><br><span class="line">编辑hosts文件</span><br><span class="line">100和101全部为</span><br><span class="line">192.168.1.100  master.aming.com</span><br><span class="line">192.168.1.101   client.aming.com</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">安装ntpdate，并建立自动同步时间的任务计划：</span><br><span class="line">yum install -y ntp</span><br><span class="line">cront -e   //加入</span><br><span class="line">*/10  * * * * ntpdate time.windows.com</span><br></pre></td></tr></table></figure>
+<h3 id="服务端安装"><a href="#服务端安装" class="headerlink" title="服务端安装"></a>服务端安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">安装puppet 源</span><br><span class="line">rpm -ivh  http://yum.puppetlabs.com/el/6/p ... ease-6-7.noarch.rpm</span><br><span class="line"></span><br><span class="line">安装服务端程序</span><br><span class="line">yum install -y puppet-server</span><br><span class="line">启动服务</span><br><span class="line">service  puppetmaster start</span><br><span class="line"></span><br><span class="line">开机启动</span><br><span class="line">chkconfig  puppetmaster on</span><br></pre></td></tr></table></figure>
+<h3 id="客户端安装"><a href="#客户端安装" class="headerlink" title="客户端安装"></a>客户端安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">安装puppet 源</span><br><span class="line">rpm -ivh http://yum.puppetlabs.com/el/6/p ... ease-6-7.noarch.rpm</span><br><span class="line"></span><br><span class="line">安装客户端程序</span><br><span class="line">yum install -y puppet</span><br><span class="line"></span><br><span class="line">修改配置文件</span><br><span class="line">vi /etc/puppet/puppet.conf</span><br><span class="line">在最后面添加：</span><br><span class="line">listen = true</span><br><span class="line">server = master.aming.com</span><br><span class="line">runinterval = 30   //主动更新，每隔30s</span><br><span class="line"></span><br><span class="line">然后启动puppet服务</span><br><span class="line">/etc/init.d/puppet start</span><br><span class="line"></span><br><span class="line">手动生成ssl证书</span><br><span class="line">puppet agent  --test  --server  master.aming.com</span><br></pre></td></tr></table></figure>
+<h3 id="服务端查看，签发客户端的证书"><a href="#服务端查看，签发客户端的证书" class="headerlink" title="服务端查看，签发客户端的证书"></a>服务端查看，签发客户端的证书</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">puppet cert list --all</span><br><span class="line">会看到client.aming.com 的key，正常应该会在行首有一个+，如果没有说明还没有签发</span><br><span class="line"></span><br><span class="line">签发客户端</span><br><span class="line">puppet cert --sign client.aming.com</span><br></pre></td></tr></table></figure>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">服务端上</span><br><span class="line">vi /etc/puppet/manifests/site.pp</span><br><span class="line">加入如下内容：</span><br><span class="line">node default &#123;</span><br><span class="line">file &#123;</span><br><span class="line">&quot;/tmp/123.txt&quot;: content =&gt; &quot;test,test&quot;;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">客户端上</span><br><span class="line">puppet agent --test --server  master.aming.com</span><br><span class="line">这样会在客户端上生成一个 /tmp/123.txt的文件，并且内容为 testtest</span><br></pre></td></tr></table></figure>
+<h3 id="配置自动签发证书"><a href="#配置自动签发证书" class="headerlink" title="配置自动签发证书"></a>配置自动签发证书</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">服务端上删除客户端证书</span><br><span class="line">puppet cert clean client.aming.com</span><br><span class="line"></span><br><span class="line">客户端上删除ssl下的文件</span><br><span class="line">rm -rf /var/lib/puppet/ssl/*</span><br><span class="line"></span><br><span class="line">服务端更改配置文件</span><br><span class="line">vim /etc/puppet/puppet.conf在[main]下面加一行</span><br><span class="line">autosign = true</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">服务端创建自动签发的配置文件</span><br><span class="line">vim /etc/puppet/autosign.conf</span><br><span class="line">加入如下内容：</span><br><span class="line">*.aming.com </span><br><span class="line"></span><br><span class="line">重启puppetmaster服务</span><br><span class="line">/etc/init.d/puppetmaster restart</span><br><span class="line"></span><br><span class="line">客户端重启puppet服务</span><br><span class="line">/etc/init.d/puppet restart</span><br><span class="line"></span><br><span class="line">这样就能在服务端上自动签发证书了。当然不重启服务，手动连一下服务端也可以</span><br><span class="line">客户端执行：</span><br><span class="line">puppet agent --test --server  master.aming.com</span><br><span class="line"></span><br><span class="line">扩展： puppet更新方式  http://www.cnphp6.com/archives/66975</span><br></pre></td></tr></table></figure>
+<h2 id="模块管理"><a href="#模块管理" class="headerlink" title="模块管理"></a>模块管理</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">首先要理解几个概念，模块、类、资源。 模块是puppet的最大单元，模块里面有类，类下面有资源。 </span><br><span class="line">puppet管理的文件、用户、服务、任务计划等全部由这些单元组成。</span><br><span class="line"></span><br><span class="line">下面我们来定义一个模块：</span><br><span class="line">在服务端上做如下操作：</span><br><span class="line">mkdir /etc/puppet/modules/testm  //模块名字就是testm</span><br><span class="line">cd !$</span><br><span class="line">mkdir &#123;files,manifests,templates&#125;   //一个模块下需要有这三个目录，files存一些文件（可以为空），manifests存配置文件，templates存模板（可以留空）</span><br><span class="line">touch manifests/init.pp  //这个是必须的</span><br><span class="line">vi  manifests/init.pp   //内容如下</span><br><span class="line">class testm&#123;</span><br><span class="line">file &#123;&quot;/tmp/2.txt&quot;:</span><br><span class="line">owner =&gt; &quot;root&quot;,</span><br><span class="line">group =&gt; &quot;root&quot;,</span><br><span class="line">mode =&gt; 0400,</span><br><span class="line">source =&gt; &quot;puppet://$puppetserver/modules/testm/1.txt&quot;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">说明：类名字也叫做testm, 类下面定义了一个资源file，文件名字叫做/tmp/2.txt ，owner，group，mode定义文件的属主、数组以及权限，</span><br><span class="line">source定义这个文件从哪里获取。 $puppetserver一会也要定义一下，这里指的是puppet server服务器上/etc/puppet/modules/testm/files/1.txt</span><br><span class="line"></span><br><span class="line">下面要继续定义一个很关键的配置文件：</span><br><span class="line">vim  /etc/puppet/manifests/site.pp   //内容如下</span><br><span class="line">$puppetserver = &apos;master.aming.com&apos;</span><br><span class="line"></span><br><span class="line">node &apos;client.aming.com&apos;&#123;</span><br><span class="line">    include testm</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">说明：$puppetserver 定义服务端的主机名，node后面为客户端的主机名，这里面定义该客户端要加载的模块</span><br><span class="line">配置完成后，在客户端执行命令：</span><br><span class="line">puppet agent --test  --server=master.aming.com   //如果客户端上启动了puppet服务，不用执行这命令，它也会自动同步的</span><br><span class="line">上面的模块其实只是同步了一个文件而已，那么要想同步一个目录如何做？我们可以通过实现同步一个目录来做一个包发布系统。</span><br><span class="line">比如在一台机器上编译安装好了apache，那么就可以通过这样的模块把这个apache目录整个分发到其他机器上。</span><br><span class="line"></span><br><span class="line">模块配置文件如下：</span><br><span class="line">class apache&#123;</span><br><span class="line">file &#123;&quot;/usr/local/apache2&quot;:</span><br><span class="line">owner =&gt; &quot;root&quot;,</span><br><span class="line">group =&gt; &quot;root&quot;,</span><br><span class="line">source =&gt; &quot;puppet://$puppetserver/modules/apache/apache2&quot;,</span><br><span class="line">recurse =&gt; true,</span><br><span class="line">purge =&gt; true</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">其中recurse=&gt;true 这个参数很关键，它表示递归的意思，没有这个不能同步目录。purge参数可以保证当服务端删除某个文件，客户端可以跟着删除。</span><br><span class="line"></span><br><span class="line">远程执行命令：</span><br><span class="line">exec &#123;&quot;123&quot;:</span><br><span class="line">unless =&gt; &quot;test -f /tmp/aminglinux.txt&quot;,</span><br><span class="line">path =&gt; [&quot;/bin&quot;, &quot;/sbin&quot;, &quot;/usr/bin&quot;, &quot;/usr/sbin&quot;],</span><br><span class="line">command =&gt; &quot;/bin/touch /tmp/aminglinux.txt&quot;</span><br><span class="line">&#125;</span><br><span class="line">说明：unless后面的命令作为一个条件，当条件成立时，不会执行下面的命令，如果想要条件成立时，执行下面的命令，用 onlyif。</span><br><span class="line">要注意的是，我们一定要给执行的这条命令加个条件，使用unless就可以，必须满足这个条件才能执行命令，否则这个命令会一直执行，不太妥当。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cron资源：</span><br><span class="line">cron &#123;&quot;aming1&quot;:</span><br><span class="line">command =&gt; &quot;/sbin/ntpdate time.windows.com&quot;,</span><br><span class="line">user =&gt; &quot;root&quot;,</span><br><span class="line">minute =&gt; &quot;*/10&quot;,</span><br><span class="line"># ensure =&gt; &quot;absent&quot;  //当增加了这行配置，则会把该cron删除掉</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">说明：分时日月周分别对应puppet里面的minute，hour，monthday，month，weekday</span><br></pre></td></tr></table></figure>
+<h2 id="扩展学习"><a href="#扩展学习" class="headerlink" title="扩展学习"></a>扩展学习</h2><ul>
+<li><a href="http://blog.chinaunix.net/uid-20639775-id-3314583.html" target="_blank" rel="noopener">http://blog.chinaunix.net/uid-20639775-id-3314583.html</a></li>
+</ul>
+<p>资源： </p>
+<ul>
+<li>package  <a href="http://puppet.wikidot.com/package" target="_blank" rel="noopener">http://puppet.wikidot.com/package</a></li>
+<li>service <a href="http://puppet.wikidot.com/srv" target="_blank" rel="noopener">http://puppet.wikidot.com/srv</a></li>
+<li>exec <a href="http://puppet.wikidot.com/exec" target="_blank" rel="noopener">http://puppet.wikidot.com/exec</a></li>
+<li>cron <a href="http://puppet.wikidot.com/cron" target="_blank" rel="noopener">http://puppet.wikidot.com/cron</a></li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://www.zhangqifei.top/2017/08/07/运维自动化工具/运维自动化工具puppet/" title="运维自动化工具puppet" target="_blank" rel="external">https://www.zhangqifei.top/2017/08/07/运维自动化工具/运维自动化工具puppet/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://www.zhangqifei.top" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://www.zhangqifei.top" target="_blank"><span class="text-dark">咻一咻</span><small class="ml-1x">Smile &amp; Simple</small></a></h3>
+        <div>人生没有彩排，每天都是现场直播。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjkyMy85NDg0">
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+      
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2017/08/09/运维自动化工具/运维自动化工具ansible/" title="运维自动化工具ansible"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2017/08/06/运维自动化工具/运维自动化工具saltstack/" title="运维自动化工具saltstack"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class>
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/zhangqifei" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=98bEwsTFwsfAx8S3hobZlJia" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        2015 &copy; 2019 咻一咻
+        
+        <div class="publishby">
+        	Theme by <a href="https://hexo.io/" target="_blank"> Hexo </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+
+
+    
+    
+        
+    
+<script defer type="text/javascript">
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+
+    if (typeof LivereTower === 'function') { return; }
+
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+    
+    
+
+
+
+</body>
+</html>

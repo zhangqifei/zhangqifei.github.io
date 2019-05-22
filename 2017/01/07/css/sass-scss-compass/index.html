@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="referrer" content="never">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>sass-scss-compass | 老朋友好久不见！</title>
+  <meta name="description" content="sass/sCSS简介SASS(Sassy CSS)是一种CSS的开发工具，提供了许多便利的写法，大大节省了设计者的时间，使得CSS的开发，变得简单和可维护。 sass和sCSS实质上是同一种语言，只是采用了两种不同风格的写法：  sass采用ruby/python的缩进风格写法；文件后缀名.sass。 sCSS采用CSS的大括号风格写法；文件后缀名.sCSS。  注意：同一个文件中，不能混合使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sass-scss-compass">
+<meta property="og:url" content="https://www.zhangqifei.top/2017/01/07/css/sass-scss-compass/index.html">
+<meta property="og:site_name" content="老朋友好久不见！">
+<meta property="og:description" content="sass/sCSS简介SASS(Sassy CSS)是一种CSS的开发工具，提供了许多便利的写法，大大节省了设计者的时间，使得CSS的开发，变得简单和可维护。 sass和sCSS实质上是同一种语言，只是采用了两种不同风格的写法：  sass采用ruby/python的缩进风格写法；文件后缀名.sass。 sCSS采用CSS的大括号风格写法；文件后缀名.sCSS。  注意：同一个文件中，不能混合使用">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-22T05:47:42.792Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sass-scss-compass">
+<meta name="twitter:description" content="sass/sCSS简介SASS(Sassy CSS)是一种CSS的开发工具，提供了许多便利的写法，大大节省了设计者的时间，使得CSS的开发，变得简单和可维护。 sass和sCSS实质上是同一种语言，只是采用了两种不同风格的写法：  sass采用ruby/python的缩进风格写法；文件后缀名.sass。 sCSS采用CSS的大括号风格写法；文件后缀名.sCSS。  注意：同一个文件中，不能混合使用">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://www.zhangqifei.top/2017/01/07/css/sass-scss-compass/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="老朋友好久不见！" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+  <script>
+      document.addEventListener('visibilitychange', function () {
+          if (document.visibilityState == 'hidden') {
+              normal_title = document.title;
+              document.title = '欢迎回家！！！！';
+          } else document.title = normal_title;
+      });
+  </script>
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://www.zhangqifei.top">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">咻一咻</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Smile &amp; Simple</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech>
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/zhangqifei" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=98bEwsTFwsfAx8S3hobZlJia" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>CSDN博客地址为：<a href="https://blog.csdn.net/qq_37187976/">『点击跳转』</a> 原有文章不迁移。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/centos7/">centos7</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux总结/">linux总结</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/专业词汇/">专业词汇</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/命令/">命令</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络/">网络</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/运维自动化工具/">运维自动化工具</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API接口/">API接口</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASCII/">ASCII</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CA/">CA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS/">CentOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/">Chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Systemd/">Systemd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vimium/">Vimium</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ab/">ab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ansible/">ansible</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/">apache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bc/">bc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/border/">border</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cat/">cat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos7/">centos7</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/date/">date</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/echo/">echo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grep/">grep</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/head/">head</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lrzsz/">lrzsz</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/puppet/">puppet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/saltstack/">saltstack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/seq/">seq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/发布/">发布</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像/">图像</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/状态码/">状态码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/运维自动化工具/">运维自动化工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/防火墙/">防火墙</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/API接口/" style="font-size: 13px;">API接口</a> <a href="/tags/ASCII/" style="font-size: 13px;">ASCII</a> <a href="/tags/CA/" style="font-size: 13px;">CA</a> <a href="/tags/CentOS/" style="font-size: 13px;">CentOS</a> <a href="/tags/Chrome/" style="font-size: 13px;">Chrome</a> <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HTTP/" style="font-size: 14px;">HTTP</a> <a href="/tags/Linux/" style="font-size: 13px;">Linux</a> <a href="/tags/Systemd/" style="font-size: 13px;">Systemd</a> <a href="/tags/Vimium/" style="font-size: 13px;">Vimium</a> <a href="/tags/ab/" style="font-size: 13px;">ab</a> <a href="/tags/ansible/" style="font-size: 13px;">ansible</a> <a href="/tags/apache/" style="font-size: 13px;">apache</a> <a href="/tags/bc/" style="font-size: 13px;">bc</a> <a href="/tags/border/" style="font-size: 13px;">border</a> <a href="/tags/cat/" style="font-size: 13px;">cat</a> <a href="/tags/centos7/" style="font-size: 14px;">centos7</a> <a href="/tags/date/" style="font-size: 13px;">date</a> <a href="/tags/echo/" style="font-size: 13px;">echo</a> <a href="/tags/grep/" style="font-size: 13px;">grep</a> <a href="/tags/head/" style="font-size: 13px;">head</a> <a href="/tags/lrzsz/" style="font-size: 13px;">lrzsz</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/nginx/" style="font-size: 14px;">nginx</a> <a href="/tags/ping/" style="font-size: 13px;">ping</a> <a href="/tags/puppet/" style="font-size: 13px;">puppet</a> <a href="/tags/redis/" style="font-size: 13px;">redis</a> <a href="/tags/saltstack/" style="font-size: 13px;">saltstack</a> <a href="/tags/seq/" style="font-size: 13px;">seq</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/test/" style="font-size: 13px;">test</a> <a href="/tags/发布/" style="font-size: 13px;">发布</a> <a href="/tags/图像/" style="font-size: 13px;">图像</a> <a href="/tags/状态码/" style="font-size: 13px;">状态码</a> <a href="/tags/运维自动化工具/" style="font-size: 13px;">运维自动化工具</a> <a href="/tags/防火墙/" style="font-size: 13px;">防火墙</a>
+    </div>
+  </div>
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/nginx/">nginx</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/nginx/安装nginx/" class="title">安装-nginx</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T10:15:07.017Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/redis/">redis</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/redis/安装-redis/" class="title">安装-redis</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T09:25:29.739Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/命令/">命令</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/命令/linux命令-sed/" class="title">linux命令-sed</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T09:25:24.606Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/工具/">工具</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/工具/PS AND gimp/" class="title">PS AND gimp</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T01:41:22.000Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/随笔/">随笔</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/03/05/随笔/一次说清什么是正向代理，什么是反向代理？/" class="title">一次说清什么是正向代理，什么是反向代理？</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-03-05T01:42:22.000Z" itemprop="datePublished">2018-03-05</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+<script>
+    var timeDiv = document.getElementById("timeDiv");
+
+    function addZero(value) {
+        return value < 10 ? "0" + value : value;
+    }
+    function getTime() {
+        var time = new Date();
+        var year = time.getFullYear();
+        var month = time.getMonth() + 1;
+        var day = time.getDate();
+        var hour = time.getHours();
+        var minute = time.getMinutes();
+        var second = time.getSeconds();
+
+        var week = time.getDay();
+        var area = "日一二三四五六";
+
+        timeDiv.innerHTML = year + "年" + addZero(month) + "月" + addZero(day) + "日 星期" + area[week] + " " + addZero(hour) + "时" + addZero(minute) + "分" + addZero(second) + "秒";
+    }
+    getTime();
+
+
+    window.setInterval(getTime, 1000);//->每隔1000ms都会重新执行getTime
+</script>
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sass-sCSS简介"><span class="toc-number">1.</span> <span class="toc-text">sass/sCSS简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#sass和sCSS"><span class="toc-number">1.1.</span> <span class="toc-text">sass和sCSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-更新-删除"><span class="toc-number">1.2.</span> <span class="toc-text">安装/更新/删除</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#语法"><span class="toc-number">2.</span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据类型"><span class="toc-number">2.1.</span> <span class="toc-text">数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变量"><span class="toc-number">2.2.</span> <span class="toc-text">变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#变量作用域"><span class="toc-number">2.2.1.</span> <span class="toc-text">变量作用域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运算"><span class="toc-number">2.3.</span> <span class="toc-text">运算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注释"><span class="toc-number">2.4.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#嵌套"><span class="toc-number">2.5.</span> <span class="toc-text">嵌套</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#媒体查询-media嵌套"><span class="toc-number">2.5.1.</span> <span class="toc-text">媒体查询@media嵌套</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#样式嵌套"><span class="toc-number">2.5.2.</span> <span class="toc-text">样式嵌套</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#跳出嵌套"><span class="toc-number">2.5.3.</span> <span class="toc-text">跳出嵌套</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复用"><span class="toc-number">2.6.</span> <span class="toc-text">复用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#引入-import"><span class="toc-number">2.6.1.</span> <span class="toc-text">引入@import</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#片段文件"><span class="toc-number">2.6.1.1.</span> <span class="toc-text">片段文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#继承类-extend"><span class="toc-number">2.6.2.</span> <span class="toc-text">继承类@extend</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#占位符-声明样式块"><span class="toc-number">2.6.2.1.</span> <span class="toc-text">占位符%声明样式块</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#混入类-mixin声明及其调用-include"><span class="toc-number">2.6.3.</span> <span class="toc-text">混入类@mixin声明及其调用@include</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#向混合样式中导入内容-content"><span class="toc-number">2.6.3.1.</span> <span class="toc-text">向混合样式中导入内容@content</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流程控制"><span class="toc-number">2.7.</span> <span class="toc-text">流程控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#条件"><span class="toc-number">2.7.1.</span> <span class="toc-text">条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#循环"><span class="toc-number">2.7.2.</span> <span class="toc-text">循环</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用函数"><span class="toc-number">2.8.</span> <span class="toc-text">常用函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#字符串函数"><span class="toc-number">2.8.1.</span> <span class="toc-text">字符串函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数字函数"><span class="toc-number">2.8.2.</span> <span class="toc-text">数字函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#列表函数"><span class="toc-number">2.8.3.</span> <span class="toc-text">列表函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#映射函数"><span class="toc-number">2.8.4.</span> <span class="toc-text">映射函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Introspection-函数"><span class="toc-number">2.8.5.</span> <span class="toc-text">Introspection 函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#颜色函数"><span class="toc-number">2.8.6.</span> <span class="toc-text">颜色函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RGB"><span class="toc-number">2.8.6.1.</span> <span class="toc-text">RGB</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HSL"><span class="toc-number">2.8.6.2.</span> <span class="toc-text">HSL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Opacity"><span class="toc-number">2.8.6.3.</span> <span class="toc-text">Opacity</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调试"><span class="toc-number">2.9.</span> <span class="toc-text">调试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#compass"><span class="toc-number">3.</span> <span class="toc-text">compass</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#模块"><span class="toc-number">3.1.</span> <span class="toc-text">模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用扩展"><span class="toc-number">3.2.</span> <span class="toc-text">常用扩展</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-css/sass-scss-compass" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      sass-scss-compass
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2017/01/07/css/sass-scss-compass/" class="article-date">
+	  <time datetime="2017-01-06T17:50:32.000Z" itemprop="datePublished">2017-01-07</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/css/">css</a>
+  </span>
+
+        
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2017/01/07/css/sass-scss-compass/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 4.1k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 16(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <h1 id="sass-sCSS简介"><a href="#sass-sCSS简介" class="headerlink" title="sass/sCSS简介"></a>sass/sCSS简介</h1><p>SASS(Sassy CSS)是一种CSS的开发工具，提供了许多便利的写法，大大节省了设计者的时间，使得CSS的开发，变得简单和可维护。</p>
+<h2 id="sass和sCSS"><a href="#sass和sCSS" class="headerlink" title="sass和sCSS"></a>sass和sCSS</h2><p>实质上是同一种语言，只是采用了两种不同风格的写法：</p>
+<ul>
+<li>sass采用ruby/python的<strong>缩进</strong>风格写法；文件后缀名.sass。</li>
+<li>sCSS采用CSS的大括号风格写法；文件后缀名.sCSS。</li>
+</ul>
+<p>注意：<strong>同一个文件</strong>中，<strong>不</strong>能混合使用以上两种写法。</p>
+<p>以下均以sCSS为例。</p>
+<h2 id="安装-更新-删除"><a href="#安装-更新-删除" class="headerlink" title="安装/更新/删除"></a>安装/更新/删除</h2><ul>
+<li><p>使用gem，gem需要ruby</p>
+<ul>
+<li><p>OSX/FreeBSD/Linux：先用包管理器（或其他方法）安装ruby，如后再使用gem命令（推荐全局安装，需要root或sudo）安装sass。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dnf install ruby  #centos/fedora等安装ruby</span><br><span class="line">brew install ruby  #OSX安装ruby</span><br><span class="line">gem install sass  #安装使用该命令安装sass</span><br><span class="line">sass --version  #或sass -v 查看sass版本</span><br><span class="line">gem update sass  #更新sass</span><br><span class="line">gem uninstall sass  #卸载（删除）sass</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>windows：前往<a href="https://rubyinstaller.org/" target="_blank" rel="noopener">rubyinstaller.org</a>下载ruby，安装后再使用ruby提供的命令行使用gem安装sass（命令同上）。</p>
+</li>
+</ul>
+</li>
+<li><p>某些Linux发行版如Arch系、Debian系在官方源中提供了<code>ruby-sass</code>这个包（可到此搜索查看：<a href="https://pkgs.org/download/ruby-sass" target="_blank" rel="noopener">pkgs.org:ruby-sass</a> )，可以直接安装使用该发行版的包管理器直接安装/更新/删除。</p>
+</li>
+</ul>
+<p>##编译为CSS</p>
+<p>Sass 的编译有多种方法：命令编译、GUI工具编译和自动化编译</p>
+<p>sass提供四种编译风格：</p>
+<blockquote>
+<p>expanded：展开的多行CSS代码，输出的CSS后半部分大括号另起一行。</p>
+<p>nested：嵌套缩进的CSS代码，输出的CSS后半部分大括号在行尾。</p>
+<p>compact：简洁格式的CSS代码，输出的CSS是单行风格。</p>
+<p>compressed：压缩后的CSS代码，输出的CSS去掉了所有的注释和空格。</p>
+</blockquote>
+<p>如果希望压缩后保留注释信息，参看后文<a href="#注释">注释</a> 。</p>
+<ul>
+<li><p>命令行</p>
+<ul>
+<li><p>使用sass的命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sass file.sCSS  #在命令行显示生成的CSS</span><br><span class="line">sass file.sCSS file.CSS   #生成CSS</span><br><span class="line">sass --watch file.sCSS:file.CSS  #watch参数监听文件/目录的变化，自动生成CSS</span><br><span class="line">sass --style compressed test.sass test.CSS  #使用压缩风格生成CSS</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用其他工具：如<a href="http://compass-style.org/" target="_blank" rel="noopener">compass</a>，参看尾部<a href="#compass">附-compass</a></p>
+<blockquote>
+<p>Sass本身只是一个编译器，Compass在它的基础上，封装了一系列有用的模块和模板，补充Sass的功能。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>GUI工具</p>
+<ul>
+<li><a href="http://koala-app.com/" target="_blank" rel="noopener">Koala</a>  支持编译sass/sCSS、less、coffee script；处理javascript（如压缩、格式化等等）、CSS（如果添加浏览器厂商前缀、合并文件等等）；配置compass……</li>
+<li><a href="https://codekitapp.com/" target="_blank" rel="noopener">codekitapp</a>和<a href="https://prepros.io/" target="_blank" rel="noopener">prepros</a> （注意这两个软件可能需要付费）</li>
+</ul>
+</li>
+<li><p>自动化编译：如Webpack、Gulp和Grunt（具体参看该工具相关说明文档）</p>
+</li>
+</ul>
+<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><ul>
+<li>数字Number: 如，1、 2、 13、 10px；</li>
+<li>字符串String：有引号字符串或无引号字符串，如，”foo”、 ‘bar’、 baz；</li>
+<li>颜色Color：如，blue、 #04a3f9、 rgba(255,0,0,0.5)；</li>
+<li>布尔型Boolean：如，true、 false；</li>
+<li>空值Null：空值，位置的数据，null；</li>
+<li>值列表List：用空格或者逗号分开的一系列值，如，margin:1.5em 1em 0 2em 、 Helvetica, Arial, sans-serif。</li>
+<li>映射Map：键值对，映射定义值成组，并且可以被动态访问，如，$map: (FirsyKey: frstvalue, SecondKey: secvalue, Thirdkey: thdvalue);</li>
+</ul>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>变量<strong>声明和使用均要以<code>$</code>开头</strong>；如果变量需要镶嵌在字符串之中，就必须需要写在<code>#{}</code>之中。</p>
+<ul>
+<li>普通变量：定义之后可以在<strong>全局范围</strong>内使用</li>
+<li>默认变量：在变量的值后面加上<code>!default</code><br>设置默认值，如果有其他的值则优先替换为其他值，没有其他值则显示默认值。</li>
+</ul>
+<p>重新声明变量可覆盖默认值。</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$lightgray</span>:<span class="number">#eee123</span>;</span><br><span class="line"><span class="selector-tag">a</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>:<span class="variable">$lightgray</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$side</span> : left;</span><br><span class="line"><span class="selector-class">.rounded</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>-#&#123;<span class="variable">$side</span>&#125;-radius: <span class="number">5px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$baseLineHeight</span>:<span class="number">1.5</span> !default;</span><br><span class="line"><span class="selector-tag">body</span>&#123;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="variable">$baseLineHeight</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h3><ul>
+<li><p>定义在元素外面的变量是全局变量，全局可用。</p>
+<p>在变量值后使用<strong><code>!global</code>可使其成为全局变量</strong>。</p>
+</li>
+<li><p>定义在元素内部的变量是局部变量，只在该范围内生效。</p>
+</li>
+</ul>
+<h2 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h2><ul>
+<li>运算符号中的加号<code>+</code>和减号<code>-</code>两边需要有空格。</li>
+<li>运算时数值的单位类型不同会报错。</li>
+<li>使用加号<code>+</code>可对字符串进行拼接。<ul>
+<li>两个变量连接，两个变量名将会被拼接为字符串。</li>
+<li>前一个字符串有引号，则生成带引号字符串，否则生成不带引号字符串。</li>
+</ul>
+</li>
+<li>颜色值支持运算。<ul>
+<li>rgba中单个色值运算结果超过255 , 会把结果作为255；</li>
+<li>rgba运算，alpha值必须相同；</li>
+<li>十六进制中，计算的值超过<code>#ffffff</code>就视结果为<code>#ffffff</code>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>SASS共有两种注释风格：</p>
+<ul>
+<li>C语言风格注释：标准的CSS注释 <code>/* comment */</code>，会保留到编译后的文件。在<code>/*</code>后面加一个感叹号，表示这是”重要注释”。即使是<a href="#编译为CSS">压缩模式编译</a>，也会保留这行注释，例如用于版权信息。</li>
+<li>C++语言风格的注释：单行注释 <code>// comment</code>，只保留在SASS源文件中，编译后被省略。</li>
+</ul>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//注释</span></span><br><span class="line"><span class="comment">/*注释</span></span><br><span class="line"><span class="comment">注释</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h2 id="嵌套"><a href="#嵌套" class="headerlink" title="嵌套"></a>嵌套</h2><h3 id="媒体查询-media嵌套"><a href="#媒体查询-media嵌套" class="headerlink" title="媒体查询@media嵌套"></a>媒体查询@media嵌套</h3><p>和CSS 的使用方法一样，但是：</p>
+<ul>
+<li>SCSS/Sass中可以将@media样式嵌套在其他样式中。（CSS文件中是不能将@media嵌套到其他样式块中的，当然，编译生成的CSS文件中，@media样式会被提取编写到最外层）</li>
+<li>在<strong>内层</strong>使用的 @media会<strong>作用到外层</strong>的选择器上。</li>
+</ul>
+<h3 id="样式嵌套"><a href="#样式嵌套" class="headerlink" title="样式嵌套"></a>样式嵌套</h3><p>有两种嵌套：<strong>选择器嵌套</strong>和<strong>属性嵌套</strong></p>
+<ul>
+<li><code>&amp;</code>：代表&amp;所在的嵌套结构。</li>
+</ul>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//选择器嵌套</span></span><br><span class="line"><span class="selector-tag">nav</span> &#123;</span><br><span class="line">  <span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: red;</span><br><span class="line">    <span class="selector-tag">header</span> &amp; &#123;    <span class="comment">//此处&amp;就代表了nav a</span></span><br><span class="line">      <span class="attribute">color</span>:green;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//属性嵌套</span></span><br><span class="line"><span class="selector-class">.box</span>&#123;</span><br><span class="line">  <span class="attribute">border</span>&#123;</span><br><span class="line">    <span class="attribute">top</span>:<span class="number">1px</span> solid white;</span><br><span class="line">    <span class="attribute">right</span>:<span class="number">1px</span> solid red;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//伪元素选择嵌套--清除浮动的例子</span></span><br><span class="line"><span class="selector-class">.clearfix</span>&#123;</span><br><span class="line">	&amp;::before,</span><br><span class="line">	&amp;::after &#123;</span><br><span class="line">   		<span class="attribute">content</span>:<span class="string">""</span>;</span><br><span class="line">    	<span class="attribute">display</span>: table;</span><br><span class="line">    &#125;</span><br><span class="line">	&amp;::after &#123;</span><br><span class="line">    	<span class="attribute">clear</span>:both;</span><br><span class="line">    	<span class="attribute">overflow</span>: hidden;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>提示：避免滥用嵌套——如无提升权重的需要，尽量减少嵌套的使用，尤其是对于class和id选择器。</p>
+<h3 id="跳出嵌套"><a href="#跳出嵌套" class="headerlink" title="跳出嵌套"></a>跳出嵌套</h3><ul>
+<li>@at-root跳出所有上级选择器（@at-root不能跳出<code>@media</code>或<code>@support</code> ）</li>
+</ul>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>:<span class="number">#f00</span>;</span><br><span class="line">    @at-root .child &#123;    <span class="comment">//.child已经不属于.parent的下一层级</span></span><br><span class="line">      	<span class="attribute">width</span>:<span class="number">200px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>@at-root (without: media)</code>  跳出媒体查询</li>
+<li><code>@at-root (without: support)</code>  跳出support</li>
+</ul>
+<ul>
+<li><code>@rule</code>   跳出常规CSS</li>
+<li><code>@all</code>   跳出所有  </li>
+</ul>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">media</span> print &#123;</span><br><span class="line">    <span class="selector-class">.parent3</span>&#123;</span><br><span class="line">     <span class="attribute">color</span>:<span class="number">#f00</span>;</span><br><span class="line">	@at-root (without: all) &#123;</span><br><span class="line">    <span class="selector-class">.child3</span> &#123;</span><br><span class="line">    	<span class="attribute">width</span>:<span class="number">200px</span>;</span><br><span class="line">     &#125; </span><br><span class="line">   &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="复用"><a href="#复用" class="headerlink" title="复用"></a>复用</h2><h3 id="引入-import"><a href="#引入-import" class="headerlink" title="引入@import"></a>引入@import</h3><p>引入外部SCSS 和 SCSS 文件，编译时，引入的内容会被合并进当前文件中输出。</p>
+<ul>
+<li>引入时可以省略后缀名</li>
+<li>引入多个文件时，可以在一个<code>@import</code>后面添加多个引入文件</li>
+</ul>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">import</span> <span class="string">"example.scss"</span>;</span><br><span class="line">@<span class="keyword">import</span> <span class="string">"example"</span>,<span class="string">"test"</span>;</span><br></pre></td></tr></table></figure>
+<p>但是，在以下几种情况下，@import会被当成 CSS的<code>@import</code>：</p>
+<ul>
+<li>文件的扩展名是 .css；</li>
+<li>文件名以 http:// 开头；</li>
+<li>文件名是 url()；</li>
+<li>@import 包含了任何媒体查询（media queries）。</li>
+</ul>
+<h4 id="片段文件"><a href="#片段文件" class="headerlink" title="片段文件"></a>片段文件</h4><p>如果需要引入某个 SCSS 或 Sass 文件，但又不希望被引入的文件被单独编译为一个 CSS 文件，可以在文件名前面加一个下划线<code>_</code>避免被编译。这种下划线<code>_</code>开始的sCSS/sass文件就是片段文件（或叫做本地文件）</p>
+<ul>
+<li>引用片段文件时可以省略掉文件名前面的下划线</li>
+</ul>
+<p>示例：片段文件名为<code>_mixin.sCSS</code>，需要在<code>main.sCSS</code>中引用片段文件中的内容，可在<code>main.CSS</code>写入：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">import</span> <span class="string">"_mixin"</span>;</span><br><span class="line">@<span class="keyword">import</span> <span class="string">"mixin"</span>; <span class="comment">//可以省略下划线</span></span><br></pre></td></tr></table></figure>
+<p>编译后只会将<code>_mixin.sCSS</code>中的被引用的内容添加到<code>main.sCSS</code>编译出来的<code>main.CSS</code>中，不会再生成一个<code>_mixin.sCSS</code>文件。</p>
+<h3 id="继承类-extend"><a href="#继承类-extend" class="headerlink" title="继承类@extend"></a>继承类@extend</h3><p><code>@extend</code>来继承已存在的<strong>类</strong>样式块。</p>
+<p>注意：</p>
+<ul>
+<li>不能继承嵌套选择器的样式。</li>
+<li>无论声明的样式块有没有被<code>@extend</code>引用，该样式都会出现在编译后的文件中（造成代码冗余），使用<a href="#占位符%">占位符%</a>来声明样式可以避免这种情况出现。（推荐使用）</li>
+</ul>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.nounderline</span> &#123;</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">  @<span class="keyword">extend</span> .nounderline;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 编译后：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.nounderline</span>, <span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果.nounderline没有被引用过，编译后的CSS文件中也有.nonderline这三行样式。</p>
+<h4 id="占位符-声明样式块"><a href="#占位符-声明样式块" class="headerlink" title="占位符%声明样式块"></a>占位符%声明样式块</h4><p>占位符声明仅用来被继承的样式块，无论该样式块被引用与否，它都<strong>不会出现在编译生成的CSS文件中</strong> （当然，占位符声明的样式被引用后，其中的样式内容会出现在引用的位置）。样式名使用<code>%</code>开始：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%error &#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.warn</span> &#123;</span><br><span class="line">  @<span class="keyword">extend</span> %error;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译后：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.warn</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果%error没有被引用过，它就不会出现在编译后的CSS文件中。</p>
+<h3 id="混入类-mixin声明及其调用-include"><a href="#混入类-mixin声明及其调用-include" class="headerlink" title="混入类@mixin声明及其调用@include"></a>混入类@mixin声明及其调用@include</h3><p>混合样式有是可以重用的代码块。</p>
+<p>使用<code>@mixin</code>声明，<code>@include</code>调用。mixin中还<strong>可以传入参数</strong>（形参）和参数默认的值（实参）。</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">mixin</span> link(<span class="variable">$size</span>:<span class="number">1.8rem</span>)&#123;<span class="comment">//声明 可在mixn中定义参数和默认值</span></span><br><span class="line">    <span class="attribute">text-decoration</span>: none;</span><br><span class="line">  	<span class="attribute">color</span>:<span class="number">#bbc5d3</span>;</span><br><span class="line">  	<span class="attribute">font-size</span>:<span class="variable">$size</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">body</span>&#123;</span><br><span class="line">  @<span class="keyword">include</span> link(<span class="number">1.6rem</span>);<span class="comment">//调用 并让size为1.6rem，覆盖默认的1.8rem</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<ul>
+<li><p>Sass 在调用相同的混合样式时，并<strong>不能</strong>智能的<strong>将相同的样式代码块合并在一起</strong>。</p>
+<p>例如某选择器中已经有<code>color:red;</code>，而include进来的mixin样式中也有<code>color:red;</code>，在生成的CSS中就，该选择器内就会有两条<code>color:red;</code></p>
+</li>
+</ul>
+<h4 id="向混合样式中导入内容-content"><a href="#向混合样式中导入内容-content" class="headerlink" title="向混合样式中导入内容@content"></a>向混合样式中导入内容@content</h4><p>将一段代码导入到混合类指令中，然后再输出混合类样式，额外导入的部分将出现在 <code>@content</code> 标志的地方：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">mixin</span> apply-to-ie6-only &#123;</span><br><span class="line">  * <span class="selector-tag">html</span> &#123;</span><br><span class="line">    @<span class="keyword">content</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">@<span class="keyword">include</span> apply-to-ie6-only &#123;</span><br><span class="line">  <span class="selector-id">#logo</span> &#123;</span><br><span class="line">    <span class="attribute">background-image</span>: url(/logo.gif);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><h3 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h3><ul>
+<li><code>@if</code>-<code>@else</code></li>
+</ul>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$type</span>:monster;</span><br><span class="line"><span class="selector-tag">p</span> &#123;</span><br><span class="line">    @<span class="keyword">if</span> <span class="variable">$type</span>==ocean &#123;</span><br><span class="line">        <span class="attribute">color</span>: blue;</span><br><span class="line">    &#125;</span><br><span class="line">    @<span class="keyword">else</span> if <span class="variable">$type</span>==matador &#123;</span><br><span class="line">        <span class="attribute">color</span>: red;</span><br><span class="line">    &#125;</span><br><span class="line">    @<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="attribute">color</span>: black;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>三目判断：<code>if($condition,$if_true,$if_false)</code></p>
+<p>三个参数：条件，条件为真的值，条件为假的值</p>
+<p><code>if(true, 1px, 2px) =&gt; 1px</code></p>
+</li>
+</ul>
+<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><ul>
+<li><p>@for循环</p>
+<ul>
+<li><code>for $var from &lt;start&gt;though&lt;end&gt;</code></li>
+<li><code>for $var from &lt;start&gt; to &lt;end&gt;</code><br>$i表示变量，start表示起始值，end表示结束值，through表示包括end这个数，而to则不包括end这个数。</li>
+</ul>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">for</span> <span class="variable">$i</span> from 1 through 3 &#123;</span><br><span class="line">    <span class="selector-class">.item-</span>#&#123;<span class="variable">$i</span>&#125; &#123; <span class="attribute">width</span>: <span class="number">2em</span> * <span class="variable">$i</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>@while循环</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$types</span>: <span class="number">4</span>;</span><br><span class="line"><span class="variable">$type-width</span>: <span class="number">20px</span>;</span><br><span class="line">@<span class="keyword">while</span> <span class="variable">$types</span>&gt;<span class="number">0</span> &#123;</span><br><span class="line">    <span class="selector-class">.item-</span>#&#123;<span class="variable">$types</span>&#125; &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="variable">$type-width</span> + <span class="variable">$types</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">$types</span>: <span class="variable">$types</span> - <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>@each循环</p>
+<p><code>@each $var in &lt;list or map&gt;</code><br>$var表示变量，而list和map表示list类型数据和map类型数据。</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$animal-list</span>: puma,sea-slug,egret,salamander;    <span class="comment">//一个列表</span></span><br><span class="line">@<span class="keyword">each</span> <span class="variable">$animal</span> in <span class="variable">$animal-list</span> &#123;</span><br><span class="line">    .#&#123;<span class="variable">$animal</span>&#125;-<span class="attribute">icon</span> &#123;</span><br><span class="line">        <span class="attribute">background-image</span>: url(<span class="string">'/images/#&#123;$animal&#125;.png'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h2><h3 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h3><ul>
+<li><code>unquote($string)</code>：删除字符串中的引号；</li>
+<li><code>quote($string)</code>：给字符串添加引号；</li>
+<li><code>To-upper-case()</code>：将字符串小写字母转换成大写字母；</li>
+<li><code>To-lower-case()</code>：将字符串转换成小写字母。</li>
+</ul>
+<h3 id="数字函数"><a href="#数字函数" class="headerlink" title="数字函数"></a>数字函数</h3><ul>
+<li><code>percentage($value)</code>：将一个不带单位的数转换成百分比值；</li>
+<li><code>round($value)</code>：将数值四舍五入取整；</li>
+<li><code>ceil($value)</code>：向上取整；</li>
+<li><code>floor($value)</code>：向下取整；</li>
+<li><code>abs($value)</code>：取绝对值；</li>
+<li><code>min($numbers…)</code>：取几个数值之间的最小值；</li>
+<li><code>max($numbers…)</code>：取几个数值之间的最大值；</li>
+<li><code>random()</code>: 取随机数。</li>
+</ul>
+<h3 id="列表函数"><a href="#列表函数" class="headerlink" title="列表函数"></a>列表函数</h3><ul>
+<li><code>length($list)</code>：返回列表的长度值；</li>
+<li><code>nth(list, n)</code>：返回列表中指定的某个标签值；</li>
+<li><code>join(list1, list2, [$separator])</code>：将两个列表连接成一个列表；</li>
+<li><code>append(list1, val, [$separator])</code>：将某个值放在列表的最后；</li>
+<li><code>zip($lists…)</code>：将几个列表结合成一个多维的列表；</li>
+<li><code>index(list, value)</code>：返回一个值在列表中的位置值。</li>
+</ul>
+<h3 id="映射函数"><a href="#映射函数" class="headerlink" title="映射函数"></a>映射函数</h3><ul>
+<li><code>map-get($map,$key)</code>：根据给定的 key 值，返回 map 中相关的值。</li>
+<li><code>map-merge($map1,$map2)</code>：将两个 map 合并成一个新的 map。</li>
+<li><code>map-remove($map,$key)</code>：从 map 中删除一个 key，返回一个新 map。</li>
+<li><code>map-keys($map)</code>：返回 map 中所有的 key。</li>
+<li><code>map-values($map)</code>：返回 map 中所有的 value。</li>
+<li><code>map-has-key($map,$key)</code>：根据给定的 key 值判断 map 是否有对应的 value 值，如果有返回 true，否则返回 false。</li>
+<li><code>keywords($args)</code>：返回一个函数的参数，这个参数可以动态的设置 key 和 value。</li>
+</ul>
+<h3 id="Introspection-函数"><a href="#Introspection-函数" class="headerlink" title="Introspection 函数"></a>Introspection 函数</h3><ul>
+<li><code>type-of($value)</code>：返回一个值的类型；</li>
+<li><code>unit($number)</code>：返回一个值的单位；</li>
+<li><code>unitless($number)</code>：判断一个值是否带有单位；</li>
+<li><code>comparable($number-1, $number-2)</code>：判断两个值是否可以做加、减和合并。</li>
+</ul>
+<h3 id="颜色函数"><a href="#颜色函数" class="headerlink" title="颜色函数"></a>颜色函数</h3><h4 id="RGB"><a href="#RGB" class="headerlink" title="RGB"></a>RGB</h4><ul>
+<li><code>rgb($red,$green,$blue)</code>：根据红、绿、蓝三个值创建一个颜色；</li>
+<li><code>rgba($red,$green,$blue,$alpha)</code>：根据红、绿、蓝和透明度值创建一个颜色；</li>
+<li><code>red($color)</code>：从一个颜色中获取其中红色值；</li>
+<li><code>green($color)</code>：从一个颜色中获取其中绿色值；</li>
+<li><code>blue($color)</code>：从一个颜色中获取其中蓝色值；</li>
+<li><code>mix($color-1,$color-2,[$weight])</code>：把两种颜色混合在一起。<h4 id="HSL"><a href="#HSL" class="headerlink" title="HSL"></a>HSL</h4></li>
+<li><code>hsl($hue,$saturation,$lightness)</code>：通过色相（hue）、饱和度(saturation)和亮度（lightness）的值创建一个颜色；</li>
+<li><code>hsla($hue,$saturation,$lightness,$alpha)</code>：通过色相（hue）、饱和度(saturation)、亮度（lightness）和透明（alpha）的值创建一个颜色；</li>
+<li><code>hue($color)</code>：从一个颜色中获取色相（hue）值；</li>
+<li><code>saturation($color)</code>：从一个颜色中获取饱和度（saturation）值；</li>
+<li><code>lightness($color)</code>：从一个颜色中获取亮度（lightness）值；</li>
+<li>adjust-hue($color,$degrees)`：通过改变一个颜色的色相值，创建一个新的颜色；</li>
+<li><code>lighten($color,$amount)</code>：通过改变颜色的亮度值，让颜色变亮，创建一个新的颜色；</li>
+<li><code>darken($color,$amount)</code>：通过改变颜色的亮度值，让颜色变暗，创建一个新的颜色；</li>
+<li><code>saturate($color,$amount)</code>：通过改变颜色的饱和度值，让颜色更饱和，从而创建一个新的颜色</li>
+<li><code>desaturate($color,$amount)</code>：通过改变颜色的饱和度值，让颜色更少的饱和，从而创建出一个新的颜色；</li>
+<li><code>grayscale($color)</code>：将一个颜色变成灰色，相当于desaturate($color,100%);</li>
+<li><code>complement($color)</code>：返回一个补充色，相当于adjust-hue($color,180deg);</li>
+<li><code>invert($color)</code>：反回一个反相色，红、绿、蓝色值倒过来，而透明度不变。</li>
+</ul>
+<h4 id="Opacity"><a href="#Opacity" class="headerlink" title="Opacity"></a>Opacity</h4><ul>
+<li><code>alpha($color) /opacity($color)</code>：获取颜色透明度值；</li>
+<li><code>rgba($color, $alpha)</code>：改变颜色的透明度值；</li>
+<li><code>opacify($color, $amount) / fade-in($color, $amount)</code>：使颜色更不透明；</li>
+<li><p><code>transparentize($color, $amount) / fade-out($color, $amount)</code>：使颜色更加透明。</p>
+<h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2></li>
+<li><p>@debug   在Sass 代码在编译出错时，在命令终端会输出错误提示。</p>
+</li>
+<li><p>@warn    在@warn后添加要输出的警告信息。</p>
+</li>
+<li><p>@error    在@warn后添加要输出的错误信息。</p>
+</li>
+</ul>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">debug</span> 54px + 86px;</span><br><span class="line">    @<span class="keyword">if</span> unitless(<span class="variable">$y</span>) &#123;</span><br><span class="line">    	@<span class="keyword">warn</span> <span class="string">"#&#123;$y&#125; 的单位是像素px"</span>;</span><br><span class="line">    	<span class="variable">$y</span>: <span class="number">1px</span> * <span class="variable">$y</span>;</span><br><span class="line">  	&#125;@<span class="keyword">else</span>&#123;</span><br><span class="line">         @error <span class="string">"$y不存在"</span>;</span><br><span class="line">  	&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="compass"><a href="#compass" class="headerlink" title="compass"></a>compass</h1><p>compass需要ruby，使用gem安装/更新/删除：<code>gem install compass</code> （参看前文<a href="#安装/更新/删除">gem安装sass</a> ）</p>
+<p><a href="http://compass-style.org/help/documentation/" target="_blank" rel="noopener">compass文档</a></p>
+<ul>
+<li><p>常用命令行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">compass create name  #创建项目（name是项目名）</span><br><span class="line">compass compile  #编译文件 在项目根目录执行</span><br><span class="line">compass compile --output-style compressed  #可以定义编译风格</span><br><span class="line">compass compile --force  #强制编译所有文件（默认只编译未变动文件）</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建（create）项目后，项目文件夹中会生成stylesheets文件夹、sass文件夹和config.rb文件；</li>
+<li>在sass文件夹中的Sass/SCSS文件在编译（compile）后会在stylesheets文件夹中生成CSS文件；</li>
+<li>项目文件夹中的config.rb文件中可以定义<a href="http://compass-style.org/help/documentation/configuration-reference/" target="_blank" rel="noopener">相关编译参数</a>（如<code>_output_style=:expand</code> ）</li>
+</ul>
+</li>
+</ul>
+<h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><p>使用<code>@import</code>引用模块</p>
+<ul>
+<li><p>核心模块</p>
+<p>核心模块使用<code>@import compass</code>即可引用一下所有模块，当然也可以单独引用：</p>
+<ul>
+<li><p><a href="http://compass-style.org/reference/compass/CSS3/" target="_blank" rel="noopener">CSS3</a>  CSS3相关属性支持</p>
+<p>使用<code>@include</code>引用该模块定义的mixin（参看前文<a href="#混合@mixin">混合@mixin</a> ），如<a href="http://compass-style.org/reference/compass/CSS3/opacity/" target="_blank" rel="noopener">opacity</a> ：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">import</span> <span class="string">"compass/CSS3"</span>;</span><br><span class="line"> </span><br><span class="line"><span class="selector-id">#opacity-10</span> &#123;</span><br><span class="line">  @<span class="keyword">include</span> opacity(<span class="number">0.1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>内容较多 更多CSS3模块中的内容 参看链接的官方文档</p>
+</li>
+<li><p><a href="http://compass-style.org/reference/compass/typography/" target="_blank" rel="noopener">typograph</a>   文本样式</p>
+</li>
+<li><p><a href="http://compass-style.org/reference/compass/utilities/" target="_blank" rel="noopener">utilities</a>  各种其他功能如清除浮动使用<code>@include clearfix</code>即可</p>
+</li>
+<li><p><a href="http://compass-style.org/reference/compass/helpers/" target="_blank" rel="noopener">Helpers</a>   一些Sass增强函数</p>
+</li>
+</ul>
+</li>
+<li><p>非核心模块</p>
+<ul>
+<li>reset  重置浏览器默认样式</li>
+<li><a href="http://compass-style.org/reference/compass/layout/" target="_blank" rel="noopener">layout</a>  布局功能 栅格背景和页脚等</li>
+</ul>
+<p>非核心模块需要单独引用：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">import</span> <span class="string">"compass/reset"</span>;</span><br><span class="line">@<span class="keyword">import</span> <span class="string">"compass/layout"</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="http://compass-style.org/reference/compass/support/" target="_blank" rel="noopener">support</a>  跨浏览器支持（浏览器兼容）</p>
+</li>
+</ul>
+<h2 id="常用扩展"><a href="#常用扩展" class="headerlink" title="常用扩展"></a>常用扩展</h2><p>使用<code>gem install</code>扩展安装后，使用require引入：</p>
+<ul>
+<li><p><code>require &#39;compass-normalize&#39;</code></p>
+<p>​</p>
+</li>
+<li><p><code>require &#39;compass/import-once/activate&#39;</code>   只引用一次文件</p>
+<p>使用了该扩展后，在Sass/SCSS中使用<code>@import</code>引用一个文件多次，该文件内容也不会在编译时被添加多次。</p>
+<p>如果使用了扩展，但又需要多次引入同一个文件，只需要在引用语句最后加上一个<code>!</code>即可。</p>
+<p>​</p>
+</li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://www.zhangqifei.top/2017/01/07/css/sass-scss-compass/" title="sass-scss-compass" target="_blank" rel="external">https://www.zhangqifei.top/2017/01/07/css/sass-scss-compass/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://www.zhangqifei.top" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://www.zhangqifei.top" target="_blank"><span class="text-dark">咻一咻</span><small class="ml-1x">Smile &amp; Simple</small></a></h3>
+        <div>人生没有彩排，每天都是现场直播。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjkyMy85NDg0">
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+      
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2017/01/07/css/css-border深入理解/" title="css-border深入理解"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2016/09/06/linux总结/自建CA认证和证书/" title="自建CA认证和证书"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class>
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/zhangqifei" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=98bEwsTFwsfAx8S3hobZlJia" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        2015 &copy; 2019 咻一咻
+        
+        <div class="publishby">
+        	Theme by <a href="https://hexo.io/" target="_blank"> Hexo </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+
+
+    
+    
+        
+    
+<script defer type="text/javascript">
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+
+    if (typeof LivereTower === 'function') { return; }
+
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+    
+    
+
+
+
+</body>
+</html>

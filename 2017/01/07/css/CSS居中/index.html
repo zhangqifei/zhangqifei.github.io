@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="referrer" content="never">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>CSS居中 | 老朋友好久不见！</title>
+  <meta name="description" content="说明 .center表示要被居中的元素，.wrap 表示要居中的元素的父元素（包含.center元素的元素）。 为了便于理解和叙述同一：  对于文本内容居中的情况，.wrap就是指包含文字的元素（例如&amp;lt;i&amp;gt;文字&amp;lt;/i&amp;gt; ，i标签就是.wrap ）。 文本内容会在外部创建一个行框（line-box），可以将文本看作是一个（外框隐形）的行内元素 ，line-box内部可以包含普">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS居中">
+<meta property="og:url" content="https://www.zhangqifei.top/2017/01/07/css/CSS居中/index.html">
+<meta property="og:site_name" content="老朋友好久不见！">
+<meta property="og:description" content="说明 .center表示要被居中的元素，.wrap 表示要居中的元素的父元素（包含.center元素的元素）。 为了便于理解和叙述同一：  对于文本内容居中的情况，.wrap就是指包含文字的元素（例如&amp;lt;i&amp;gt;文字&amp;lt;/i&amp;gt; ，i标签就是.wrap ）。 文本内容会在外部创建一个行框（line-box），可以将文本看作是一个（外框隐形）的行内元素 ，line-box内部可以包含普">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-22T05:46:47.951Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS居中">
+<meta name="twitter:description" content="说明 .center表示要被居中的元素，.wrap 表示要居中的元素的父元素（包含.center元素的元素）。 为了便于理解和叙述同一：  对于文本内容居中的情况，.wrap就是指包含文字的元素（例如&amp;lt;i&amp;gt;文字&amp;lt;/i&amp;gt; ，i标签就是.wrap ）。 文本内容会在外部创建一个行框（line-box），可以将文本看作是一个（外框隐形）的行内元素 ，line-box内部可以包含普">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://www.zhangqifei.top/2017/01/07/css/CSS居中/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="老朋友好久不见！" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <!-- font-awesome CSS -->
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/css/style.css">
+  
+    
+    
+
+  <script>
+      document.addEventListener('visibilitychange', function () {
+          if (document.visibilityState == 'hidden') {
+              normal_title = document.title;
+              document.title = '欢迎回家！！！！';
+          } else document.title = normal_title;
+      });
+  </script>
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://www.zhangqifei.top">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">咻一咻</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Smile &amp; Simple</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Beijing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索">
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech>
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav">
+        
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/zhangqifei" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=98bEwsTFwsfAx8S3hobZlJia" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>CSDN博客地址为：<a href="https://blog.csdn.net/qq_37187976/">『点击跳转』</a> 原有文章不迁移。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/centos7/">centos7</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux总结/">linux总结</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/nginx/">nginx</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/专业词汇/">专业词汇</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/命令/">命令</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/浏览器/">浏览器</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络/">网络</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/运维自动化工具/">运维自动化工具</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a><span class="category-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/API接口/">API接口</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ASCII/">ASCII</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CA/">CA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS/">CentOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Chrome/">Chrome</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP/">HTTP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Systemd/">Systemd</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vimium/">Vimium</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ab/">ab</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ansible/">ansible</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/">apache</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bc/">bc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/border/">border</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cat/">cat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/centos7/">centos7</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/date/">date</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/echo/">echo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grep/">grep</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/head/">head</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lrzsz/">lrzsz</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ping/">ping</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/puppet/">puppet</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/saltstack/">saltstack</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/seq/">seq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/">test</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/发布/">发布</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像/">图像</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/状态码/">状态码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/运维自动化工具/">运维自动化工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/防火墙/">防火墙</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/API接口/" style="font-size: 13px;">API接口</a> <a href="/tags/ASCII/" style="font-size: 13px;">ASCII</a> <a href="/tags/CA/" style="font-size: 13px;">CA</a> <a href="/tags/CentOS/" style="font-size: 13px;">CentOS</a> <a href="/tags/Chrome/" style="font-size: 13px;">Chrome</a> <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HTTP/" style="font-size: 14px;">HTTP</a> <a href="/tags/Linux/" style="font-size: 13px;">Linux</a> <a href="/tags/Systemd/" style="font-size: 13px;">Systemd</a> <a href="/tags/Vimium/" style="font-size: 13px;">Vimium</a> <a href="/tags/ab/" style="font-size: 13px;">ab</a> <a href="/tags/ansible/" style="font-size: 13px;">ansible</a> <a href="/tags/apache/" style="font-size: 13px;">apache</a> <a href="/tags/bc/" style="font-size: 13px;">bc</a> <a href="/tags/border/" style="font-size: 13px;">border</a> <a href="/tags/cat/" style="font-size: 13px;">cat</a> <a href="/tags/centos7/" style="font-size: 14px;">centos7</a> <a href="/tags/date/" style="font-size: 13px;">date</a> <a href="/tags/echo/" style="font-size: 13px;">echo</a> <a href="/tags/grep/" style="font-size: 13px;">grep</a> <a href="/tags/head/" style="font-size: 13px;">head</a> <a href="/tags/lrzsz/" style="font-size: 13px;">lrzsz</a> <a href="/tags/markdown/" style="font-size: 13px;">markdown</a> <a href="/tags/nginx/" style="font-size: 14px;">nginx</a> <a href="/tags/ping/" style="font-size: 13px;">ping</a> <a href="/tags/puppet/" style="font-size: 13px;">puppet</a> <a href="/tags/redis/" style="font-size: 13px;">redis</a> <a href="/tags/saltstack/" style="font-size: 13px;">saltstack</a> <a href="/tags/seq/" style="font-size: 13px;">seq</a> <a href="/tags/socket/" style="font-size: 13px;">socket</a> <a href="/tags/test/" style="font-size: 13px;">test</a> <a href="/tags/发布/" style="font-size: 13px;">发布</a> <a href="/tags/图像/" style="font-size: 13px;">图像</a> <a href="/tags/状态码/" style="font-size: 13px;">状态码</a> <a href="/tags/运维自动化工具/" style="font-size: 13px;">运维自动化工具</a> <a href="/tags/防火墙/" style="font-size: 13px;">防火墙</a>
+    </div>
+  </div>
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+    <div id="timeDiv" style="font-size: 12px;color: #3333337a"></div>
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/nginx/">nginx</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/nginx/安装nginx/" class="title">安装-nginx</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T10:15:07.017Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/redis/">redis</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/redis/安装-redis/" class="title">安装-redis</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T09:25:29.739Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/命令/">命令</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/命令/linux命令-sed/" class="title">linux命令-sed</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T09:25:24.606Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/工具/">工具</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/22/工具/PS AND gimp/" class="title">PS AND gimp</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-22T01:41:22.000Z" itemprop="datePublished">2019-05-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/随笔/">随笔</a>
+              </p>
+              <p class="item-title">
+                <a href="/2018/03/05/随笔/一次说清什么是正向代理，什么是反向代理？/" class="title">一次说清什么是正向代理，什么是反向代理？</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2018-03-05T01:42:22.000Z" itemprop="datePublished">2018-03-05</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+<script>
+    var timeDiv = document.getElementById("timeDiv");
+
+    function addZero(value) {
+        return value < 10 ? "0" + value : value;
+    }
+    function getTime() {
+        var time = new Date();
+        var year = time.getFullYear();
+        var month = time.getMonth() + 1;
+        var day = time.getDate();
+        var hour = time.getHours();
+        var minute = time.getMinutes();
+        var second = time.getSeconds();
+
+        var week = time.getDay();
+        var area = "日一二三四五六";
+
+        timeDiv.innerHTML = year + "年" + addZero(month) + "月" + addZero(day) + "日 星期" + area[week] + " " + addZero(hour) + "时" + addZero(minute) + "分" + addZero(second) + "秒";
+    }
+    getTime();
+
+
+    window.setInterval(getTime, 1000);//->每隔1000ms都会重新执行getTime
+</script>
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#说明"><span class="toc-number">1.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#行内内容的居中"><span class="toc-number">2.</span> <span class="toc-text">行内内容的居中</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#text-align-center水平居中"><span class="toc-number">2.1.</span> <span class="toc-text">text-align:center水平居中</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#line-height垂直居中"><span class="toc-number">2.2.</span> <span class="toc-text">line-height垂直居中</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vertical-align-middle垂直居中"><span class="toc-number">2.3.</span> <span class="toc-text">vertical-align:middle垂直居中</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#块级元素居中"><span class="toc-number">3.</span> <span class="toc-text">块级元素居中</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#margin-padding值设置居中"><span class="toc-number">3.1.</span> <span class="toc-text">margin/padding值设置居中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#clac计算数值"><span class="toc-number">3.1.1.</span> <span class="toc-text">clac计算数值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#margin-0-auto左右居中"><span class="toc-number">3.1.2.</span> <span class="toc-text">margin:0 auto左右居中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#position-absolute居中"><span class="toc-number">3.2.</span> <span class="toc-text">position:absolute居中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#偏移量50-负margin值"><span class="toc-number">3.2.1.</span> <span class="toc-text">偏移量50%+负margin值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#偏移量50-负50-translate值"><span class="toc-number">3.2.2.</span> <span class="toc-text">偏移量50%+负50%translate值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#偏移量0-margin-auto"><span class="toc-number">3.2.3.</span> <span class="toc-text">偏移量0+margin:auto</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flex弹性布局居中"><span class="toc-number">3.3.</span> <span class="toc-text">flex弹性布局居中</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#object-fit和object-postion居中"><span class="toc-number">3.4.</span> <span class="toc-text">object-fit和object-postion居中</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#grid网格布局居中"><span class="toc-number">3.5.</span> <span class="toc-text">grid网格布局居中</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#表格内容居中"><span class="toc-number">4.</span> <span class="toc-text">表格内容居中</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-css/CSS居中" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CSS居中
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2017/01/07/css/CSS居中/" class="article-date">
+	  <time datetime="2017-01-06T17:50:32.000Z" itemprop="datePublished">2017-01-07</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/css/">css</a>
+  </span>
+
+        
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2017/01/07/css/CSS居中/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 2.7k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 10(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry markdown-body" itemprop="articleBody">
+      
+        <h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><ul>
+<li><p><code>.center</code>表示要被居中的元素，<code>.wrap</code> 表示要居中的元素的父元素（包含<code>.center</code>元素的元素）。</p>
+<p>为了便于理解和叙述同一：</p>
+<ul>
+<li><p>对于文本内容居中的情况，<code>.wrap</code>就是指包含文字的元素（例如<code>&lt;i&gt;文字&lt;/i&gt;</code> ，i标签就是<code>.wrap</code> ）。</p>
+<p>文本内容会在外部创建一个行框（line-box），可以将文本看作是一个（外框隐形）的<strong>行内元素</strong> ，line-box内部可以包含普通文本框、inline-block元素、inline元素。</p>
+</li>
+<li><p>将文本内容包含在一个容器中（‘父亲’），然后再将该容器在另一个容器（‘祖父’）内居中不看作是文本内容居中，而是该文本内容外部容器的居中（‘父亲’在’祖父‘内居中）。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>须知某些情况不设置元素宽高、边框色/背景，无法看出居中效果，也就无所谓居中与否</strong>。</p>
+<p>例如父容器不设置背景或边框，无法看出子元素是否居中，<strong>示例代码只是写出了该居中方法所需要的那部分样式</strong> 。</p>
+</li>
+<li><p><strong>inline元素</strong>，准确来说，是不可替换（non-replace）的inline元素，<strong>不能设置竖直方向上的margin和padding</strong>，下不赘述。（margin同理）</p>
+<p>参看<a href="http://www.w3.org/TR/CSS2/box.html#margin-properties" target="_blank" rel="noopener">margin规定</a>和<a href="http://www.w3.org/TR/CSS2/box.html#padding-propertie" target="_blank" rel="noopener">padding规定</a> ，之所以不能设置margin/padding，是因为</p>
+<blockquote>
+<p>padding的值是根据目标元素的width计算出来的，而inline中的non-replace元素的width是不确定的。</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>CSS兼容性情况未作说明，具体自行查阅<a href="http://caniuse.com/" target="_blank" rel="noopener">caniuse</a>。</li>
+<li>推荐使用那些不必使用到精确数值（如50px，20rem这种情况，百分比值50%除外）的方法。</li>
+</ul>
+<hr>
+<h1 id="行内内容的居中"><a href="#行内内容的居中" class="headerlink" title="行内内容的居中"></a>行内内容的居中</h1><p>如何让一个容器的行内内容（文本和行内元素–inline/inlineblock）居中。（当然inline-block比较特殊，即有行内属性，又有块级属性）</p>
+<h2 id="text-align-center水平居中"><a href="#text-align-center水平居中" class="headerlink" title="text-align:center水平居中"></a>text-align:center水平居中</h2><p>在<strong>块级元素</strong>上设置<code>text-align:center</code>，其内部的<strong>inline或inline-block</strong>的子元素以及<strong>文本内容</strong>会在父元素内居中。</p>
+<h2 id="line-height垂直居中"><a href="#line-height垂直居中" class="headerlink" title="line-height垂直居中"></a>line-height垂直居中</h2><p>line-height设置了行间的距离（行高），将要居中的元素的line-heigth值设置为和其<strong>块级父元素</strong>的height值一样时，其内部内容会垂直居中。</p>
+<p>用于<strong>单行的行内元素</strong>的垂直居中</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span>&#123;</span><br><span class="line">  <span class="attribute">height</span>:<span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<ul>
+<li>line-height不能使用负值</li>
+</ul>
+<ul>
+<li>在块级元素使用line-height是定义该元素基线之间的最小距离而不是最大距离。</li>
+</ul>
+<h2 id="vertical-align-middle垂直居中"><a href="#vertical-align-middle垂直居中" class="headerlink" title="vertical-align:middle垂直居中"></a>vertical-align:middle垂直居中</h2><p>vertical-align的使用效果要分为以下不同情况：</p>
+<ul>
+<li><p>行内元素inline/linline-block/inline-table</p>
+<p>多用于图文排版，将图片和文字进行垂直对齐。</p>
+<p>使用伪元素（也可以<code>.wrap</code>的父元素和兄弟元素进行居中，将下面代码中的<code>.wrap::before</code>换成<code>.wrap</code>的兄弟元素的选择器即可）</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.wrap::before&#123; //或者::after</span><br><span class="line">  content: '';</span><br><span class="line">  <span class="selector-tag">display</span>: <span class="selector-tag">inline-block</span>;</span><br><span class="line">  <span class="selector-tag">height</span>: 100%;</span><br><span class="line">  <span class="selector-tag">display</span><span class="selector-pseudo">:inline-block</span>;</span><br><span class="line">  <span class="selector-tag">vertical-align</span>: <span class="selector-tag">middle</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<ul>
+<li><p>直接对一个inline-block元素（block、list-item元素更不必说）元素设置<code>vertical-align:middle</code>往往不能让其内部的达到预期的垂直居中效果，因为：</p>
+<blockquote>
+<p>vertical-align大部分取值是<strong>相对于父元素</strong>来说的</p>
+</blockquote>
+<p>例如<code>vertical-align:baseline</code>（vertical-align的默认值）是相对于父元素的基线对齐，<code>vertical-align:middle</code>是相对与父元素的中线对齐（中线位置受到基线的影响）。</p>
+<p>而父元素的基线取值有以下规则：</p>
+<ul>
+<li><p>inline类：baseline就是文本的基线——基线的位置（当前元素默认字体的）小写字母x的底端，font-size和line-height都会对其产生影响。</p>
+</li>
+<li><p>inline-block类</p>
+<ul>
+<li><blockquote>
+<p>正常流内容的情况下，<code>inline-block</code>元素的baseline就是最后一个作为内容存在的元素的baseline</p>
+</blockquote>
+</li>
+<li><blockquote>
+<p>在overflow属性不为visible的情况下，baseline就是margin-box的下边界</p>
+</blockquote>
+</li>
+<li><blockquote>
+<p>在没有内容但是内容区还有高度的情况下，baseline还是margin-box的下边界。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>可替换元素（如img）</p>
+<blockquote>
+<p>不管display设置为inline还是inline-block，其baseline都为margin-box</p>
+</blockquote>
+</li>
+<li><p>有多个baseline时（如不同的字体），以baseline最低者为准。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>设置为middle也不一定是真正的对齐</strong>，某些字体的中线位置不一定顶部和底部的正中间。</p>
+</li>
+<li><p>不同风格的字体常有不同的排版标准，因此有不同的基线/中线/顶线等，多种字体混合排版会让基线发生变化（参看父元素的基线取值规则）。</p>
+</li>
+</ul>
+</li>
+<li><p>表格单元格（table-cell）元素</p>
+<p>在单元格上设置<code>vertical-align:middle</code>，其内部内容将垂直居中。</p>
+</li>
+<li><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/::first-letter" target="_blank" rel="noopener"><code>::first-letter</code></a> 和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/::first-line" target="_blank" rel="noopener"><code>::first-line</code></a> 伪元素  （同第一条行内元素）</p>
+</li>
+</ul>
+<h1 id="块级元素居中"><a href="#块级元素居中" class="headerlink" title="块级元素居中"></a>块级元素居中</h1><p>block、list-item、inline-block等元素如何在其父元素中居中。</p>
+<h2 id="margin-padding值设置居中"><a href="#margin-padding值设置居中" class="headerlink" title="margin/padding值设置居中"></a>margin/padding值设置居中</h2><p>最基础的方法是设置<strong>精确的</strong>padding（父元素上）或margin（子元素上）<strong>值</strong>使得子元素居中，这里不再示例。</p>
+<h3 id="clac计算数值"><a href="#clac计算数值" class="headerlink" title="clac计算数值"></a>clac计算数值</h3><p>margin值为 父容器宽/高的50% 减去 自身宽/高的50%：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.center</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">20rem</span>;<span class="attribute">height</span>: <span class="number">20rem</span>;</span><br><span class="line">  <span class="attribute">margin-left</span>:<span class="built_in">calc</span>(50% - 10rem);</span><br><span class="line">  <span class="attribute">margin-top</span>:<span class="built_in">calc</span>(50% - 10rem);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：inline水平的元素margin/padding设置<strong>仅在左右方向上有效</strong>。</p>
+<h3 id="margin-0-auto左右居中"><a href="#margin-0-auto左右居中" class="headerlink" title="margin:0 auto左右居中"></a>margin:0 auto左右居中</h3><p>要居中的<strong>块级元素（block）</strong>元素设置<code>margin:0 auto</code> 。</p>
+<p>注意：<strong>对浮动元素、绝对定位和固定定位的元素无效</strong> 。（注意：使用绝对定位+<a href="偏移量0+margin:auto">偏移量0+margin:auto</a>方法中使用了四个方向的值为0偏移量例外）</p>
+<hr>
+<p>附：</p>
+<p>注意margin/pading</p>
+<blockquote>
+<p>百分比值参照其<strong>包含块的宽度</strong>进行计算</p>
+</blockquote>
+<p>因此使用<code>margin:auto</code>并不能实现垂直方向上的居中，垂直居中最好不要使用<code>margin/pading</code>来实现。（当然如果确切知道父容器的高度，使用精确的margin/pading数值来实现不再此讨论之列）</p>
+<h2 id="position-absolute居中"><a href="#position-absolute居中" class="headerlink" title="position:absolute居中"></a>position:absolute居中</h2><p>在父元素上设置定位，再在要居中的子元素上使用绝对定位进行居中。</p>
+<p>最基础的方法：计算出要居中的元素宽高与父容器宽高的差值，然后将差值除以2得到精确的值，再用以设置精确的水平和垂直偏移量；</p>
+<p>其次是设置水平和垂直偏移量鸽50%，然会设置水平和垂直的负margin值——取值分别为要居中的子元素宽高的半。</p>
+<p>以上方法均需要使用容器宽高的确切值，灵活性较差，以下方法更为灵活：</p>
+<h3 id="偏移量50-负margin值"><a href="#偏移量50-负margin值" class="headerlink" title="偏移量50%+负margin值"></a>偏移量50%+负margin值</h3><p>设置50%的水平和垂直偏移，然后设置的margin-top和margin-left值是要居中元素自身宽/高的一半的负数 ：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.center</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;<span class="attribute">width</span>:<span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;<span class="attribute">left</span>:<span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">margin-top</span>:-<span class="number">50px</span>;</span><br><span class="line">  <span class="attribute">margin-left</span>:-<span class="number">50px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="偏移量50-负50-translate值"><a href="#偏移量50-负50-translate值" class="headerlink" title="偏移量50%+负50%translate值"></a>偏移量50%+负50%translate值</h3><p>使用位移transform:translate，将设置了50%偏移的子元素”往回”移动自身宽高的一半：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.center</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;<span class="attribute">left</span>:<span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(-50%,-50%);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="偏移量0-margin-auto"><a href="#偏移量0-margin-auto" class="headerlink" title="偏移量0+margin:auto"></a>偏移量0+margin:auto</h3><p>父元素设置相对或绝对定位；要居中的子元素设置绝对定位，所有偏移量为0，外边距为auto：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span>&#123;</span><br><span class="line">  <span class="attribute">positon</span>:relative;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.center</span>&#123;</span><br><span class="line">  <span class="attribute">position</span>:absolute;</span><br><span class="line">  <span class="attribute">top</span>:<span class="number">0</span>;<span class="attribute">bottom</span>:<span class="number">0</span>;<span class="attribute">left</span>:<span class="number">0</span>;<span class="attribute">right</span>:<span class="number">0</span>;</span><br><span class="line">  <span class="attribute">margin</span>:auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="flex弹性布局居中"><a href="#flex弹性布局居中" class="headerlink" title="flex弹性布局居中"></a>flex弹性布局居中</h2><p>父元素设置为弹性盒子（容器），子元素就成为了弹性元素，利用flex相关属性进行居中。</p>
+<p>更多flex相关信息&gt;&gt;<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes" target="_blank" rel="noopener">MDN-弹性盒子</a></p>
+<ul>
+<li>父元素设置为弹性容器<code>display:flex</code>，并设置弹性容器内主轴/侧轴<code>justify-content/align-content</code>值为<code>center</code>：</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>:flex; <span class="comment">/*使用flex盒子*/</span></span><br><span class="line">  <span class="attribute">justify-content</span>:center;<span class="comment">/*主轴上居中*/</span></span><br><span class="line">  <span class="attribute">align-items</span>:center;<span class="comment">/*侧轴上居中*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>父元素设置为弹性容器<code>display:flex</code>，子元素设置<code>magrin:auto</code> ：</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>:flex;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.child</span>&#123;</span><br><span class="line">  <span class="attribute">margin</span>: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>注意：</p>
+<ul>
+<li>如果有多个弹性子元素，默认情况下弹性子元素会成一横排分布在父元素容器中，因为<ol>
+<li>flex默认将子元素水平排列到一行（<code>flex-direction:row</code>），使用<code>flex-direction:column</code>可以使子元素垂直排成一列。</li>
+<li>flex默认子元素不折行显示（<code>flex-wrap: nowrap</code> ），使用<code>flex-wrap: wrap</code>可使子元素自动折行显示（当一行宽/高度不足容下多个子元素时折行为多行/列）。</li>
+</ol>
+</li>
+<li>弹性盒子的主轴不是固定的，它由弹性子元素的排列方式（flex-direction）决定。</li>
+</ul>
+<ul>
+<li><p><code>align-items</code>和<code>align-content</code>区别：</p>
+<ul>
+<li><code>align-content</code>属性只适用于<strong>多行子元素</strong>（超过一行，当然如果主轴是垂直轴，则应该称为多列，下同）的 flex 容器，<strong>如果只有一行子元素，该属性不起作用；</strong><code>align-items</code>适用于任意行子元素的<code>flex</code>容器。</li>
+<li><code>align-content</code>是设置一列子元素在整个侧轴上的对其方式；而<code>align-items</code>是设置每个子元素在该行的高度范围内的侧轴上的对齐方式，相当于将侧轴按行平分，设置的是子元素在该行高度范围内的对齐方式。</li>
+</ul>
+</li>
+</ul>
+<h2 id="object-fit和object-postion居中"><a href="#object-fit和object-postion居中" class="headerlink" title="object-fit和object-postion居中"></a>object-fit和object-postion居中</h2><p><strong>object-fit 只能用于<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/Replaced_element" target="_blank" rel="noopener">可替换元素</a>(replaced element) </strong>，用以</p>
+<blockquote>
+<p>指定替换元素的内容应该如何适应到其使用的高度和宽度确定的框。</p>
+</blockquote>
+<p>一般用做图片的样式。它有着类似background-image的用法：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.center</span>&#123;</span><br><span class="line">	<span class="attribute">object-fit</span>:fill|cover|contain|none|scale-down;</span><br><span class="line"><span class="comment">/*其属性值，分别是填充（默认）、包含、覆盖（可能被裁剪）、无变化（保持原状）和等比例缩放*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而object-positon属性默认值是<code>50% 50%</code>，也就是居中(也就是要求居中的情况不用写这个属性了……），对元素定位控制，类似background-postion。</p>
+<h2 id="grid网格布局居中"><a href="#grid网格布局居中" class="headerlink" title="grid网格布局居中"></a>grid网格布局居中</h2><p>根据需要布局网格，将要居中的元素“摆放”在网格中间即可。</p>
+<p>示例制作3x3的表格内元素居中：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span>&#123;</span><br><span class="line">  <span class="attribute">display</span>:grid;</span><br><span class="line">  <span class="attribute">grid-template-rows</span>: <span class="built_in">repeat</span>(3, 1fr);</span><br><span class="line">  <span class="attribute">grid-template-columns</span>: <span class="built_in">repeat</span>(3, 1fr);</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.center</span>&#123;</span><br><span class="line">  <span class="attribute">grid-row</span>: <span class="number">2</span>;</span><br><span class="line">  <span class="attribute">grid-column</span>: <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="表格内容居中"><a href="#表格内容居中" class="headerlink" title="表格内容居中"></a>表格内容居中</h1><ul>
+<li>表格式布局：根据语义化原则，使用表格布局非表格的内容已不再合适，而且表格的<code>&lt;td&gt;</code> <code>&lt;th&gt;</code>标签的align和valign属性已经是HTML的废除标签属性，<strong>建议不要使用</strong>。</li>
+<li>非表格元素模拟表格：可以使用<code>display:table-cell</code> 模拟其为一个表格，由于不建议使用废除的align和valign标签属性，故而也就<code>vertical-align:middle</code> 垂直居中具有实用性，将元素模拟成表格进行垂直居中意义也不大了，因此<strong>建议不要使用</strong>。</li>
+<li>真正的表格，<strong>表格内容的居中</strong>：<ul>
+<li>水平：<code>text-align:center</code> </li>
+<li>垂直：<code>vertical-align:middle</code></li>
+<li>也可以使用margin/pading等其他方法来控制表格内容的居中</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://www.zhangqifei.top/2017/01/07/css/CSS居中/" title="CSS居中" target="_blank" rel="external">https://www.zhangqifei.top/2017/01/07/css/CSS居中/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://www.zhangqifei.top" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt>
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://www.zhangqifei.top" target="_blank"><span class="text-dark">咻一咻</span><small class="ml-1x">Smile &amp; Simple</small></a></h3>
+        <div>人生没有彩排，每天都是现场直播。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+       
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMjkyMy85NDg0">
+  <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+      
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2017/01/07/css/float浮动相关/" title="float浮动相关"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2017/01/07/centos7/CentOS7启动及排错/" title="CentOS7启动及排错"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫">
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class>
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/zhangqifei" target="_blank" title="Github" data-toggle="tooltip" data-placement="top"><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=98bEwsTFwsfAx8S3hobZlJia" target="_blank" title="Email" data-toggle="tooltip" data-placement="top"><i class="icon icon-email"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle="tooltip" data-placement="top"><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        2015 &copy; 2019 咻一咻
+        
+        <div class="publishby">
+        	Theme by <a href="https://hexo.io/" target="_blank"> Hexo </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+  
+    
+    
+    
+        <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+    
+    
+    
+        
+
+
+    
+    
+        
+    
+<script defer type="text/javascript">
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+
+    if (typeof LivereTower === 'function') { return; }
+
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+
+    
+    
+
+
+
+</body>
+</html>
