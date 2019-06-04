@@ -5582,6 +5582,7 @@ pre code {
   top: 0;
   left: 15px;
   margin-top: 11px;
+  opacity: 0.4;
   -webkit-box-shadow: 20px 0 #FF7F00,40px 0 #FFFF00,60px 0 #00FF00,80px 0 #00FFFF,100px 0 #0000FF,120px 0 #8B00FF;
   box-shadow: 20px 0 #FF7F00,40px 0 #FFFF00,60px 0 #00FF00,80px 0 #00FFFF,100px 0 #0000FF,120px 0 #8B00FF;
 }
