@@ -71,15 +71,17 @@
     <link href="https://www.zhangqifei.top/2019/06/28/shell%E8%84%9A%E6%9C%AC/Windows/"/>
     <id>https://www.zhangqifei.top/2019/06/28/shell脚本/Windows/</id>
     <published>2019-06-28T04:04:22.058Z</published>
-    <updated>2019-07-01T06:27:44.518Z</updated>
+    <updated>2019-07-01T07:27:29.234Z</updated>
     
-    <content type="html"><![CDATA[<p>锁屏.vbs<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Dim WSHShell</span><br><span class="line"></span><br><span class="line">Set WSHShell=WScript.CreateObject(&quot;WScript.Shell&quot;)</span><br><span class="line"></span><br><span class="line">WSHShell.Run &quot;Rundll32.exe user32.dll,LockWorkStation&quot;, 0</span><br></pre></td></tr></table></figure></p><p>休眠.bat<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutdown.exe -h</span><br></pre></td></tr></table></figure></p>]]></content>
+    <content type="html"><![CDATA[<ol><li><p>锁屏.vbs</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Dim WSHShell</span><br><span class="line"></span><br><span class="line">Set WSHShell=WScript.CreateObject(&quot;WScript.Shell&quot;)</span><br><span class="line"></span><br><span class="line">WSHShell.Run &quot;Rundll32.exe user32.dll,LockWorkStation&quot;, 0</span><br></pre></td></tr></table></figure></li><li><p>休眠.bat</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutdown.exe -h</span><br></pre></td></tr></table></figure></li><li><p>start_jar.bat(Windows后台运行jar)</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start javaw -jar D:\CreditSoft\hurongAPI.jar</span><br></pre></td></tr></table></figure></li></ol>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;锁屏.vbs&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;b
+        &lt;ol&gt;
+&lt;li&gt;&lt;p&gt;锁屏.vbs&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;
       
     
     </summary>
